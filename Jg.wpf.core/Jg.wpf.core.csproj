@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AE32AA46-4536-4BE7-9589-1CF857821759}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jg.wpf.core</RootNamespace>
+    <AssemblyName>Jg.wpf.core</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Command\CommandBase.cs" />
+    <Compile Include="Log\Logger.cs" />
+    <Compile Include="Notify\ViewModelBase.cs" />
+    <Compile Include="Profilers\Dispatcher.cs" />
+    <Compile Include="Profilers\MemoryMonitor.cs" />
+    <Compile Include="Profilers\Profiler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\FileService\FileDialogServiceImp.cs" />
+    <Compile Include="Service\FileService\IFileDialogService.cs" />
+    <Compile Include="Service\FileService\IFileService.cs" />
+    <Compile Include="Service\FileService\IXmlFileService.cs" />
+    <Compile Include="Service\FileService\TxtFileServiceImp.cs" />
+    <Compile Include="Service\FileService\XmlFileServiceImp.cs" />
+    <Compile Include="Service\Resource\ResourceManager.cs" />
+    <Compile Include="Service\ServiceManager.cs" />
+    <Compile Include="Service\ServiceRegistration.cs" />
+    <Compile Include="Service\ThreadService\CustomTaskScheduler.cs" />
+    <Compile Include="Service\ThreadService\ITaskManager.cs" />
+    <Compile Include="Service\ThreadService\TaskManager.cs" />
+    <Compile Include="Service\ThreadService\TaskManagerFactory.cs" />
+    <Compile Include="Service\ThreadService\TaskProxy.cs" />
+    <Compile Include="Service\ThreadService\ThreadManager.cs" />
+    <Compile Include="Utility\JsonNewtonsoft.cs" />
+    <Compile Include="Utility\TranslateHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

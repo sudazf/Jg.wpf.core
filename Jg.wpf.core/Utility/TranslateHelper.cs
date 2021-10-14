@@ -55,7 +55,7 @@ namespace Jg.wpf.core.Utility
 
             if (string.IsNullOrEmpty(CurrentLanguage))
             {
-                var languageName = ResourceManager.GetValue("LanguageSetting", "Language", "English");
+                var languageName = ResourceManager.GetValue("LanguageSettings", "Language", "English");
                 string localeFileFullName = Path.Combine(languagesFolder, $@"{languageName}.xml");
                 if (!File.Exists(localeFileFullName))
                 {

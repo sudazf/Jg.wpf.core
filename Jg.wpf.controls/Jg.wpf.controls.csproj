@@ -67,6 +67,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Custom\Jg.TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Custom\Jg.ToggleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -86,6 +90,7 @@
     <Compile Include="Converter\LocalizationExtension.cs" />
     <Compile Include="Converter\MathConverter.cs" />
     <Compile Include="Customer\LayoutPanel\CustomerLayoutPanel.cs" />
+    <Compile Include="Customer\NumericTextBox\NumericTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

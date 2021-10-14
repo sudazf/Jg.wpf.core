@@ -12,7 +12,7 @@ namespace Jg.wpf.core.Service
         public static void Regist()
         {
             var etc = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "etc");
-            var language = Path.Combine(etc, "etc");
+            var language = Path.Combine(etc, "Language");
 
             if (!Directory.Exists(etc))
             {

@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\CommandBase.cs" />
-    <Compile Include="Log\Logger.cs" />
+    <Compile Include="Logger\Logger.cs" />
     <Compile Include="Notify\ViewModelBase.cs" />
     <Compile Include="Profilers\Dispatcher.cs" />
     <Compile Include="Profilers\MemoryMonitor.cs" />

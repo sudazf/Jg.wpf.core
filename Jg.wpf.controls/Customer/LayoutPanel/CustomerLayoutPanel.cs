@@ -1,0 +1,1359 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+
+
+namespace Jg.wpf.controls.Customer.LayoutPanel
+{
+    public class CustomerLayoutPanel : Panel
+    {
+        private const double NormalScale = 1.0d;
+        private const double DragScaleDefault = 1.0d;
+        private const double NormalOpacity = 1.0d;
+        private const double DragOpacityDefault = 0.6d;
+        private const double OpacityMin = 0.1d;
+        private const Int32 ZIndexIntermediate = 1;
+        private const Int32 ZIndexDrag = 10;
+        private static readonly TimeSpan DefaultAnimationTimeWithoutEasing = TimeSpan.FromMilliseconds(200);
+        private static readonly TimeSpan DefaultAnimationTimeWithEasing = TimeSpan.FromMilliseconds(400);
+        private static readonly TimeSpan FirstTimeAnimationDuration = TimeSpan.FromMilliseconds(50);
+
+
+        #region Fields
+
+        private readonly IList<UIElement> _fluidElements;
+        private int _finalColumns;
+        private int _finalRows;
+        private Size _availableSize;
+
+        private readonly CellsLayoutManager _layoutManager;
+        private Point _dragStartPoint;
+        private Point _lastMovePoint;
+        private UIElement _dragElement;
+        private UIElement _lastDragElement;
+        private Vector _offset;
+
+        private int _dragStartIndex;
+        private int _internalVisibleChildrenCount;
+
+
+        #endregion
+
+        #region Routed Events and Dependency Properties
+
+        /// <summary>
+        /// event when a dragging item dropped
+        /// </summary>
+        public static readonly RoutedEvent ItemDroppedEvent = EventManager.RegisterRoutedEvent("ItemDropped",
+                                                                             RoutingStrategy.Bubble,
+                                                                             typeof(RoutedEventHandler),
+                                                                             typeof(CustomerLayoutPanel));
+        public event RoutedEventHandler ItemDropped
+        {
+            add { AddHandler(ItemDroppedEvent, value); }
+            remove { RemoveHandler(ItemDroppedEvent, value); }
+        }
+
+        #region DragEasing
+
+        /// <summary>
+        /// DragEasing Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty DragEasingProperty =
+            DependencyProperty.Register("DragEasing", typeof(EasingFunctionBase), typeof(CustomerLayoutPanel),
+                new FrameworkPropertyMetadata((new PropertyChangedCallback(OnDragEasingChanged))));
+
+        /// <summary>
+        /// Gets or sets the DragEasing property. This dependency property 
+        /// indicates the Easing function to be used when the user stops dragging the child and releases it.
+        /// </summary>
+        public EasingFunctionBase DragEasing
+        {
+            get { return (EasingFunctionBase)GetValue(DragEasingProperty); }
+            set { SetValue(DragEasingProperty, value); }
+        }
+
+        /// <summary>
+        /// Handles changes to the DragEasing property.
+        /// </summary>
+        /// <param name="d">CustomerLayoutPanel</param>
+        /// <param name="e">DependencyProperty changed event arguments</param>
+        private static void OnDragEasingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CustomerLayoutPanel panel = (CustomerLayoutPanel)d;
+            EasingFunctionBase oldDragEasing = (EasingFunctionBase)e.OldValue;
+            EasingFunctionBase newDragEasing = panel.DragEasing;
+            panel.OnDragEasingChanged(oldDragEasing, newDragEasing);
+        }
+
+        /// <summary>
+        /// Provides derived classes an opportunity to handle changes to the DragEasing property.
+        /// </summary>
+        /// <param name="oldDragEasing">Old Value</param>
+        /// <param name="newDragEasing">New Value</param>
+        protected virtual void OnDragEasingChanged(EasingFunctionBase oldDragEasing, EasingFunctionBase newDragEasing)
+        {
+
+        }
+
+        #endregion
+
+        #region DragOpacity
+
+        /// <summary>
+        /// DragOpacity Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty DragOpacityProperty =
+            DependencyProperty.Register("DragOpacity", typeof(double), typeof(CustomerLayoutPanel),
+                new FrameworkPropertyMetadata(DragOpacityDefault,
+                                              new PropertyChangedCallback(OnDragOpacityChanged),
+                                              new CoerceValueCallback(CoerceDragOpacity)));
+
+        /// <summary>
+        /// Gets or sets the DragOpacity property. This dependency property 
+        /// indicates the opacity of the child being dragged.
+        /// </summary>
+        public double DragOpacity
+        {
+            get { return (double)GetValue(DragOpacityProperty); }
+            set { SetValue(DragOpacityProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Coerces the FluidDrag Opacity to an acceptable value
+        /// </summary>
+        /// <param name="d">Dependency Object</param>
+        /// <param name="value">Value</param>
+        /// <returns>Coerced Value</returns>
+        private static object CoerceDragOpacity(DependencyObject d, object value)
+        {
+            double opacity = (double)value;
+
+            if (opacity < OpacityMin)
+            {
+                opacity = OpacityMin;
+            }
+            else if (opacity > NormalOpacity)
+            {
+                opacity = NormalOpacity;
+            }
+
+            return opacity;
+        }
+
+        /// <summary>
+        /// Handles changes to the DragOpacity property.
+        /// </summary>
+        /// <param name="d">CustomerLayoutPanel</param>
+        /// <param name="e">DependencyProperty changed event arguments</param>
+        private static void OnDragOpacityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CustomerLayoutPanel panel = (CustomerLayoutPanel)d;
+            double oldDragOpacity = (double)e.OldValue;
+            double newDragOpacity = panel.DragOpacity;
+            panel.OnDragOpacityChanged(oldDragOpacity, newDragOpacity);
+        }
+
+        /// <summary>
+        /// Provides derived classes an opportunity to handle changes to the DragOpacity property.
+        /// </summary>
+        /// <param name="oldDragOpacity">Old Value</param>
+        /// <param name="newDragOpacity">New Value</param>
+        protected virtual void OnDragOpacityChanged(double oldDragOpacity, double newDragOpacity)
+        {
+
+        }
+
+        #endregion
+
+        #region DragScale
+
+        /// <summary>
+        /// DragScale Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty DragScaleProperty =
+            DependencyProperty.Register("DragScale", typeof(double), typeof(CustomerLayoutPanel),
+                new FrameworkPropertyMetadata(DragScaleDefault, new PropertyChangedCallback(OnDragScaleChanged)));
+
+        /// <summary>
+        /// Gets or sets the DragScale property. This dependency property 
+        /// indicates the factor by which the child should be scaled when it is dragged.
+        /// </summary>
+        public double DragScale
+        {
+            get { return (double)GetValue(DragScaleProperty); }
+            set { SetValue(DragScaleProperty, value); }
+        }
+
+        /// <summary>
+        /// Handles changes to the DragScale property.
+        /// </summary>
+        /// <param name="d">CustomerLayoutPanel</param>
+        /// <param name="e">DependencyProperty changed event arguments</param>
+        private static void OnDragScaleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CustomerLayoutPanel panel = (CustomerLayoutPanel)d;
+            double oldDragScale = (double)e.OldValue;
+            double newDragScale = panel.DragScale;
+            panel.OnDragScaleChanged(oldDragScale, newDragScale);
+        }
+
+        /// <summary>
+        /// Provides derived classes an opportunity to handle changes to the DragScale property.
+        /// </summary>
+        /// <param name="oldDragScale">Old Value</param>
+        /// <param name="newDragScale">New Value</param>
+        protected virtual void OnDragScaleChanged(double oldDragScale, double newDragScale)
+        {
+
+        }
+
+        #endregion
+
+        #region ElementEasing
+
+        /// <summary>
+        /// ElementEasing Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty ElementEasingProperty =
+            DependencyProperty.Register("ElementEasing", typeof(EasingFunctionBase), typeof(CustomerLayoutPanel),
+                new FrameworkPropertyMetadata((new PropertyChangedCallback(OnElementEasingChanged))));
+
+        /// <summary>
+        /// Gets or sets the ElementEasing property. This dependency property 
+        /// indicates the Easing Function to be used when the elements are rearranged.
+        /// </summary>
+        public EasingFunctionBase ElementEasing
+        {
+            get { return (EasingFunctionBase)GetValue(ElementEasingProperty); }
+            set { SetValue(ElementEasingProperty, value); }
+        }
+
+        /// <summary>
+        /// Handles changes to the ElementEasing property.
+        /// </summary>
+        /// <param name="d">CustomerLayoutPanel</param>
+        /// <param name="e">DependencyProperty changed event arguments</param>
+        private static void OnElementEasingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CustomerLayoutPanel panel = (CustomerLayoutPanel)d;
+            EasingFunctionBase oldElementEasing = (EasingFunctionBase)e.OldValue;
+            EasingFunctionBase newElementEasing = panel.ElementEasing;
+            panel.OnElementEasingChanged(oldElementEasing, newElementEasing);
+        }
+
+        /// <summary>
+        /// Provides derived classes an opportunity to handle changes to the ElementEasing property.
+        /// </summary>
+        /// <param name="oldElementEasing">Old Value</param>
+        /// <param name="newElementEasing">New Value</param>
+        /// 
+        protected virtual void OnElementEasingChanged(EasingFunctionBase oldElementEasing, EasingFunctionBase newElementEasing)
+        {
+
+        }
+
+        #endregion
+
+        #region columns
+
+        /// <summary>
+        /// Columns Property
+        /// </summary>
+        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns", typeof(int), typeof(CustomerLayoutPanel),
+                                                                    new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure |
+                                                                                                     FrameworkPropertyMetadataOptions.AffectsArrange |
+                                                                                                     FrameworkPropertyMetadataOptions.Inherits));
+
+
+        public int Columns
+        {
+            get { return (int)GetValue(ColumnsProperty); }
+            set { SetValue(ColumnsProperty, value); }
+        }
+
+        #endregion
+
+        #region Rows
+
+        /// <summary>
+        /// Rows Property
+        /// </summary>
+        public static readonly DependencyProperty RowsProperty = DependencyProperty.RegisterAttached("Rows", typeof(int), typeof(CustomerLayoutPanel),
+                                                                    new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsMeasure |
+                                                                                                     FrameworkPropertyMetadataOptions.AffectsArrange |
+                                                                                                     FrameworkPropertyMetadataOptions.Inherits));
+
+
+        public int Rows
+        {
+            get { return (int)GetValue(RowsProperty); }
+            set { SetValue(RowsProperty, value); }
+        }
+
+        #endregion
+
+        #region
+
+        public static readonly DependencyProperty FreeItemHeightProperty =
+            DependencyProperty.RegisterAttached("FreeItemHeight", typeof(bool), typeof(CustomerLayoutPanel),
+                new FrameworkPropertyMetadata(true));
+
+        public bool FreeItemHeight
+        {
+            get { return (bool)GetValue(FreeItemHeightProperty); }
+            set { SetValue(FreeItemHeightProperty, value); }
+        }
+
+
+
+
+        public bool FreeItemSize
+        {
+            get { return (bool)GetValue(FreeItemSizeProperty); }
+            set { SetValue(FreeItemSizeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FreeItemSize.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FreeItemSizeProperty =
+            DependencyProperty.Register("FreeItemSize", typeof(bool), typeof(CustomerLayoutPanel), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+
+
+
+
+        public bool ReverseRow
+        {
+            get { return (bool)GetValue(ReverseRowProperty); }
+            set { SetValue(ReverseRowProperty, value); }
+        }
+
+        public static readonly DependencyProperty ReverseRowProperty =
+            DependencyProperty.Register("ReverseRow", typeof(bool), typeof(CustomerLayoutPanel), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange));
+
+
+        public bool AllowPlaceHolder
+        {
+            get { return (bool)GetValue(AllowPlaceHolderProperty); }
+            set { SetValue(AllowPlaceHolderProperty, value); }
+        }
+
+        public static readonly DependencyProperty AllowPlaceHolderProperty =
+            DependencyProperty.RegisterAttached("AllowPlaceHolder", typeof(bool), typeof(CustomerLayoutPanel),
+                new FrameworkPropertyMetadata(true));
+
+        #endregion
+
+        #endregion
+
+        #region Overrides
+
+        /// <summary>
+        /// 1.Calculate cell width, rows by available width, internal children and Columns
+        /// 2.Get desired height as cell height
+        /// </summary>
+        /// <param name="availableSize"></param>
+        /// <returns>Size(cellWith * columns, cellHeight * rows)</returns>
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            UpdateInternalVisibleChildrenCount();
+            if (FreeItemSize)
+            {
+                UpdateComputedValues();
+                _fluidElements.Clear();
+                Size itemAvailableSize = new Size(availableSize.Width / _finalColumns, availableSize.Height / _finalRows);
+                double itemWidth = 0.0;
+                double itemHeight = 0.0;
+                int index = 0;
+                for (int count = InternalChildren.Count; index < count; ++index)
+                {
+                    UIElement child = InternalChildren[index];
+                    child.Measure(itemAvailableSize);
+                    Size desiredSize = child.DesiredSize;
+                    if (itemWidth < desiredSize.Width)
+                        itemWidth = desiredSize.Width;
+                    if (itemHeight < desiredSize.Height)
+                        itemHeight = desiredSize.Height;
+                    _fluidElements.Add(child);
+                }
+                return new Size(itemWidth * _finalColumns, itemHeight * _finalRows);
+            }
+            else
+            {
+                double totalColumnWidth = 0.0;
+                double totalRowHeight = 0.0;
+
+                int childrenCount = _internalVisibleChildrenCount;
+                if (childrenCount > 0)
+                {
+                    _fluidElements.Clear();
+
+                    if (Columns > 0)
+                    {
+                        _finalColumns = Columns;
+                        if (Rows <= 0)
+                        {
+                            _finalRows = childrenCount % Columns == 0
+                                       ? childrenCount / Columns
+                                       : childrenCount / Columns + 1;
+                        }
+                        else
+                        {
+                            _finalRows = Rows;
+                        }
+                    }
+                    else
+                    {
+                        if (Rows > 0)
+                        {
+                            _finalRows = Rows;
+                            _finalColumns = childrenCount % Rows == 0
+                                       ? childrenCount / _finalRows
+                                       : childrenCount / _finalRows + 1;
+                        }
+                    }
+                    double itemWidth = double.IsPositiveInfinity(availableSize.Width) ? double.PositiveInfinity : availableSize.Width / _finalColumns;
+                    double itemHeight = double.IsPositiveInfinity(availableSize.Height) ? double.PositiveInfinity : availableSize.Height / _finalRows;
+
+                    // Iterate through all the UIElements in the Children collection
+                    for (int i = 0; i < childrenCount; i++)
+                    {
+                        UIElement child = InternalChildren[i];
+
+                        if (child != null)
+                        {
+                            Size availableItemSize = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
+                            // Ask the child how much size it needs
+                            child.Measure(availableItemSize);
+
+                            //todo:When the height of item is binding to other control values, the child.Measure return value is incorrect
+                            if (FreeItemHeight)
+                            {
+                                if (itemHeight <= 0 || double.IsPositiveInfinity(itemHeight) || Math.Abs(itemHeight - child.DesiredSize.Height) > 0)
+                                {
+                                    itemHeight = child.DesiredSize.Height;
+                                }
+                                if (itemWidth <= 0 || double.IsPositiveInfinity(itemWidth))
+                                {
+                                    itemWidth = child.DesiredSize.Width;
+                                }
+
+                                itemWidth = this.ActualWidth;
+                                if (child is FrameworkElement listBoxItem)
+                                {
+                                    listBoxItem.Width = itemWidth;
+                                }
+                            }
+                            else
+                            {
+                                if (itemHeight <= 0 || double.IsPositiveInfinity(itemHeight))
+                                {
+                                    itemHeight = child.DesiredSize.Height;
+                                }
+                                if (itemWidth <= 0 || double.IsPositiveInfinity(itemWidth))
+                                {
+                                    itemWidth = child.DesiredSize.Width;
+                                }
+
+                                FrameworkElement listBoxItem = child as FrameworkElement;
+                                if (listBoxItem != null)
+                                {
+                                    listBoxItem.Width = itemWidth;
+                                    listBoxItem.Height = itemHeight;
+                                }
+                            }
+
+                            // Check if the child is already added to the fluidElements collection
+                            if (!_fluidElements.Contains(child))
+                            {
+                                _fluidElements.Add(child);
+                            }
+                        }
+                    }
+
+                    totalColumnWidth = itemWidth * _finalColumns;
+                    totalRowHeight = itemHeight * _finalRows;
+                    if (totalColumnWidth >= 0 && totalRowHeight >= 0)
+                    {
+                        _availableSize = new Size(totalColumnWidth, totalRowHeight);
+                    }
+                }
+
+                return new Size(totalColumnWidth, totalRowHeight);
+            }
+        }
+
+        private void UpdateComputedValues()
+        {
+            int childrenCount = _internalVisibleChildrenCount;
+            if (childrenCount == 0)
+            {
+                childrenCount = 1;
+            }
+
+            if (Columns > 0)
+            {
+                _finalColumns = Columns;
+                if (Rows <= 0)
+                {
+                    _finalRows = (childrenCount + (_finalColumns - 1)) / _finalColumns;
+                }
+                else
+                {
+                    _finalRows = Rows;
+                }
+            }
+            else
+            {
+                if (Rows <= 0)
+                {
+                    _finalRows = (int)Math.Sqrt((double)_finalColumns);
+                    if (_finalRows * _finalRows < _finalColumns)
+                    {
+                        ++_finalRows;
+                    }
+
+                    _finalColumns = _finalRows;
+                }
+                else
+                {
+                    _finalRows = Rows;
+                    _finalColumns = (childrenCount + (_finalRows - 1)) / _finalRows;
+                }
+            }
+        }
+
+        private void UpdateInternalVisibleChildrenCount()
+        {
+            _internalVisibleChildrenCount = 0;
+            if (AllowPlaceHolder)
+            {
+                _internalVisibleChildrenCount = InternalChildren.Count;
+            }
+            else
+            {
+                foreach (var child in InternalChildren)
+                {
+                    if (child is UIElement element && element.Visibility == Visibility.Visible)
+                    {
+                        _internalVisibleChildrenCount++;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Initialize LayoutManager and locate child items
+        /// </summary>
+        /// <param name="finalSize"></param>
+        /// <returns></returns>
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            if (FreeItemSize)
+            {
+                Rect finalRect = new Rect(0.0, 0.0, finalSize.Width / (double)_finalColumns, finalSize.Height / (double)_finalRows);
+
+                if (Children.Count > 0 && _fluidElements.Count > 0)
+                {
+                    // Initialize the LayoutManager
+                    Orientation orientation = Orientation.Horizontal;
+                    if (Rows > 0 && Columns <= 0)
+                    {
+                        orientation = Orientation.Vertical;
+                    }
+
+                    _layoutManager.Initialize(finalSize, _finalColumns, _finalRows, orientation, ReverseRow);
+
+                    // Update the Layout
+                    for (int index = 0; index < _fluidElements.Count; index++)
+                    {
+                        UIElement element = _fluidElements[index];
+                        if (element == null)
+                            continue;
+
+                        // If an child is currently being dragged, then no need to animate it
+                        if (_dragElement != null && index == _fluidElements.IndexOf(_dragElement))
+                            continue;
+
+                        Point pos = _layoutManager.GetPointFromIndex(index);
+                        element.RenderTransform = _layoutManager.CreateTransform(pos.X, pos.Y, 1.0, 1.0);
+                        // Get the cell position of the current index                          
+                        //element.Arrange(new Rect(0, 0, element.DesiredSize.Width, element.DesiredSize.Height));
+                        element.Arrange(finalRect);
+                    }
+                }
+
+            }
+            else
+            {
+                if (Children.Count > 0 && _fluidElements.Count > 0)
+                {
+                    // Initialize the LayoutManager
+                    Orientation orientation = Orientation.Horizontal;
+                    if (Rows > 0 && Columns <= 0)
+                    {
+                        orientation = Orientation.Vertical;
+                    }
+
+                    _layoutManager.Initialize(_availableSize, _finalColumns, _finalRows, orientation, ReverseRow);
+
+                    // Update the Layout
+                    InitializeFluidLayout();
+                }
+            }
+            return finalSize;
+        }
+
+        #endregion
+
+        #region Construction
+
+        public CustomerLayoutPanel()
+        {
+            _fluidElements = new List<UIElement>();
+            _layoutManager = new CellsLayoutManager();
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private void InitializeFluidLayout()
+        {
+            // Iterate through all the fluid elements and animate their
+            // movement to their new location.
+            for (int index = 0; index < _fluidElements.Count; index++)
+            {
+                UIElement element = _fluidElements[index];
+                if (element == null)
+                    continue;
+
+                // If an child is currently being dragged, then no need to animate it
+                if (_dragElement != null && index == _fluidElements.IndexOf(_dragElement))
+                    continue;
+
+                Point pos = _layoutManager.GetPointFromIndex(index);
+                //Logger.WriteLineInfo("Point index:{2} - pos x:{0}, y:{1}", pos.X, pos.Y, index);
+                element.RenderTransform = _layoutManager.CreateTransform(pos.X, pos.Y, 1.0, 1.0);
+                // Get the cell position of the current index                          
+                element.Arrange(new Rect(0, 0, element.DesiredSize.Width, element.DesiredSize.Height));
+            }
+        }
+
+        /// <summary>
+        /// Iterates through all the fluid elements and animate their
+        /// movement to their new location.
+        /// </summary>
+        private void UpdateFluidLayout()
+        {
+            // Iterate through all the fluid elements and animate their
+            // movement to their new location.
+            for (int index = 0; index < _fluidElements.Count; index++)
+            {
+                UIElement element = _fluidElements[index];
+                if (element == null)
+                    continue;
+
+                // If an child is currently being dragged, then no need to animate it
+                if (_dragElement != null && index == _fluidElements.IndexOf(_dragElement))
+                    continue;
+
+                if (FreeItemSize)
+                {
+                    element.Arrange(new Rect(0, 0, _layoutManager.CellSize.Width, _layoutManager.CellSize.Height));
+                }
+                else
+                {
+                    element.Arrange(new Rect(0, 0, element.DesiredSize.Width, element.DesiredSize.Height));
+                }
+                //
+
+                // Get the cell position of the current index
+                Point pos = _layoutManager.GetPointFromIndex(index);
+
+                Storyboard transition;
+                // Is the child being animated the same as the child which was last dragged?
+                if (element == _lastDragElement)
+                {
+                    // Is easing function specified for the animation?
+                    TimeSpan duration = (DragEasing != null) ? DefaultAnimationTimeWithEasing : DefaultAnimationTimeWithoutEasing;
+                    // Create the Storyboard for the transition
+                    transition = _layoutManager.CreateTransition(element, pos, duration, DragEasing);
+
+                    // When the user releases the drag child, it's Z-Index is set to 1 so that 
+                    // during the animation it does not go below other elements.
+                    // After the animation has completed set its Z-Index to 0
+                    transition.Completed += (s, e) =>
+                    {
+                        if (_lastDragElement != null)
+                        {
+                            _lastDragElement.SetValue(ZIndexProperty, 0);
+                            _lastDragElement = null;
+                        }
+                    };
+                }
+                else // It is a non-dragElement
+                {
+                    // Is easing function specified for the animation?
+                    TimeSpan duration = (ElementEasing != null) ? DefaultAnimationTimeWithEasing : DefaultAnimationTimeWithoutEasing;
+                    // Create the Storyboard for the transition
+                    transition = _layoutManager.CreateTransition(element, pos, duration, ElementEasing);
+                }
+
+                // Start the animation                
+                transition.Begin();
+            }
+        }
+
+        /// <summary>
+        /// Moves the dragElement to the new Index
+        /// </summary>
+        /// <param name="newIndex">Index of the new location</param>
+        /// <returns>True-if dragElement was moved otherwise False</returns>
+        private bool UpdateDragElementIndex(int newIndex)
+        {
+            // Check if the dragElement is being moved to its current place
+            // If yes, then no need to proceed further. (Improves efficiency!)
+            int dragCellIndex = _fluidElements.IndexOf(_dragElement);
+            if (dragCellIndex == newIndex)
+                return false;
+
+            _fluidElements.RemoveAt(dragCellIndex);
+            _fluidElements.Insert(newIndex, _dragElement);
+
+            return true;
+        }
+
+        #endregion
+
+        #region Drag drop methods
+
+        /// <summary>
+        /// Handler for the event when the user starts dragging the dragElement.
+        /// </summary>
+        /// <param name="child">UIElement being dragged</param>
+        /// <param name="position">Position in the child where the user clicked</param>
+        public void BeginDrag(UIElement child, Point position)
+        {
+            if (child == null)
+            {
+                return;
+            }
+
+            var element = child as FrameworkElement;
+            if (element != null)
+            {
+                _offset = VisualTreeHelper.GetOffset(element);
+            }
+
+            // Call the event handler core on the Dispatcher. (Improves efficiency!)
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                child.Opacity = DragOpacity;
+                child.SetValue(ZIndexProperty, ZIndexDrag);
+                // Capture further mouse events
+                child.CaptureMouse();
+                _dragElement = child;
+                _lastDragElement = null;
+
+                // Since we are scaling the dragElement by DragScale, the clickPoint also shifts
+                _dragStartPoint = new Point(position.X * DragScale, position.Y * DragScale);
+                _dragStartIndex = _fluidElements.IndexOf(child);
+            }));
+        }
+
+        /// <summary>
+        /// Handler for the event when the user drags the dragElement.
+        /// </summary>
+        /// <param name="child">UIElement being dragged</param>
+        /// <param name="position">Position where the user clicked w.r.t. the UIElement being dragged</param>
+        /// <param name="positionInParent">Position where the user clicked w.r.t. the CustomerLayoutPanel (the parentFWPanel of the UIElement being dragged</param>
+        public void DragMove(UIElement child, Point position, Point positionInParent, ItemsControl associatedObject)
+        {
+            if (child == null || positionInParent == _lastMovePoint)
+            {
+                return;
+            }
+
+            // Call the event handler core on the Dispatcher. (Improves efficiency!)
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                double transX = 0d;
+                double transY = 0d;
+
+                switch (DragOrientation)
+                {
+                    case DragOrientation.Horizontal:
+                        transX = positionInParent.X - _dragStartPoint.X - _offset.X;
+                        break;
+                    case DragOrientation.Vertical:
+                        transY = positionInParent.Y - _dragStartPoint.Y - _offset.Y;
+                        break;
+                    case DragOrientation.All:
+                        transX = positionInParent.X - _dragStartPoint.X - _offset.X;
+                        transY = positionInParent.Y - _dragStartPoint.Y - _offset.Y;
+                        break;
+                }
+
+                if ((_dragElement != null) && (_layoutManager != null))
+                {
+
+                    _dragElement.RenderTransform = _layoutManager.CreateTransform(transX, transY, DragScale, DragScale);
+
+                    // Get the index in the fluidElements list corresponding to the current mouse location
+                    Point currentPt = positionInParent;
+                    int index = _layoutManager.GetIndexFromPoint(currentPt);
+
+                    // If no valid cell index is obtained, add the child to the end of the 
+                    // fluidElements list.
+                    if ((index == -1) || (index >= _fluidElements.Count))
+                    {
+                        index = _fluidElements.Count - 1;
+                    }
+                    if (associatedObject is ListBox listBox)
+                    {
+                        if (index > 1 && index < listBox.Items.Count - 1)
+                        {
+                            listBox.ScrollIntoView(listBox.Items[index]);
+                        }
+                    }
+                    if (associatedObject is DataGrid grid)
+                    {
+                        if (index > 1 && index < grid.Items.Count - 1)
+                        {
+                            grid.ScrollIntoView(grid.Items[index]);
+                        }
+                    }
+                    // If the dragElement is moved to a new location, then only
+                    // call the updation of the layout.
+                    if (UpdateDragElementIndex(index))
+                    {
+                        UpdateFluidLayout();
+                    }
+                    _lastMovePoint = positionInParent;
+                }
+            }));
+        }
+
+        /// <summary>
+        /// Handler for the event when the user stops dragging the dragElement and releases it.
+        /// </summary>
+        /// <param name="child">UIElement being dragged</param>
+        /// <param name="position">Position where the user clicked w.r.t. the UIElement being dragged</param>
+        /// <param name="positionInParent">Position where the user clicked w.r.t. the CustomerLayoutPanel (the parentFWPanel of the UIElement being dragged</param>
+        public void EndDrag(UIElement child, Point position, Point positionInParent)
+        {
+            if (child == null)
+                return;
+
+            // Call the event handler core on the Dispatcher. (Improves efficiency!)
+            Dispatcher.Invoke(new Action(() =>
+            {
+                double transX = 0d;
+                double transY = 0d;
+
+                switch (DragOrientation)
+                {
+                    case DragOrientation.Horizontal:
+                        transX = positionInParent.X - _dragStartPoint.X - _offset.X;
+                        break;
+                    case DragOrientation.Vertical:
+                        transY = positionInParent.Y - _dragStartPoint.Y - _offset.Y;
+                        break;
+                    case DragOrientation.All:
+                        transX = positionInParent.X - _dragStartPoint.X - _offset.X;
+                        transY = positionInParent.Y - _dragStartPoint.Y - _offset.Y;
+                        break;
+                }
+
+                if ((_dragElement != null) && (_layoutManager != null))
+                {
+                    _dragElement.RenderTransform = _layoutManager.CreateTransform(transX, transY, DragScale, DragScale);
+
+                    child.Opacity = NormalOpacity;
+                    // Z-Index is set to 1 so that during the animation it does not go below other elements.
+                    child.SetValue(ZIndexProperty, ZIndexIntermediate);
+                    // Release the mouse capture
+                    child.ReleaseMouseCapture();
+
+                    // Reference used to set the Z-Index to 0 during the UpdateFluidLayout
+                    _lastDragElement = _dragElement;
+
+                    _dragElement = null;
+                    UpdateFluidLayout();
+
+                    RaiseItemDroppedEvent(_dragStartIndex, _fluidElements.IndexOf(_lastDragElement), ((FrameworkElement)_lastDragElement).DataContext); //Rasie drop event                    
+                }
+            }));
+        }
+
+        private void RaiseItemDroppedEvent(int previousIndex, int currentIndex, object dataContext)
+        {
+            RoutedEventArgs newEventArgs = new ItemDroppedEventArgs(ItemDroppedEvent, previousIndex, currentIndex, dataContext);
+            RaiseEvent(newEventArgs);
+        }
+
+        #endregion
+
+        #region layout manager
+
+        /// <summary>
+        /// Manager cellls' positions
+        /// </summary>
+        private sealed class CellsLayoutManager
+        {
+            #region Fields
+
+            private Size _panelSize;
+            private Size _cellSize;
+            private Orientation _panelOrientation;
+            private int _cellsPerLine;
+            private bool _reverseRow;
+            private int _finalRows;
+            public Size CellSize
+            {
+                get { return _cellSize; }
+            }
+            #endregion
+
+            #region Methods
+
+            /// <summary>
+            /// Initializes properties
+            /// </summary>
+            /// <param name="panelSize">With and height of Panel</param>       
+            /// <param name="columns">Width of each child in the Panel</param>
+            /// <param name="rows">Height of each child in the Panel</param>
+            /// <param name="orientation">Orientation of the panel - Horizontal or Vertical
+            /// Horizontal - cells number of one row is fixed
+            /// Verical - cells number of on column is fixed
+            /// </param>        
+            internal void Initialize(Size panelSize, int columns, int rows, Orientation orientation, bool reverseRow)
+            {
+                if ((panelSize.Width <= 0.0d) || (panelSize.Height <= 0.0d))
+                {
+                    _cellsPerLine = 0;
+                    return;
+                }
+
+                //fixed Bug 7382 - REV.1.6.1(KB4 pre) [Map]The number of Map is incorrect on the left.
+                //Always update cell size ,while PanelSize not change but columns/rows count changed.
+                _panelSize = panelSize;
+                _cellSize = new Size(panelSize.Width / columns, panelSize.Height / rows);
+                _panelOrientation = orientation;
+
+                _cellsPerLine = orientation == Orientation.Horizontal ? columns : rows;
+                _reverseRow = reverseRow;
+                _finalRows = rows;
+            }
+
+            /// <summary>
+            /// Provides the index of the child (in the CustomerLayoutPanel's children) from the given row and column
+            /// </summary>
+            /// <param name="row">Row</param>
+            /// <param name="column">Column</param>
+            /// <returns>Index</returns>
+            private int GetIndexFromCell(int row, int column)
+            {
+                int result = -1;
+
+                if ((row >= 0) && (column >= 0))
+                {
+                    switch (_panelOrientation)
+                    {
+                        case Orientation.Horizontal:
+                            result = (_cellsPerLine * row) + column;
+                            break;
+                        case Orientation.Vertical:
+                            result = (_cellsPerLine * column) + row;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Provides the index of the child (in the CustomerLayoutPanel's children) from the given point
+            /// </summary>
+            /// <param name="p"></param>
+            /// <returns></returns>
+            internal int GetIndexFromPoint(Point p)
+            {
+                int result = -1;
+                if ((p.X > 0.00D) &&
+                    (p.X < _panelSize.Width) &&
+                    (p.Y > 0.00D) &&
+                    (p.Y < _panelSize.Height))
+                {
+                    int row;
+                    int column;
+
+                    GetCellFromPoint(p, out row, out column);
+                    result = GetIndexFromCell(row, column);
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Provides the row and column of the child based on its index in the CustomerLayoutPanel.Children
+            /// </summary>
+            /// <param name="index">Index</param>
+            /// <param name="row">Row</param>
+            /// <param name="column">Column</param>
+            private void GetCellFromIndex(int index, out int row, out int column)
+            {
+                row = column = -1;
+
+                if (index >= 0)
+                {
+                    switch (_panelOrientation)
+                    {
+                        case Orientation.Horizontal:
+                            row = (int)(index / (double)_cellsPerLine);
+                            column = (int)(index % (double)_cellsPerLine);
+                            if (_reverseRow)
+                            {
+                                row = (_finalRows - 1) - row;
+                            }
+                            break;
+                        case Orientation.Vertical:
+                            column = (int)(index / (double)_cellsPerLine);
+                            row = (int)(index % (double)_cellsPerLine);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Provides the row and column of the child based on its location in the CustomerLayoutPanel
+            /// </summary>
+            /// <param name="p">Location of the child in the parent</param>
+            /// <param name="row">Row</param>
+            /// <param name="column">Column</param>
+            private void GetCellFromPoint(Point p, out int row, out int column)
+            {
+                row = column = -1;
+
+                if ((p.X < 0.00D) ||
+                    (p.X > _panelSize.Width) ||
+                    (p.Y < 0.00D) ||
+                    (p.Y > _panelSize.Height))
+                {
+                    return;
+                }
+
+                row = (int)(p.Y / _cellSize.Height);
+                column = (int)(p.X / _cellSize.Width);
+                if (_panelOrientation == Orientation.Horizontal && _reverseRow)
+                {
+                    row = (_finalRows - 1) - row;
+                }
+            }
+
+            /// <summary>
+            /// Provides the location of the child in the CustomerLayoutPanel based on the given row and column
+            /// </summary>
+            /// <param name="row">Row</param>
+            /// <param name="column">Column</param>
+            /// <returns>Location of the child in the panel</returns>
+            private Point GetPointFromCell(int row, int column)
+            {
+                Point result = new Point();
+
+                if ((row >= 0) && (column >= 0))
+                {
+                    result = new Point(_cellSize.Width * column, _cellSize.Height * row);
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Provides the location of the child in the CustomerLayoutPanel based on the given row and column
+            /// </summary>
+            /// <param name="index">Index</param>
+            /// <returns>Location of the child in the panel</returns>
+            internal Point GetPointFromIndex(int index)
+            {
+                Point result = new Point();
+
+                if (index >= 0)
+                {
+                    int row;
+                    int column;
+
+                    GetCellFromIndex(index, out row, out column);
+                    result = GetPointFromCell(row, column);
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Creates a TransformGroup based on the given Translation, Scale and Rotation
+            /// </summary>
+            /// <param name="transX">Translation in the X-axis</param>
+            /// <param name="transY">Translation in the Y-axis</param>
+            /// <param name="scaleX">Scale factor in the X-axis</param>
+            /// <param name="scaleY">Scale factor in the Y-axis</param>
+            /// <param name="rotAngle">Rotation</param>
+            /// <returns>TransformGroup</returns>
+            internal TransformGroup CreateTransform(double transX, double transY, double scaleX, double scaleY, double rotAngle = 0.0D)
+            {
+                TranslateTransform translation = new TranslateTransform();
+                translation.X = transX;
+                translation.Y = transY;
+
+                ScaleTransform scale = new ScaleTransform();
+                scale.ScaleX = scaleX;
+                scale.ScaleY = scaleY;
+
+                //RotateTransform rotation = new RotateTransform();
+                //rotation.Angle = rotAngle;
+
+                TransformGroup transform = new TransformGroup();
+                // THE ORDER OF TRANSFORM IS IMPORTANT
+                // First, scale, then rotate and finally translate
+                transform.Children.Add(scale);
+                //transform.Children.Add(rotation);
+                transform.Children.Add(translation);
+
+                return transform;
+            }
+
+            /// <summary>
+            /// Creates the storyboard for animating a child from its old location to the new location.
+            /// The Translation and Scale properties are animated.
+            /// </summary>
+            /// <param name="element">UIElement for which the storyboard has to be created</param>
+            /// <param name="newLocation">New location of the UIElement</param>
+            /// <param name="period">Duration of animation</param>
+            /// <param name="easing">Easing function</param>
+            /// <returns>Storyboard</returns>
+            internal Storyboard CreateTransition(UIElement element, Point newLocation, TimeSpan period, EasingFunctionBase easing)
+            {
+                Duration duration = new Duration(period);
+
+                // Animate X
+                DoubleAnimation translateAnimationX = new DoubleAnimation();
+                translateAnimationX.To = newLocation.X;
+                translateAnimationX.Duration = duration;
+                if (easing != null)
+                    translateAnimationX.EasingFunction = easing;
+
+                Storyboard.SetTarget(translateAnimationX, element);
+                Storyboard.SetTargetProperty(translateAnimationX,
+                    new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"));
+
+                // Animate Y
+                DoubleAnimation translateAnimationY = new DoubleAnimation();
+                translateAnimationY.To = newLocation.Y;
+                translateAnimationY.Duration = duration;
+                if (easing != null)
+                    translateAnimationY.EasingFunction = easing;
+
+                Storyboard.SetTarget(translateAnimationY, element);
+                Storyboard.SetTargetProperty(translateAnimationY,
+                    new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.Y)"));
+
+                // Animate ScaleX
+                DoubleAnimation scaleAnimationX = new DoubleAnimation();
+                scaleAnimationX.To = 1.0D;
+                scaleAnimationX.Duration = duration;
+                if (easing != null)
+                    scaleAnimationX.EasingFunction = easing;
+
+                Storyboard.SetTarget(scaleAnimationX, element);
+                Storyboard.SetTargetProperty(scaleAnimationX,
+                    new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"));
+
+                // Animate ScaleY
+                DoubleAnimation scaleAnimationY = new DoubleAnimation();
+                scaleAnimationY.To = 1.0D;
+                scaleAnimationY.Duration = duration;
+                if (easing != null)
+                    scaleAnimationY.EasingFunction = easing;
+
+                Storyboard.SetTarget(scaleAnimationY, element);
+                Storyboard.SetTargetProperty(scaleAnimationY,
+                    new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"));
+
+                Storyboard sb = new Storyboard();
+                sb.Duration = duration;
+                sb.Children.Add(translateAnimationX);
+                sb.Children.Add(translateAnimationY);
+                sb.Children.Add(scaleAnimationX);
+                sb.Children.Add(scaleAnimationY);
+
+                return sb;
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+
+        #region Customer
+
+        /// <summary>
+        /// Show the mode button (should used with <see cref="ItemControlDragBehavior"/>)
+        /// </summary>
+        public bool ShowModeButton
+        {
+            get => (bool)GetValue(ShowModeButtonProperty);
+            set => SetValue(ShowModeButtonProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowModeButtonProperty =
+            DependencyProperty.Register("ShowModeButton", typeof(bool), typeof(CustomerLayoutPanel), new PropertyMetadata(false));
+
+
+        public DragOrientation DragOrientation
+        {
+            get => (DragOrientation)GetValue(DragOrientationProperty);
+            set => SetValue(DragOrientationProperty, value);
+        }
+
+        public static readonly DependencyProperty DragOrientationProperty =
+            DependencyProperty.Register("DragOrientation", typeof(DragOrientation), typeof(CustomerLayoutPanel), new PropertyMetadata(DragOrientation.All));
+
+
+
+        #endregion
+
+    }
+
+    public class CustomPanelAdorner : System.Windows.Documents.Adorner
+    {
+        private VisualCollection _visualCollection;
+        private ToggleButton _btn;
+        private Canvas _canvas;
+
+        public EventHandler OnDragModeStart;
+
+        public CustomPanelAdorner(UIElement adornedElement) : base(adornedElement)
+        {
+            _visualCollection = new VisualCollection(this);
+
+            _btn = new ToggleButton();
+            Style btnStyle = (Style)FindResource("DragModeButton.ToggleButton.Style");
+            _btn.SetValue(StyleProperty, btnStyle);
+
+            _btn.Click += _btn_Click;
+
+            _canvas = new Canvas();
+            _canvas.Children.Add(_btn);
+            _visualCollection.Add(_canvas);
+        }
+
+
+        private void _btn_Click(object sender, RoutedEventArgs e)
+        {
+            OnDragModeStart?.Invoke(null, EventArgs.Empty);
+        }
+
+        protected override int VisualChildrenCount
+        {
+            get
+            {
+                return _visualCollection.Count;
+            }
+        }
+
+        protected override Visual GetVisualChild(int index)
+        {
+            return _visualCollection[index];
+        }
+
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            _canvas.Arrange(new Rect(finalSize));
+
+            var margin = new Thickness(finalSize.Width - _btn.ActualWidth - 30, finalSize.Height - _btn.ActualHeight - 30, 0, 0);
+            _btn.Margin = margin;
+
+            return base.ArrangeOverride(finalSize);
+        }
+    }
+
+    public class ItemDroppedEventArgs : RoutedEventArgs, IItemDroppedEventArgs
+    {
+        public int PreviousIndex { get; private set; }
+
+        public int CurrentIndex { get; private set; }
+        public object DataContext { get; set; }
+
+        public ItemDroppedEventArgs(RoutedEvent routedEvent, int previousIndex, int currentIndex, object dataContext)
+            : base(routedEvent)
+        {
+            PreviousIndex = previousIndex;
+            CurrentIndex = currentIndex;
+            DataContext = dataContext;
+        }
+
+        public object GetSourceDataContext()
+        {
+            if (Source is FrameworkElement frameworkElement)
+            {
+                return frameworkElement.DataContext;
+            }
+            return null;
+        }
+
+        public object GetOriginalSourceDataContext()
+        {
+            if (OriginalSource is FrameworkElement frameworkElement)
+            {
+                return frameworkElement.DataContext;
+            }
+
+            return null;
+        }
+
+    }
+
+    public enum DragOrientation
+    {
+        Horizontal,
+        Vertical,
+        All
+    }
+
+    public interface IRoutedEventArgs
+    {
+        object Source { get; }
+
+        object OriginalSource { get; }
+
+        object GetSourceDataContext();
+
+        object GetOriginalSourceDataContext();
+    }
+
+    public interface IItemDroppedEventArgs : IRoutedEventArgs
+    {
+        /// <summary>
+        /// Index of dragged item
+        /// </summary>
+        int PreviousIndex { get; }
+
+        /// <summary>
+        /// new index when dragging item dropped
+        /// </summary>
+        int CurrentIndex { get; }
+
+        object DataContext { get; set; }
+    }
+}

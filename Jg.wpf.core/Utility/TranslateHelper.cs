@@ -38,8 +38,12 @@ namespace Jg.wpf.core.Utility
             };
         }
 
-        public static void Initialize()
+        public static void Initialize(string languagesFolder)
         {
+            if (!Directory.Exists(languagesFolder))
+            {
+                return;
+            }
             //initial nlsMapping
             Dictionary<string, string> nlsMapping = new Dictionary<string, string>(DefaultNlS);
 
@@ -51,8 +55,7 @@ namespace Jg.wpf.core.Utility
 
             if (string.IsNullOrEmpty(CurrentLanguage))
             {
-                string languagesFolder = "..\\etc\\Language";
-                var languageName = ResourceManager.GetValue("LanguageSection", "Language", "English");
+                var languageName = ResourceManager.GetValue("LanguageSetting", "Language", "English");
                 string localeFileFullName = Path.Combine(languagesFolder, $@"{languageName}.xml");
                 if (!File.Exists(localeFileFullName))
                 {

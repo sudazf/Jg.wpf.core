@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+
+        <!-- MaterialDesign -->
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+
+        <!-- Custom -->
+        <ResourceDictionary Source="Custom/Jg.TextBlock.xaml" />
+        <ResourceDictionary Source="Custom/Jg.ItemControl.xaml" />
+        <ResourceDictionary Source="Custom/Jg.CustomerLayoutPanel.xaml" />
+        <ResourceDictionary Source="Custom/Jg.ToggleButton.xaml" />
+        
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

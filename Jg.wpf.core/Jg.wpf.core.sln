@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jg.wpf.core", "Jg.wpf.core.csproj", "{AE32AA46-4536-4BE7-9589-1CF857821759}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jg.wpf.controls", "..\Jg.wpf.controls\Jg.wpf.controls.csproj", "{8133D388-288A-4876-BDD5-56A8E7E34836}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jg.wpf.app", "..\Jg.wpf.app\Jg.wpf.app.csproj", "{2C77207B-8AA0-476D-BCAE-C4959AD5F8A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AE32AA46-4536-4BE7-9589-1CF857821759}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE32AA46-4536-4BE7-9589-1CF857821759}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE32AA46-4536-4BE7-9589-1CF857821759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8133D388-288A-4876-BDD5-56A8E7E34836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8133D388-288A-4876-BDD5-56A8E7E34836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8133D388-288A-4876-BDD5-56A8E7E34836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8133D388-288A-4876-BDD5-56A8E7E34836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C77207B-8AA0-476D-BCAE-C4959AD5F8A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C77207B-8AA0-476D-BCAE-C4959AD5F8A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C77207B-8AA0-476D-BCAE-C4959AD5F8A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C77207B-8AA0-476D-BCAE-C4959AD5F8A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

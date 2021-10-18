@@ -10,11 +10,17 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style
-        x:Key="Setting.TextBox.Style"
+        x:Key="Numeric.TextBox.Style"
         BasedOn="{StaticResource MaterialDesignTextBox}"
         TargetType="{x:Type numericTextBox:NumericTextBox}">
         <Setter Property="InputMethod.IsInputMethodEnabled" Value="False" />
         <Setter Property="materialDesign:TextFieldAssist.SuffixText" Value="{Binding Unit, RelativeSource={RelativeSource Mode=Self}}" />
+    </Style>
+
+    <Style
+        x:Key="Normal.TextBox.Style"
+        BasedOn="{StaticResource MaterialDesignTextBox}"
+        TargetType="{x:Type TextBox}">
     </Style>
 
 </ResourceDictionary>

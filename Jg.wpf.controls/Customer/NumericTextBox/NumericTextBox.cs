@@ -62,8 +62,14 @@ namespace Jg.wpf.controls.Customer.NumericTextBox
         {
             UpdateRegex();
             PreviewTextInput += OnPreviewTextInput;
+            GotFocus += OnCustomGotFocus;
             LostFocus += OnCustomLostFocus;
             DataObject.AddPastingHandler(this, PasteHandle);
+        }
+
+        private void OnCustomGotFocus(object sender, RoutedEventArgs e)
+        {
+            this.SelectAll();
         }
 
         private void OnCustomLostFocus(object sender, RoutedEventArgs e)

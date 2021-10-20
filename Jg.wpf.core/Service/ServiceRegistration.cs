@@ -3,6 +3,7 @@ using System.IO;
 using Jg.wpf.core.Log;
 using Jg.wpf.core.Service.FileService;
 using Jg.wpf.core.Service.Resource;
+using Jg.wpf.core.Service.ThemeService;
 using Jg.wpf.core.Utility;
 
 namespace Jg.wpf.core.Service
@@ -26,6 +27,7 @@ namespace Jg.wpf.core.Service
             ServiceManager.RegisterService("FileDialogService", new FileDialogServiceImp());
             ServiceManager.RegisterService("XmlFileService", new XmlFileServiceImp());
             ServiceManager.RegisterService("TxtFileService", new TxtFileServiceImp());
+            ServiceManager.RegisterService("ThemeService", new ThemeServiceImp());
         }
     }
 }

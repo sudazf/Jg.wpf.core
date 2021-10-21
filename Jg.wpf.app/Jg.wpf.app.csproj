@@ -105,4 +105,8 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)..\Libs\MaterialDesign\*.dll" "$(TargetDir)" /S /Y
+rd /s /q "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

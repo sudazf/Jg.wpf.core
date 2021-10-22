@@ -52,6 +52,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\CommandBase.cs" />
@@ -74,6 +75,8 @@
     <Compile Include="Service\ThemeService\IThemeService.cs" />
     <Compile Include="Service\ThemeService\ThemeServiceImp.cs" />
     <Compile Include="Service\ThreadService\CustomTaskScheduler.cs" />
+    <Compile Include="Service\ThreadService\DispatcherHelper.cs" />
+    <Compile Include="Service\ThreadService\DispatcherServiceImp.cs" />
     <Compile Include="Service\ThreadService\ITaskManager.cs" />
     <Compile Include="Service\ThreadService\TaskManager.cs" />
     <Compile Include="Service\ThreadService\TaskManagerFactory.cs" />

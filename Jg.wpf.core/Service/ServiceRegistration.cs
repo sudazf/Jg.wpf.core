@@ -1,16 +1,22 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Threading;
 using Jg.wpf.core.Log;
 using Jg.wpf.core.Service.FileService;
 using Jg.wpf.core.Service.Resource;
 using Jg.wpf.core.Service.ThemeService;
+using Jg.wpf.core.Service.ThreadService;
 using Jg.wpf.core.Utility;
 
 namespace Jg.wpf.core.Service
 {
-    public static class ServiceRegistration
+    public static class BaseService
     {
-        public static void Regist()
+        /// <summary>
+        /// 注册基础 Service
+        /// </summary>
+        /// <param name="dispatcher">当前程序 Dispatcher</param>
+        public static void Register(Dispatcher dispatcher)
         {
             var etc = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "etc");
             var language = Path.Combine(etc, "Language");
@@ -24,6 +30,7 @@ namespace Jg.wpf.core.Service
             Logger.Initialize();
             TranslateHelper.Initialize(language);
 
+            ServiceManager.RegisterService("DispatcherService", new DispatcherServiceImp(dispatcher));
             ServiceManager.RegisterService("FileDialogService", new FileDialogServiceImp());
             ServiceManager.RegisterService("XmlFileService", new XmlFileServiceImp());
             ServiceManager.RegisterService("TxtFileService", new TxtFileServiceImp());

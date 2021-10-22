@@ -10,7 +10,7 @@ namespace Jg.wpf.app
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            ServiceRegistration.Regist();
+            BaseService.Register(Current.Dispatcher);
         }
     }
 }

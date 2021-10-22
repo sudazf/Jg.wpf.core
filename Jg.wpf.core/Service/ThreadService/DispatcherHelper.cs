@@ -1,6 +1,6 @@
 ﻿using System.Windows.Threading;
 
-namespace Jg.wpf.controls.Utility
+namespace Jg.wpf.core.Service.ThreadService
 {
     public static class DispatcherHelper
     {

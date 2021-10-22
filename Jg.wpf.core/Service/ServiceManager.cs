@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using Jg.wpf.core.Profilers;
 
 namespace Jg.wpf.core.Service
 {
     public static class ServiceManager
     {
-
         private static readonly INamedServiceManager NamedServiceManagerImp = new NamedServiceManagerImp();
         public static IDispatcher MainDispatcher => ServiceManager.GetService<IDispatcher>();
 
@@ -31,6 +31,10 @@ namespace Jg.wpf.core.Service
             return NamedServiceManagerImp.GetService<T>();
         }
 
+        public static void Init(Dispatcher dispatcher)
+        {
+            BaseService.Register(dispatcher);
+        }
     }
 
     internal interface INamedServiceManager

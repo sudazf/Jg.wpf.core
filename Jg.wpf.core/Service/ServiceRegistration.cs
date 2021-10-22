@@ -10,7 +10,7 @@ using Jg.wpf.core.Utility;
 
 namespace Jg.wpf.core.Service
 {
-    public static class BaseService
+    internal static class BaseService
     {
         /// <summary>
         /// 注册基础 Service

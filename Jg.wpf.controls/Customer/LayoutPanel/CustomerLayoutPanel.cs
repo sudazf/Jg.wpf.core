@@ -11,19 +11,14 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 {
     public class CustomerLayoutPanel : Panel
     {
-        private const double NormalScale = 1.0d;
         private const double DragScaleDefault = 1.0d;
         private const double NormalOpacity = 1.0d;
         private const double DragOpacityDefault = 0.6d;
         private const double OpacityMin = 0.1d;
-        private const Int32 ZIndexIntermediate = 1;
-        private const Int32 ZIndexDrag = 10;
+        private const int ZIndexIntermediate = 1;
+        private const int ZIndexDrag = 10;
         private static readonly TimeSpan DefaultAnimationTimeWithoutEasing = TimeSpan.FromMilliseconds(200);
         private static readonly TimeSpan DefaultAnimationTimeWithEasing = TimeSpan.FromMilliseconds(400);
-        private static readonly TimeSpan FirstTimeAnimationDuration = TimeSpan.FromMilliseconds(50);
-
-
-        #region Fields
 
         private readonly IList<UIElement> _fluidElements;
         private int _finalColumns;
@@ -36,12 +31,9 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         private UIElement _dragElement;
         private UIElement _lastDragElement;
         private Vector _offset;
-
         private int _dragStartIndex;
         private int _internalVisibleChildrenCount;
 
-
-        #endregion
 
         #region Routed Events and Dependency Properties
 
@@ -54,8 +46,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                                                                              typeof(CustomerLayoutPanel));
         public event RoutedEventHandler ItemDropped
         {
-            add { AddHandler(ItemDroppedEvent, value); }
-            remove { RemoveHandler(ItemDroppedEvent, value); }
+            add => AddHandler(ItemDroppedEvent, value);
+            remove => RemoveHandler(ItemDroppedEvent, value);
         }
 
         #region DragEasing
@@ -65,7 +57,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// </summary>
         public static readonly DependencyProperty DragEasingProperty =
             DependencyProperty.Register("DragEasing", typeof(EasingFunctionBase), typeof(CustomerLayoutPanel),
-                new FrameworkPropertyMetadata((new PropertyChangedCallback(OnDragEasingChanged))));
+                new FrameworkPropertyMetadata((OnDragEasingChanged)));
 
         /// <summary>
         /// Gets or sets the DragEasing property. This dependency property 
@@ -73,8 +65,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// </summary>
         public EasingFunctionBase DragEasing
         {
-            get { return (EasingFunctionBase)GetValue(DragEasingProperty); }
-            set { SetValue(DragEasingProperty, value); }
+            get => (EasingFunctionBase)GetValue(DragEasingProperty);
+            set => SetValue(DragEasingProperty, value);
         }
 
         /// <summary>
@@ -84,9 +76,9 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// <param name="e">DependencyProperty changed event arguments</param>
         private static void OnDragEasingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CustomerLayoutPanel panel = (CustomerLayoutPanel)d;
-            EasingFunctionBase oldDragEasing = (EasingFunctionBase)e.OldValue;
-            EasingFunctionBase newDragEasing = panel.DragEasing;
+            var panel = (CustomerLayoutPanel)d;
+            var oldDragEasing = (EasingFunctionBase)e.OldValue;
+            var newDragEasing = panel.DragEasing;
             panel.OnDragEasingChanged(oldDragEasing, newDragEasing);
         }
 
@@ -110,8 +102,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         public static readonly DependencyProperty DragOpacityProperty =
             DependencyProperty.Register("DragOpacity", typeof(double), typeof(CustomerLayoutPanel),
                 new FrameworkPropertyMetadata(DragOpacityDefault,
-                                              new PropertyChangedCallback(OnDragOpacityChanged),
-                                              new CoerceValueCallback(CoerceDragOpacity)));
+                                              OnDragOpacityChanged,
+                                              CoerceDragOpacity));
 
         /// <summary>
         /// Gets or sets the DragOpacity property. This dependency property 
@@ -153,9 +145,9 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// <param name="e">DependencyProperty changed event arguments</param>
         private static void OnDragOpacityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CustomerLayoutPanel panel = (CustomerLayoutPanel)d;
-            double oldDragOpacity = (double)e.OldValue;
-            double newDragOpacity = panel.DragOpacity;
+            var panel = (CustomerLayoutPanel)d;
+            var oldDragOpacity = (double)e.OldValue;
+            var newDragOpacity = panel.DragOpacity;
             panel.OnDragOpacityChanged(oldDragOpacity, newDragOpacity);
         }
 
@@ -178,7 +170,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// </summary>
         public static readonly DependencyProperty DragScaleProperty =
             DependencyProperty.Register("DragScale", typeof(double), typeof(CustomerLayoutPanel),
-                new FrameworkPropertyMetadata(DragScaleDefault, new PropertyChangedCallback(OnDragScaleChanged)));
+                new FrameworkPropertyMetadata(DragScaleDefault, OnDragScaleChanged));
 
         /// <summary>
         /// Gets or sets the DragScale property. This dependency property 
@@ -186,8 +178,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// </summary>
         public double DragScale
         {
-            get { return (double)GetValue(DragScaleProperty); }
-            set { SetValue(DragScaleProperty, value); }
+            get => (double)GetValue(DragScaleProperty);
+            set => SetValue(DragScaleProperty, value);
         }
 
         /// <summary>
@@ -197,9 +189,9 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// <param name="e">DependencyProperty changed event arguments</param>
         private static void OnDragScaleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CustomerLayoutPanel panel = (CustomerLayoutPanel)d;
-            double oldDragScale = (double)e.OldValue;
-            double newDragScale = panel.DragScale;
+            var panel = (CustomerLayoutPanel)d;
+            var oldDragScale = (double)e.OldValue;
+            var newDragScale = panel.DragScale;
             panel.OnDragScaleChanged(oldDragScale, newDragScale);
         }
 
@@ -222,7 +214,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// </summary>
         public static readonly DependencyProperty ElementEasingProperty =
             DependencyProperty.Register("ElementEasing", typeof(EasingFunctionBase), typeof(CustomerLayoutPanel),
-                new FrameworkPropertyMetadata((new PropertyChangedCallback(OnElementEasingChanged))));
+                new FrameworkPropertyMetadata((OnElementEasingChanged)));
 
         /// <summary>
         /// Gets or sets the ElementEasing property. This dependency property 
@@ -230,8 +222,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// </summary>
         public EasingFunctionBase ElementEasing
         {
-            get { return (EasingFunctionBase)GetValue(ElementEasingProperty); }
-            set { SetValue(ElementEasingProperty, value); }
+            get => (EasingFunctionBase)GetValue(ElementEasingProperty);
+            set => SetValue(ElementEasingProperty, value);
         }
 
         /// <summary>
@@ -241,9 +233,9 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// <param name="e">DependencyProperty changed event arguments</param>
         private static void OnElementEasingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CustomerLayoutPanel panel = (CustomerLayoutPanel)d;
-            EasingFunctionBase oldElementEasing = (EasingFunctionBase)e.OldValue;
-            EasingFunctionBase newElementEasing = panel.ElementEasing;
+            var panel = (CustomerLayoutPanel)d;
+            var oldElementEasing = (EasingFunctionBase)e.OldValue;
+            var newElementEasing = panel.ElementEasing;
             panel.OnElementEasingChanged(oldElementEasing, newElementEasing);
         }
 
@@ -273,8 +265,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 
         public int Columns
         {
-            get { return (int)GetValue(ColumnsProperty); }
-            set { SetValue(ColumnsProperty, value); }
+            get => (int)GetValue(ColumnsProperty);
+            set => SetValue(ColumnsProperty, value);
         }
 
         #endregion
@@ -287,13 +279,14 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         public static readonly DependencyProperty RowsProperty = DependencyProperty.RegisterAttached("Rows", typeof(int), typeof(CustomerLayoutPanel),
                                                                     new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsMeasure |
                                                                                                      FrameworkPropertyMetadataOptions.AffectsArrange |
-                                                                                                     FrameworkPropertyMetadataOptions.Inherits));
+                                                                                                     FrameworkPropertyMetadataOptions.Inherits, OnRowsChanged));
+
 
 
         public int Rows
         {
-            get { return (int)GetValue(RowsProperty); }
-            set { SetValue(RowsProperty, value); }
+            get => (int)GetValue(RowsProperty);
+            set => SetValue(RowsProperty, value);
         }
 
         #endregion
@@ -306,17 +299,15 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 
         public bool FreeItemHeight
         {
-            get { return (bool)GetValue(FreeItemHeightProperty); }
-            set { SetValue(FreeItemHeightProperty, value); }
+            get => (bool)GetValue(FreeItemHeightProperty);
+            set => SetValue(FreeItemHeightProperty, value);
         }
-
-
 
 
         public bool FreeItemSize
         {
-            get { return (bool)GetValue(FreeItemSizeProperty); }
-            set { SetValue(FreeItemSizeProperty, value); }
+            get => (bool)GetValue(FreeItemSizeProperty);
+            set => SetValue(FreeItemSizeProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for FreeItemSize.  This enables animation, styling, binding, etc...
@@ -324,13 +315,10 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             DependencyProperty.Register("FreeItemSize", typeof(bool), typeof(CustomerLayoutPanel), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
 
-
-
-
         public bool ReverseRow
         {
-            get { return (bool)GetValue(ReverseRowProperty); }
-            set { SetValue(ReverseRowProperty, value); }
+            get => (bool)GetValue(ReverseRowProperty);
+            set => SetValue(ReverseRowProperty, value);
         }
 
         public static readonly DependencyProperty ReverseRowProperty =
@@ -339,8 +327,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 
         public bool AllowPlaceHolder
         {
-            get { return (bool)GetValue(AllowPlaceHolderProperty); }
-            set { SetValue(AllowPlaceHolderProperty, value); }
+            get => (bool)GetValue(AllowPlaceHolderProperty);
+            set => SetValue(AllowPlaceHolderProperty, value);
         }
 
         public static readonly DependencyProperty AllowPlaceHolderProperty =
@@ -366,15 +354,15 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             {
                 UpdateComputedValues();
                 _fluidElements.Clear();
-                Size itemAvailableSize = new Size(availableSize.Width / _finalColumns, availableSize.Height / _finalRows);
-                double itemWidth = 0.0;
-                double itemHeight = 0.0;
-                int index = 0;
-                for (int count = InternalChildren.Count; index < count; ++index)
+                var itemAvailableSize = new Size(availableSize.Width / _finalColumns, availableSize.Height / _finalRows);
+                var itemWidth = 0.0;
+                var itemHeight = 0.0;
+                var index = 0;
+                for (var count = InternalChildren.Count; index < count; ++index)
                 {
-                    UIElement child = InternalChildren[index];
+                    var child = InternalChildren[index];
                     child.Measure(itemAvailableSize);
-                    Size desiredSize = child.DesiredSize;
+                    var desiredSize = child.DesiredSize;
                     if (itemWidth < desiredSize.Width)
                         itemWidth = desiredSize.Width;
                     if (itemHeight < desiredSize.Height)
@@ -385,10 +373,10 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             }
             else
             {
-                double totalColumnWidth = 0.0;
-                double totalRowHeight = 0.0;
+                var totalColumnWidth = 0.0;
+                var totalRowHeight = 0.0;
 
-                int childrenCount = _internalVisibleChildrenCount;
+                var childrenCount = _internalVisibleChildrenCount;
                 if (childrenCount > 0)
                 {
                     _fluidElements.Clear();
@@ -417,17 +405,17 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                                        : childrenCount / _finalRows + 1;
                         }
                     }
-                    double itemWidth = double.IsPositiveInfinity(availableSize.Width) ? double.PositiveInfinity : availableSize.Width / _finalColumns;
-                    double itemHeight = double.IsPositiveInfinity(availableSize.Height) ? double.PositiveInfinity : availableSize.Height / _finalRows;
+                    var itemWidth = double.IsPositiveInfinity(availableSize.Width) ? double.PositiveInfinity : availableSize.Width / _finalColumns;
+                    var itemHeight = double.IsPositiveInfinity(availableSize.Height) ? double.PositiveInfinity : availableSize.Height / _finalRows;
 
                     // Iterate through all the UIElements in the Children collection
-                    for (int i = 0; i < childrenCount; i++)
+                    for (var i = 0; i < childrenCount; i++)
                     {
-                        UIElement child = InternalChildren[i];
+                        var child = InternalChildren[i];
 
                         if (child != null)
                         {
-                            Size availableItemSize = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
+                            var availableItemSize = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
                             // Ask the child how much size it needs
                             child.Measure(availableItemSize);
 
@@ -438,16 +426,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                                 {
                                     itemHeight = child.DesiredSize.Height;
                                 }
-                                if (itemWidth <= 0 || double.IsPositiveInfinity(itemWidth))
-                                {
-                                    itemWidth = child.DesiredSize.Width;
-                                }
 
-                                itemWidth = this.ActualWidth;
-                                if (child is FrameworkElement listBoxItem)
-                                {
-                                    listBoxItem.Width = itemWidth;
-                                }
+                                itemWidth = ActualWidth - 4;
                             }
                             else
                             {
@@ -460,11 +440,10 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                                     itemWidth = child.DesiredSize.Width;
                                 }
 
-                                FrameworkElement listBoxItem = child as FrameworkElement;
-                                if (listBoxItem != null)
+                                if (child is FrameworkElement frameworkElement)
                                 {
-                                    listBoxItem.Width = itemWidth;
-                                    listBoxItem.Height = itemHeight;
+                                    frameworkElement.Width = itemWidth;
+                                    frameworkElement.Height = itemHeight;
                                 }
                             }
 
@@ -487,10 +466,65 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                 return new Size(totalColumnWidth, totalRowHeight);
             }
         }
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            if (FreeItemSize)
+            {
+                var finalRect = new Rect(0.0, 0.0, finalSize.Width / (double)_finalColumns, finalSize.Height / (double)_finalRows);
 
+                if (Children.Count > 0 && _fluidElements.Count > 0)
+                {
+                    // Initialize the LayoutManager
+                    var orientation = Orientation.Horizontal;
+                    if (Rows > 0 && Columns <= 0)
+                    {
+                        orientation = Orientation.Vertical;
+                    }
+
+                    _layoutManager.Initialize(finalSize, _finalColumns, _finalRows, orientation, ReverseRow);
+
+                    // Update the Layout
+                    for (var index = 0; index < _fluidElements.Count; index++)
+                    {
+                        UIElement element = _fluidElements[index];
+                        if (element == null)
+                            continue;
+
+                        // If an child is currently being dragged, then no need to animate it
+                        if (_dragElement != null && index == _fluidElements.IndexOf(_dragElement))
+                            continue;
+
+                        var pos = _layoutManager.GetPointFromIndex(index);
+                        element.RenderTransform = _layoutManager.CreateTransform(pos.X, pos.Y, 1.0, 1.0);
+                        // Get the cell position of the current index                          
+                        //element.Arrange(new Rect(0, 0, element.DesiredSize.Width, element.DesiredSize.Height));
+                        element.Arrange(finalRect);
+                    }
+                }
+
+            }
+            else
+            {
+                if (Children.Count > 0 && _fluidElements.Count > 0)
+                {
+                    // Initialize the LayoutManager
+                    var orientation = Orientation.Horizontal;
+                    if (Rows > 0 && Columns <= 0)
+                    {
+                        orientation = Orientation.Vertical;
+                    }
+
+                    _layoutManager.Initialize(_availableSize, _finalColumns, _finalRows, orientation, ReverseRow);
+
+                    // Update the Layout
+                    InitializeFluidLayout();
+                }
+            }
+            return finalSize;
+        }
         private void UpdateComputedValues()
         {
-            int childrenCount = _internalVisibleChildrenCount;
+            var childrenCount = _internalVisibleChildrenCount;
             if (childrenCount == 0)
             {
                 childrenCount = 1;
@@ -552,62 +586,6 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// </summary>
         /// <param name="finalSize"></param>
         /// <returns></returns>
-        protected override Size ArrangeOverride(Size finalSize)
-        {
-            if (FreeItemSize)
-            {
-                Rect finalRect = new Rect(0.0, 0.0, finalSize.Width / (double)_finalColumns, finalSize.Height / (double)_finalRows);
-
-                if (Children.Count > 0 && _fluidElements.Count > 0)
-                {
-                    // Initialize the LayoutManager
-                    Orientation orientation = Orientation.Horizontal;
-                    if (Rows > 0 && Columns <= 0)
-                    {
-                        orientation = Orientation.Vertical;
-                    }
-
-                    _layoutManager.Initialize(finalSize, _finalColumns, _finalRows, orientation, ReverseRow);
-
-                    // Update the Layout
-                    for (int index = 0; index < _fluidElements.Count; index++)
-                    {
-                        UIElement element = _fluidElements[index];
-                        if (element == null)
-                            continue;
-
-                        // If an child is currently being dragged, then no need to animate it
-                        if (_dragElement != null && index == _fluidElements.IndexOf(_dragElement))
-                            continue;
-
-                        Point pos = _layoutManager.GetPointFromIndex(index);
-                        element.RenderTransform = _layoutManager.CreateTransform(pos.X, pos.Y, 1.0, 1.0);
-                        // Get the cell position of the current index                          
-                        //element.Arrange(new Rect(0, 0, element.DesiredSize.Width, element.DesiredSize.Height));
-                        element.Arrange(finalRect);
-                    }
-                }
-
-            }
-            else
-            {
-                if (Children.Count > 0 && _fluidElements.Count > 0)
-                {
-                    // Initialize the LayoutManager
-                    Orientation orientation = Orientation.Horizontal;
-                    if (Rows > 0 && Columns <= 0)
-                    {
-                        orientation = Orientation.Vertical;
-                    }
-
-                    _layoutManager.Initialize(_availableSize, _finalColumns, _finalRows, orientation, ReverseRow);
-
-                    // Update the Layout
-                    InitializeFluidLayout();
-                }
-            }
-            return finalSize;
-        }
 
         #endregion
 
@@ -623,13 +601,13 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 
         #region Helpers
 
-        private void InitializeFluidLayout()
+        public void InitializeFluidLayout()
         {
             // Iterate through all the fluid elements and animate their
             // movement to their new location.
             for (int index = 0; index < _fluidElements.Count; index++)
             {
-                UIElement element = _fluidElements[index];
+                var element = _fluidElements[index];
                 if (element == null)
                     continue;
 
@@ -637,7 +615,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                 if (_dragElement != null && index == _fluidElements.IndexOf(_dragElement))
                     continue;
 
-                Point pos = _layoutManager.GetPointFromIndex(index);
+                var pos = _layoutManager.GetPointFromIndex(index);
                 //Logger.WriteLineInfo("Point index:{2} - pos x:{0}, y:{1}", pos.X, pos.Y, index);
                 element.RenderTransform = _layoutManager.CreateTransform(pos.X, pos.Y, 1.0, 1.0);
                 // Get the cell position of the current index                          
@@ -653,7 +631,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         {
             // Iterate through all the fluid elements and animate their
             // movement to their new location.
-            for (int index = 0; index < _fluidElements.Count; index++)
+            for (var index = 0; index < _fluidElements.Count; index++)
             {
                 UIElement element = _fluidElements[index];
                 if (element == null)
@@ -663,25 +641,19 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                 if (_dragElement != null && index == _fluidElements.IndexOf(_dragElement))
                     continue;
 
-                if (FreeItemSize)
-                {
-                    element.Arrange(new Rect(0, 0, _layoutManager.CellSize.Width, _layoutManager.CellSize.Height));
-                }
-                else
-                {
-                    element.Arrange(new Rect(0, 0, element.DesiredSize.Width, element.DesiredSize.Height));
-                }
-                //
+                element.Arrange(FreeItemSize
+                    ? new Rect(0, 0, _layoutManager.CellSize.Width, _layoutManager.CellSize.Height)
+                    : new Rect(0, 0, element.DesiredSize.Width, element.DesiredSize.Height));
 
                 // Get the cell position of the current index
-                Point pos = _layoutManager.GetPointFromIndex(index);
+                var pos = _layoutManager.GetPointFromIndex(index);
 
                 Storyboard transition;
                 // Is the child being animated the same as the child which was last dragged?
                 if (element == _lastDragElement)
                 {
                     // Is easing function specified for the animation?
-                    TimeSpan duration = (DragEasing != null) ? DefaultAnimationTimeWithEasing : DefaultAnimationTimeWithoutEasing;
+                    var duration = (DragEasing != null) ? DefaultAnimationTimeWithEasing : DefaultAnimationTimeWithoutEasing;
                     // Create the Storyboard for the transition
                     transition = _layoutManager.CreateTransition(element, pos, duration, DragEasing);
 
@@ -700,7 +672,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                 else // It is a non-dragElement
                 {
                     // Is easing function specified for the animation?
-                    TimeSpan duration = (ElementEasing != null) ? DefaultAnimationTimeWithEasing : DefaultAnimationTimeWithoutEasing;
+                    var duration = (ElementEasing != null) ? DefaultAnimationTimeWithEasing : DefaultAnimationTimeWithoutEasing;
                     // Create the Storyboard for the transition
                     transition = _layoutManager.CreateTransition(element, pos, duration, ElementEasing);
                 }
@@ -719,7 +691,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         {
             // Check if the dragElement is being moved to its current place
             // If yes, then no need to proceed further. (Improves efficiency!)
-            int dragCellIndex = _fluidElements.IndexOf(_dragElement);
+            var dragCellIndex = _fluidElements.IndexOf(_dragElement);
             if (dragCellIndex == newIndex)
                 return false;
 
@@ -740,15 +712,13 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// <param name="position">Position in the child where the user clicked</param>
         public void BeginDrag(UIElement child, Point position)
         {
-            if (child == null)
+            switch (child)
             {
-                return;
-            }
-
-            var element = child as FrameworkElement;
-            if (element != null)
-            {
-                _offset = VisualTreeHelper.GetOffset(element);
+                case null:
+                    return;
+                case FrameworkElement element:
+                    _offset = VisualTreeHelper.GetOffset(element);
+                    break;
             }
 
             // Call the event handler core on the Dispatcher. (Improves efficiency!)
@@ -773,6 +743,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         /// <param name="child">UIElement being dragged</param>
         /// <param name="position">Position where the user clicked w.r.t. the UIElement being dragged</param>
         /// <param name="positionInParent">Position where the user clicked w.r.t. the CustomerLayoutPanel (the parentFWPanel of the UIElement being dragged</param>
+        /// <param name="associatedObject">Associated Object</param>
         public void DragMove(UIElement child, Point position, Point positionInParent, ItemsControl associatedObject)
         {
             if (child == null || positionInParent == _lastMovePoint)
@@ -783,8 +754,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             // Call the event handler core on the Dispatcher. (Improves efficiency!)
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                double transX = 0d;
-                double transY = 0d;
+                var transX = 0d;
+                var transY = 0d;
 
                 switch (DragOrientation)
                 {
@@ -800,14 +771,14 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                         break;
                 }
 
-                if ((_dragElement != null) && (_layoutManager != null))
+                if (_dragElement != null && _layoutManager != null)
                 {
 
                     _dragElement.RenderTransform = _layoutManager.CreateTransform(transX, transY, DragScale, DragScale);
 
                     // Get the index in the fluidElements list corresponding to the current mouse location
-                    Point currentPt = positionInParent;
-                    int index = _layoutManager.GetIndexFromPoint(currentPt);
+                    var currentPt = positionInParent;
+                    var index = _layoutManager.GetIndexFromPoint(currentPt);
 
                     // If no valid cell index is obtained, add the child to the end of the 
                     // fluidElements list.
@@ -852,10 +823,10 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                 return;
 
             // Call the event handler core on the Dispatcher. (Improves efficiency!)
-            Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(() =>
             {
-                double transX = 0d;
-                double transY = 0d;
+                var transX = 0d;
+                var transY = 0d;
 
                 switch (DragOrientation)
                 {
@@ -889,7 +860,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 
                     RaiseItemDroppedEvent(_dragStartIndex, _fluidElements.IndexOf(_lastDragElement), ((FrameworkElement)_lastDragElement).DataContext); //Rasie drop event                    
                 }
-            }));
+            });
         }
 
         private void RaiseItemDroppedEvent(int previousIndex, int currentIndex, object dataContext)
@@ -903,7 +874,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         #region layout manager
 
         /// <summary>
-        /// Manager cellls' positions
+        /// Manager cells' positions
         /// </summary>
         private sealed class CellsLayoutManager
         {
@@ -915,10 +886,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             private int _cellsPerLine;
             private bool _reverseRow;
             private int _finalRows;
-            public Size CellSize
-            {
-                get { return _cellSize; }
-            }
+            public Size CellSize => _cellSize;
+
             #endregion
 
             #region Methods
@@ -932,7 +901,8 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             /// <param name="orientation">Orientation of the panel - Horizontal or Vertical
             /// Horizontal - cells number of one row is fixed
             /// Verical - cells number of on column is fixed
-            /// </param>        
+            /// </param>
+            /// <param name="reverseRow">reverse row</param>        
             internal void Initialize(Size panelSize, int columns, int rows, Orientation orientation, bool reverseRow)
             {
                 if ((panelSize.Width <= 0.0d) || (panelSize.Height <= 0.0d))
@@ -941,8 +911,6 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                     return;
                 }
 
-                //fixed Bug 7382 - REV.1.6.1(KB4 pre) [Map]The number of Map is incorrect on the left.
-                //Always update cell size ,while PanelSize not change but columns/rows count changed.
                 _panelSize = panelSize;
                 _cellSize = new Size(panelSize.Width / columns, panelSize.Height / rows);
                 _panelOrientation = orientation;
@@ -960,7 +928,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             /// <returns>Index</returns>
             private int GetIndexFromCell(int row, int column)
             {
-                int result = -1;
+                var result = -1;
 
                 if ((row >= 0) && (column >= 0))
                 {
@@ -971,8 +939,6 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                             break;
                         case Orientation.Vertical:
                             result = (_cellsPerLine * column) + row;
-                            break;
-                        default:
                             break;
                     }
                 }
@@ -987,16 +953,13 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             /// <returns></returns>
             internal int GetIndexFromPoint(Point p)
             {
-                int result = -1;
+                var result = -1;
                 if ((p.X > 0.00D) &&
                     (p.X < _panelSize.Width) &&
                     (p.Y > 0.00D) &&
                     (p.Y < _panelSize.Height))
                 {
-                    int row;
-                    int column;
-
-                    GetCellFromPoint(p, out row, out column);
+                    GetCellFromPoint(p, out var row, out var column);
                     result = GetIndexFromCell(row, column);
                 }
 
@@ -1028,8 +991,6 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                         case Orientation.Vertical:
                             column = (int)(index / (double)_cellsPerLine);
                             row = (int)(index % (double)_cellsPerLine);
-                            break;
-                        default:
                             break;
                     }
                 }
@@ -1069,7 +1030,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             /// <returns>Location of the child in the panel</returns>
             private Point GetPointFromCell(int row, int column)
             {
-                Point result = new Point();
+                var result = new Point();
 
                 if ((row >= 0) && (column >= 0))
                 {
@@ -1086,14 +1047,11 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             /// <returns>Location of the child in the panel</returns>
             internal Point GetPointFromIndex(int index)
             {
-                Point result = new Point();
+                var result = new Point();
 
                 if (index >= 0)
                 {
-                    int row;
-                    int column;
-
-                    GetCellFromIndex(index, out row, out column);
+                    GetCellFromIndex(index, out var row, out var column);
                     result = GetPointFromCell(row, column);
                 }
 
@@ -1107,26 +1065,23 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             /// <param name="transY">Translation in the Y-axis</param>
             /// <param name="scaleX">Scale factor in the X-axis</param>
             /// <param name="scaleY">Scale factor in the Y-axis</param>
-            /// <param name="rotAngle">Rotation</param>
             /// <returns>TransformGroup</returns>
-            internal TransformGroup CreateTransform(double transX, double transY, double scaleX, double scaleY, double rotAngle = 0.0D)
+            internal TransformGroup CreateTransform(double transX, double transY, double scaleX, double scaleY)
             {
-                TranslateTransform translation = new TranslateTransform();
-                translation.X = transX;
-                translation.Y = transY;
+                var translation = new TranslateTransform
+                {
+                    X = transX,
+                    Y = transY
+                };
 
-                ScaleTransform scale = new ScaleTransform();
-                scale.ScaleX = scaleX;
-                scale.ScaleY = scaleY;
+                var scale = new ScaleTransform
+                {
+                    ScaleX = scaleX,
+                    ScaleY = scaleY
+                };
 
-                //RotateTransform rotation = new RotateTransform();
-                //rotation.Angle = rotAngle;
-
-                TransformGroup transform = new TransformGroup();
-                // THE ORDER OF TRANSFORM IS IMPORTANT
-                // First, scale, then rotate and finally translate
+                var transform = new TransformGroup();
                 transform.Children.Add(scale);
-                //transform.Children.Add(rotation);
                 transform.Children.Add(translation);
 
                 return transform;
@@ -1231,15 +1186,45 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 
 
 
+        public int RowHeight
+        {
+            get => (int)GetValue(RowHeightProperty);
+            set => SetValue(RowHeightProperty, value);
+        }
+
+        public static readonly DependencyProperty RowHeightProperty =
+            DependencyProperty.Register("RowHeight", typeof(int), typeof(CustomerLayoutPanel), new PropertyMetadata(0));
+
+
+        public int ColumnWidth
+        {
+            get => (int)GetValue(ColumnWidthProperty);
+            set => SetValue(ColumnWidthProperty, value);
+        }
+
+        public static readonly DependencyProperty ColumnWidthProperty =
+            DependencyProperty.Register("ColumnWidth", typeof(int), typeof(CustomerLayoutPanel), new PropertyMetadata(0));
+
+
+        private static void OnRowsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CustomerLayoutPanel panel)
+            {
+                var rowHeight = (int)panel.GetValue(RowHeightProperty);
+                panel.SetValue(HeightProperty, (double)((int)e.NewValue * rowHeight));
+            }
+        }
+
+
         #endregion
 
     }
 
     public class CustomPanelAdorner : System.Windows.Documents.Adorner
     {
-        private VisualCollection _visualCollection;
-        private ToggleButton _btn;
-        private Canvas _canvas;
+        private readonly VisualCollection _visualCollection;
+        private readonly ToggleButton _btn;
+        private readonly Canvas _canvas;
 
         public EventHandler OnDragModeStart;
 
@@ -1248,10 +1233,10 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             _visualCollection = new VisualCollection(this);
 
             _btn = new ToggleButton();
-            Style btnStyle = (Style)FindResource("DragModeButton.ToggleButton.Style");
+            var btnStyle = (Style)FindResource("DragModeButton.ToggleButton.Style");
             _btn.SetValue(StyleProperty, btnStyle);
 
-            _btn.Click += _btn_Click;
+            _btn.Click += OnButtonClick;
 
             _canvas = new Canvas();
             _canvas.Children.Add(_btn);
@@ -1259,18 +1244,12 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         }
 
 
-        private void _btn_Click(object sender, RoutedEventArgs e)
+        private void OnButtonClick(object sender, RoutedEventArgs e)
         {
             OnDragModeStart?.Invoke(null, EventArgs.Empty);
         }
 
-        protected override int VisualChildrenCount
-        {
-            get
-            {
-                return _visualCollection.Count;
-            }
-        }
+        protected override int VisualChildrenCount => _visualCollection.Count;
 
         protected override Visual GetVisualChild(int index)
         {

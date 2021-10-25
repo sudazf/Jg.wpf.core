@@ -11,30 +11,35 @@ namespace Jg.wpf.controls.Behaviors
 {
     public class ItemControlDragBehavior : Behavior<ItemsControl>
     {
+        #region Fields
+
         private FrameworkElement _dragItem;
         private int _currentTouchId = -1;
         private bool _attachedObjectLoaded;
         private CustomPanelAdorner _customPanelAdorner;
+        private bool _mouseInCustomerLayoutPanel;
         private bool _mouseDragActived;
 
         public static readonly DependencyProperty EnableProperty =
             DependencyProperty.RegisterAttached("Enable", typeof(bool), typeof(ItemControlDragBehavior),
                 new FrameworkPropertyMetadata(true));
+
+        public static readonly DependencyProperty SupportMouseDragProperty =
+            DependencyProperty.RegisterAttached("SupportMouseDrag", typeof(bool), typeof(ItemControlDragBehavior),
+                new FrameworkPropertyMetadata(false));
+
         public bool Enable
         {
             get => (bool)GetValue(EnableProperty);
             set => SetValue(EnableProperty, value);
         }
 
-        public static readonly DependencyProperty SupportMouseDragProperty =
-            DependencyProperty.RegisterAttached("SupportMouseDrag", typeof(bool), typeof(ItemControlDragBehavior),
-                new FrameworkPropertyMetadata(false));
-
         public bool SupportMouseDrag
         {
             get => (bool)GetValue(SupportMouseDragProperty);
             set => SetValue(SupportMouseDragProperty, value);
         }
+        #endregion
 
         #region Overrides
 
@@ -50,20 +55,21 @@ namespace Jg.wpf.controls.Behaviors
             }
         }
 
-        private bool _mouseInCustomerLayoutPanel = false;
         private void OnAssociatedObjectLoaded(object sender, RoutedEventArgs e)
         {
             if (AssociatedObject != null)
             {
+                AssociatedObject.PreviewMouseLeftButtonDown -= OnPreviewMouseLeftButtonDown;
                 AssociatedObject.PreviewMouseLeftButtonUp -= OnPreviewMouseLeftButtonUp;
                 AssociatedObject.MouseLeave -= OnMouseLeave;
                 AssociatedObject.PreviewMouseMove -= OnItemsControlPreviewMouseMove;
 
+                AssociatedObject.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
                 AssociatedObject.PreviewMouseLeftButtonUp += OnPreviewMouseLeftButtonUp;
                 AssociatedObject.MouseLeave += OnMouseLeave;
                 AssociatedObject.PreviewMouseMove += OnItemsControlPreviewMouseMove;
 
-                CustomerLayoutPanel panel = FindChild<CustomerLayoutPanel>(AssociatedObject);
+                var panel = FindChild<CustomerLayoutPanel>(AssociatedObject);
                 var adorerLayer = AdornerLayer.GetAdornerLayer(AssociatedObject);
 
                 if (panel != null && panel.ShowModeButton)
@@ -106,9 +112,9 @@ namespace Jg.wpf.controls.Behaviors
 
         private void OnAssociatedObjectUnLoaded(object sender, RoutedEventArgs e)
         {
-            if (AssociatedObject != null &&
-                AssociatedObject.Items != null && _attachedObjectLoaded)
+            if (AssociatedObject != null && _attachedObjectLoaded)
             {
+                AssociatedObject.PreviewMouseLeftButtonDown -= OnPreviewMouseLeftButtonDown;
                 AssociatedObject.PreviewMouseLeftButtonUp -= OnPreviewMouseLeftButtonUp;
                 AssociatedObject.MouseLeave -= OnMouseLeave;
                 AssociatedObject.PreviewMouseMove -= OnItemsControlPreviewMouseMove;
@@ -134,6 +140,52 @@ namespace Jg.wpf.controls.Behaviors
             OnPreviewMouseLeftButtonUp(sender, e);
         }
 
+        private void OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var device = e.StylusDevice;
+            if (device != null && device.TabletDevice != null && device.TabletDevice.Type == TabletDeviceType.Touch)
+            {
+                if (_dragItem != null && _currentTouchId == -1)
+                {
+                    e.Handled = true;
+                    _dragItem = null;
+                }
+
+                return;
+            }
+
+            var itemsControl = (ItemsControl)sender;
+            var panel = FindChild<CustomerLayoutPanel>(itemsControl);
+
+            if (_mouseInCustomerLayoutPanel == false)
+            {
+                return;
+            }
+
+            if (SupportMouseDrag)
+            {
+                if (!_mouseDragActived)
+                {
+                    if (itemsControl != null)
+                    {
+                        if (panel != null)
+                        {
+                            _dragItem = itemsControl.ContainerFromElement((DependencyObject)e.OriginalSource) as FrameworkElement;
+                            if (_dragItem != null)
+                            {
+                                _mouseDragActived = true;
+
+                                var point = e.GetPosition(_dragItem);
+                                panel.BeginDrag(_dragItem, point);
+                            }
+                        }
+                    }
+                }
+
+                e.Handled = true;
+            }
+        }
+
         private void OnPreviewMouseLeftButtonUp(object sender, MouseEventArgs e)
         {
             var device = e.StylusDevice;
@@ -147,8 +199,8 @@ namespace Jg.wpf.controls.Behaviors
 
                 return;
             }
-            ItemsControl itemsControl = (ItemsControl)sender;
-            CustomerLayoutPanel panel = FindChild<CustomerLayoutPanel>(itemsControl);
+            var itemsControl = (ItemsControl)sender;
+            var panel = FindChild<CustomerLayoutPanel>(itemsControl);
 
             if (_mouseInCustomerLayoutPanel == false)
             {
@@ -165,32 +217,14 @@ namespace Jg.wpf.controls.Behaviors
                     {
                         if (panel != null)
                         {
-                            Point point = e.GetPosition(_dragItem);
-                            Point pointParent = e.GetPosition(panel);
+                            var point = e.GetPosition(_dragItem);
+                            var pointParent = e.GetPosition(panel);
                             panel.EndDrag(_dragItem, point, pointParent);
                         }
                     }
                     _dragItem = null;
                 }
-                else
-                {
-                    if (itemsControl != null)
-                    {
-                        if (panel != null)
-                        {
-                            _dragItem = itemsControl.ContainerFromElement((DependencyObject)e.OriginalSource) as FrameworkElement;
-                            if (_dragItem != null)
-                            {
-                                _mouseDragActived = true;
-                                ScrollViewer scrollViewer = FindChild<ScrollViewer>(itemsControl);
 
-                                Point point = e.GetPosition(_dragItem);
-                                Point pointParent = e.GetPosition(panel);
-                                panel.BeginDrag(_dragItem, point);
-                            }
-                        }
-                    }
-                }
                 e.Handled = true;
             }
         }
@@ -203,14 +237,14 @@ namespace Jg.wpf.controls.Behaviors
                 return;
             }
 
-            ItemsControl itemsControl = (ItemsControl)sender;
+            var itemsControl = (ItemsControl)sender;
             if (_dragItem != null && itemsControl != null)
             {
-                CustomerLayoutPanel panel = FindChild<CustomerLayoutPanel>(itemsControl);
+                var panel = FindChild<CustomerLayoutPanel>(itemsControl);
                 if (panel != null)
                 {
-                    Point point = e.GetPosition(_dragItem);
-                    Point pointParent = e.GetPosition(panel);
+                    var point = e.GetPosition(_dragItem);
+                    var pointParent = e.GetPosition(panel);
 
                     panel.DragMove(_dragItem, point, pointParent, AssociatedObject);
                 }

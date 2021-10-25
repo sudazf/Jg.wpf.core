@@ -104,6 +104,10 @@
       <Name>Jg.wpf.core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modesl\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)..\Libs\MaterialDesign\*.dll" "$(TargetDir)" /S /Y

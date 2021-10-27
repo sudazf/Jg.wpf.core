@@ -50,7 +50,7 @@
 
 
         <i:Interaction.Behaviors>
-            <behaviors:ItemControlDragBehavior SupportMouseDrag="{Binding IsInDraggingMode}" />
+            <behaviors:ItemControlDragBehavior DraggingMode="{Binding IsInDraggingMode}" />
         </i:Interaction.Behaviors>
 
         <DataGrid.ItemsPanel>

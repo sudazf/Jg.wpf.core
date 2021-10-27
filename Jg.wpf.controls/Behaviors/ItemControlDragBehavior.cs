@@ -24,8 +24,8 @@ namespace Jg.wpf.controls.Behaviors
             DependencyProperty.RegisterAttached("Enable", typeof(bool), typeof(ItemControlDragBehavior),
                 new FrameworkPropertyMetadata(true));
 
-        public static readonly DependencyProperty SupportMouseDragProperty =
-            DependencyProperty.RegisterAttached("SupportMouseDrag", typeof(bool), typeof(ItemControlDragBehavior),
+        public static readonly DependencyProperty DraggingModeProperty =
+            DependencyProperty.RegisterAttached("DraggingMode", typeof(bool), typeof(ItemControlDragBehavior),
                 new FrameworkPropertyMetadata(false));
 
         public bool Enable
@@ -34,10 +34,10 @@ namespace Jg.wpf.controls.Behaviors
             set => SetValue(EnableProperty, value);
         }
 
-        public bool SupportMouseDrag
+        public bool DraggingMode
         {
-            get => (bool)GetValue(SupportMouseDragProperty);
-            set => SetValue(SupportMouseDragProperty, value);
+            get => (bool)GetValue(DraggingModeProperty);
+            set => SetValue(DraggingModeProperty, value);
         }
         #endregion
 
@@ -97,7 +97,6 @@ namespace Jg.wpf.controls.Behaviors
 
         private void OnDragModeChanged(object sender, EventArgs e)
         {
-            //SupportMouseDrag = !SupportMouseDrag;
         }
 
         private void Panel_MouseLeave(object sender, MouseEventArgs e)
@@ -162,7 +161,7 @@ namespace Jg.wpf.controls.Behaviors
                 return;
             }
 
-            if (SupportMouseDrag)
+            if (DraggingMode)
             {
                 if (!_mouseDragActived)
                 {
@@ -207,7 +206,7 @@ namespace Jg.wpf.controls.Behaviors
                 return;
             }
 
-            if (SupportMouseDrag)
+            if (DraggingMode)
             {
                 if (_mouseDragActived)
                 {

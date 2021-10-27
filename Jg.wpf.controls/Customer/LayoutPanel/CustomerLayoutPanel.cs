@@ -1245,13 +1245,13 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             _visualCollection = new VisualCollection(this);
 
             _btn = new ToggleButton();
-            var btnStyle = (Style)FindResource("DragModeButton.ToggleButton.Style");
+            var btnStyle = (Style)FindResource("DraggingMode.ToggleButton");
             _btn.SetValue(StyleProperty, btnStyle);
 
             var binding = new Binding()
             {
                 Source = listBoxDragBehavior,
-                Path = new PropertyPath("SupportMouseDrag")
+                Path = new PropertyPath("DraggingMode")
             };
             _btn.SetBinding(ToggleButton.IsCheckedProperty, binding);
 

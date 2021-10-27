@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Jg.wpf.controls.Behaviors;
 
 
 namespace Jg.wpf.controls.Customer.LayoutPanel
@@ -427,7 +429,7 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                                     itemHeight = child.DesiredSize.Height;
                                 }
 
-                                itemWidth = ActualWidth - 4;
+                                itemWidth = child.DesiredSize.Width;
                             }
                             else
                             {
@@ -595,6 +597,12 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         {
             _fluidElements = new List<UIElement>();
             _layoutManager = new CellsLayoutManager();
+            Loaded += OnCustomLoaded;
+        }
+
+        private void OnCustomLoaded(object sender, RoutedEventArgs e)
+        {
+            //InitializeFluidLayout();
         }
 
         #endregion
@@ -610,6 +618,10 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
                 var element = _fluidElements[index];
                 if (element == null)
                     continue;
+
+                var availableItemSize = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
+                // Ask the child how much size it needs
+                element.Measure(availableItemSize);
 
                 // If an child is currently being dragged, then no need to animate it
                 if (_dragElement != null && index == _fluidElements.IndexOf(_dragElement))
@@ -1228,13 +1240,20 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 
         public EventHandler OnDragModeStart;
 
-        public CustomPanelAdorner(UIElement adornedElement) : base(adornedElement)
+        public CustomPanelAdorner(UIElement adornedElement, ItemControlDragBehavior listBoxDragBehavior) : base(adornedElement)
         {
             _visualCollection = new VisualCollection(this);
 
             _btn = new ToggleButton();
             var btnStyle = (Style)FindResource("DragModeButton.ToggleButton.Style");
             _btn.SetValue(StyleProperty, btnStyle);
+
+            var binding = new Binding()
+            {
+                Source = listBoxDragBehavior,
+                Path = new PropertyPath("SupportMouseDrag")
+            };
+            _btn.SetBinding(ToggleButton.IsCheckedProperty, binding);
 
             _btn.Click += OnButtonClick;
 

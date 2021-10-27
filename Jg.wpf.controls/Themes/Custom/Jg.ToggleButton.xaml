@@ -11,7 +11,7 @@
         x:Key="DragModeButton.ToggleButton.Style"
         BasedOn="{StaticResource MaterialDesignActionToggleButton}"
         TargetType="ToggleButton">
-        <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
         <Setter Property="Foreground" Value="#FFDEDEDE" />
         <Setter Property="Opacity" Value="0.5" />
         <Setter Property="Width" Value="50" />

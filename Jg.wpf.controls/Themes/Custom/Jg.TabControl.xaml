@@ -7,10 +7,13 @@
 
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="Jg.TabControl" TargetType="{x:Type TabControl}" BasedOn="{StaticResource MaterialDesignTabControl}">
+    <Style x:Key="Jg.Default.TabControl" TargetType="{x:Type TabControl}" BasedOn="{StaticResource MaterialDesignTabControl}">
+        <Setter Property="mde:TabControlAssist.TabHeaderHorizontalAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="Jg.TabControl" TargetType="{x:Type TabControl}" BasedOn="{StaticResource Jg.Default.TabControl}">
         <Setter Property="mde:TabControlAssist.TabHeaderHighlightBrush" Value="#DEDEDE" />
         <Setter Property="mde:TabControlAssist.TabHeaderInactiveBrush" Value="Gray" />
-        <Setter Property="mde:TabControlAssist.TabHeaderHorizontalAlignment" Value="Stretch" />
         
     </Style>
 </ResourceDictionary>

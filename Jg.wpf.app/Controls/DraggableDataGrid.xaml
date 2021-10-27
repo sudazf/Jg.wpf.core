@@ -1,0 +1,68 @@
+﻿<UserControl
+    x:Class="Jg.wpf.app.Controls.DraggableDataGrid"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:Jg.wpf.controls.Behaviors;assembly=Jg.wpf.controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:layoutPanel="clr-namespace:Jg.wpf.controls.Customer.LayoutPanel;assembly=Jg.wpf.controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggerActions="clr-namespace:Jg.wpf.controls.TriggerActions;assembly=Jg.wpf.controls"
+    xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:DraggableViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <!--  注意 如果设置了 DataGrid ColumnWidth="*"或及任何 DataGridColumn Width="*" 需要指定每列最小宽度 -->
+    <DataGrid
+        AutoGenerateColumns="False"
+        ColumnWidth="*"
+        ItemsSource="{Binding Rows}">
+
+        <DataGrid.Columns>
+            <DataGridTextColumn
+                MinWidth="140"
+                Binding="{Binding CellProperty1}"
+                Header="Column1"
+                IsReadOnly="True" />
+            <DataGridTextColumn
+                MinWidth="200"
+                Binding="{Binding CellProperty2}"
+                Header="Column2"
+                IsReadOnly="True" />
+            <DataGridTextColumn
+                MinWidth="200"
+                Binding="{Binding CellProperty3}"
+                Header="Column3"
+                IsReadOnly="True" />
+            <DataGridTextColumn
+                MinWidth="200"
+                Binding="{Binding CellProperty4}"
+                Header="Column4"
+                IsReadOnly="True" />
+            <DataGridTextColumn
+                MinWidth="200"
+                Binding="{Binding CellProperty5}"
+                Header="Column5"
+                IsReadOnly="True" />
+        </DataGrid.Columns>
+
+
+        <i:Interaction.Behaviors>
+            <behaviors:ItemControlDragBehavior SupportMouseDrag="{Binding IsInDraggingMode}" />
+        </i:Interaction.Behaviors>
+
+        <DataGrid.ItemsPanel>
+            <ItemsPanelTemplate>
+                <layoutPanel:CustomerLayoutPanel ShowModeButton="True" Style="{StaticResource Jg.Vertical.CustomerLayoutPanelStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ItemDropped">
+                            <triggerActions:EventToCommand Command="{Binding ItemDroppedCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </layoutPanel:CustomerLayoutPanel>
+            </ItemsPanelTemplate>
+        </DataGrid.ItemsPanel>
+    </DataGrid>
+</UserControl>

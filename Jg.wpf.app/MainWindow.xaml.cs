@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Jg.wpf.app.Models;
+using Jg.wpf.app.ViewModels;
 
 namespace Jg.wpf.app
 {
@@ -23,6 +15,38 @@ namespace Jg.wpf.app
         public MainWindow()
         {
             InitializeComponent();
+
+            var mainVm = new MainViewModel();
+            mainVm.OnSelectDemo += OnSelectDemo;
+            DataContext = mainVm;
         }
+
+        private void OnSelectDemo(object sender, DemoItem e)
+        {
+            var type = Type.GetType($"Jg.wpf.app.Controls.{e.ContentType}");
+            if (type != null)
+            {
+                var content = Activator.CreateInstance(type);
+                if (e.DataContext != null && content is FrameworkElement element)
+                {
+                    element.DataContext = e.DataContext;
+                }
+
+                MainContent.Content = content;
+            }
+        }
+
+
+        private void UIElement_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MenuToggleButton.IsChecked = false;
+        }
+
+        private void MenuToggleButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            DemoItemsSearchBox.Focus();
+        }
+
+
     }
 }

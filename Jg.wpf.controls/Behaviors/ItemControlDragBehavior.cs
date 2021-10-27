@@ -74,7 +74,7 @@ namespace Jg.wpf.controls.Behaviors
 
                 if (panel != null && panel.ShowModeButton)
                 {
-                    _customPanelAdorner = new CustomPanelAdorner(AssociatedObject);
+                    _customPanelAdorner = new CustomPanelAdorner(AssociatedObject,this);
                     _customPanelAdorner.OnDragModeStart += OnDragModeChanged;
                     if (adorerLayer != null)
                     {
@@ -97,7 +97,7 @@ namespace Jg.wpf.controls.Behaviors
 
         private void OnDragModeChanged(object sender, EventArgs e)
         {
-            SupportMouseDrag = !SupportMouseDrag;
+            //SupportMouseDrag = !SupportMouseDrag;
         }
 
         private void Panel_MouseLeave(object sender, MouseEventArgs e)

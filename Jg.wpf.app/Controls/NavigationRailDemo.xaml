@@ -1,0 +1,63 @@
+﻿<UserControl
+    x:Class="Jg.wpf.app.Controls.NavigationRailDemo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <TabControl Style="{StaticResource MaterialDesignNavigatilRailTabControl}" TabStripPlacement="Left">
+            <TabItem Style="{StaticResource Jg.NavigationRail.UnderLine.TabItem}">
+                <TabItem.Header>
+                    <materialDesign:PackIcon
+                        Width="24"
+                        Height="24"
+                        Kind="Heart" />
+                </TabItem.Header>
+                <TextBlock Padding="5" TextWrapping="Wrap">
+                    <Run Text="tab 1 content. Default look and behaviors. " />
+                    <LineBreak />
+                    <LineBreak />
+                    <Run FontStyle="Italic">
+                        Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+                    </Run>
+                </TextBlock>
+            </TabItem>
+            <TabItem Style="{StaticResource Jg.NavigationRail.UnderLine.TabItem}">
+                <TabItem.Header>
+                    <materialDesign:PackIcon
+                        Width="24"
+                        Height="24"
+                        Kind="Clock" />
+                </TabItem.Header>
+                <TextBlock Padding="5" TextWrapping="Wrap">
+                    <Run Text="tab 2 content. Default look and behaviors. " />
+                    <LineBreak />
+                    <LineBreak />
+                    <Run FontStyle="Italic">
+                        aaa
+                    </Run>
+                </TextBlock>
+            </TabItem>
+            <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                <TabItem.Header>
+                    <materialDesign:PackIcon
+                        Width="24"
+                        Height="24"
+                        Kind="Spade" />
+                </TabItem.Header>
+                <TextBlock Padding="5" TextWrapping="Wrap">
+                    <Run Text="tab 3 content. Default look and behaviors. " />
+                    <LineBreak />
+                    <LineBreak />
+                    <Run FontStyle="Italic">
+                        Praesent sed dui arcu. Vivamus porta auctor sagittis
+                    </Run>
+                </TextBlock>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

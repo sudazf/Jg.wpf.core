@@ -48,6 +48,7 @@ namespace Jg.wpf.app.ViewModels
             _defaultItems = new List<DemoItem>()
             {
                 new DemoItem("Draggable ItemsControl", "DraggableDemo", new DraggableDemoViewModel()),
+                new DemoItem("Navigation Rail", "NavigationRailDemo", null),
 
             };
             DemoItems = _defaultItems;

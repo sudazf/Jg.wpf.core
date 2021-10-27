@@ -18,7 +18,8 @@
     <DataGrid
         AutoGenerateColumns="False"
         ColumnWidth="*"
-        ItemsSource="{Binding Rows}">
+        ItemsSource="{Binding Rows}"
+        Style="{StaticResource Jg.AnimationScrolling.DataGrid}">
 
         <DataGrid.Columns>
             <DataGridTextColumn

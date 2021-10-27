@@ -13,7 +13,6 @@ namespace Jg.wpf.app.ViewModels
 
         public DraggableDemoViewModel()
         {
-
             DraggableDataGridViewModel = new DraggableViewModel();
             DraggableListBoxViewModel = new DraggableViewModel();
             DraggableItemsControlViewModel = new DraggableViewModel();
@@ -39,18 +38,14 @@ namespace Jg.wpf.app.ViewModels
         public DraggableViewModel()
         {
             ItemDroppedCommand = new JCommand("ItemDroppedCommand", OnDropItem, a => true, "ItemDropped");
+            Rows = new ObservableCollection<RowItem>();
 
-            Rows = new ObservableCollection<RowItem>()
+            for (int i = 0; i < 20; i++)
             {
-                new RowItem("Cell Value 11","Cell Value 12","Cell Value 13","Cell Value 14","Cell Value 15"),
-                new RowItem("Cell Value 21","Cell Value 2","Cell Value 3","Cell Value 4","Cell Value 5"),
-                new RowItem("Cell Value 31","Cell Value 2","Cell Value 3","Cell Value 4","Cell Value 5"),
-                new RowItem("Cell Value 41","Cell Value 2","Cell Value 3","Cell Value 4","Cell Value 5"),
-                new RowItem("Cell Value 51","Cell Value 2","Cell Value 3","Cell Value 4","Cell Value 5"),
-                new RowItem("Cell Value 61","Cell Value 2","Cell Value 3","Cell Value 4","Cell Value 5"),
-                new RowItem("Cell Value 71","Cell Value 2","Cell Value 3","Cell Value 4","Cell Value 5"),
-                new RowItem("Cell Value 81","Cell Value 2","Cell Value 3","Cell Value 4","Cell Value 5"),
-            };
+                var prefix = $"Cell Value {i}";
+                var row = new RowItem($"{prefix}1", $"{prefix}2", $"{prefix}3", $"{prefix}4", $"{prefix}5");
+                Rows.Add(row);
+            }
         }
 
         private void OnDropItem(object obj)

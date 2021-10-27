@@ -24,6 +24,7 @@
         <ResourceDictionary Source="Custom/Jg.TextBox.xaml" />
         <ResourceDictionary Source="Custom/Jg.ListBox.xaml" />
         <ResourceDictionary Source="Custom/Jg.TabControl.xaml" />
+        <ResourceDictionary Source="Custom/Jg.DataGrid.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

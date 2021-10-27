@@ -13,7 +13,7 @@
     <Grid>
         <TabControl Style="{StaticResource Jg.Default.TabControl}">
             <TabItem Header="Draggable ItemsControl">
-                <local:DraggableListBox DataContext="{Binding DraggableItemsControlViewModel}" />
+                <local:DraggableItemsControl DataContext="{Binding DraggableItemsControlViewModel}" />
             </TabItem>
             <TabItem Header="Draggable ListBox">
                 <local:DraggableListBox DataContext="{Binding DraggableListBoxViewModel}" />

@@ -14,33 +14,143 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <ListBox ItemsSource="{Binding Rows}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="4" Width="200" Text="{Binding CellProperty1}" />
-                        <TextBlock Margin="4" Width="200" Text="{Binding CellProperty2}" />
-                        <TextBlock Margin="4" Width="200" Text="{Binding CellProperty3}" />
-                        <TextBlock Margin="4" Width="200" Text="{Binding CellProperty4}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+        <TabControl>
+            <TabItem Header="Dragging Horizontal">
+                <ListBox
+                    ItemsSource="{Binding Rows}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    Style="{StaticResource Jg.AnimationScrolling.ListBox}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty1}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty2}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty3}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty4}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
 
-            <i:Interaction.Behaviors>
-                <behaviors:ItemControlDragBehavior DraggingMode="{Binding IsInDraggingMode}" />
-            </i:Interaction.Behaviors>
+                    <i:Interaction.Behaviors>
+                        <behaviors:ItemControlDragBehavior DraggingMode="{Binding IsInDraggingMode}" />
+                    </i:Interaction.Behaviors>
 
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <layoutPanel:CustomerLayoutPanel ShowModeButton="True" Style="{StaticResource Jg.Vertical.CustomerLayoutPanelStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="ItemDropped">
-                                <triggerActions:EventToCommand Command="{Binding ItemDroppedCommand}" PassEventArgsToCommand="True" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </layoutPanel:CustomerLayoutPanel>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <layoutPanel:CustomerLayoutPanel
+                                Columns="{Binding Rows.Count}"
+                                ShowModeButton="True"
+                                Style="{StaticResource Jg.Horizontal.CustomerLayoutPanelStyle}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="ItemDropped">
+                                        <triggerActions:EventToCommand Command="{Binding ItemDroppedCommand}" PassEventArgsToCommand="True" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </layoutPanel:CustomerLayoutPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="Dragging Vertical">
+                <ListBox ItemsSource="{Binding Rows}" Style="{StaticResource Jg.AnimationScrolling.ListBox}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty1}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty2}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty3}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty4}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <i:Interaction.Behaviors>
+                        <behaviors:ItemControlDragBehavior DraggingMode="{Binding IsInDraggingMode}" />
+                    </i:Interaction.Behaviors>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <layoutPanel:CustomerLayoutPanel ShowModeButton="True" Style="{StaticResource Jg.Vertical.CustomerLayoutPanelStyle}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="ItemDropped">
+                                        <triggerActions:EventToCommand Command="{Binding ItemDroppedCommand}" PassEventArgsToCommand="True" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </layoutPanel:CustomerLayoutPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </TabItem>
+
+            <TabItem Header="Dragging All">
+                <ListBox ItemsSource="{Binding Rows}" Style="{StaticResource Jg.AnimationScrolling.ListBox}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty1}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty2}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty3}" />
+                                <TextBlock
+                                    Width="200"
+                                    Margin="4"
+                                    Text="{Binding CellProperty4}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <i:Interaction.Behaviors>
+                        <behaviors:ItemControlDragBehavior DraggingMode="{Binding IsInDraggingMode}" />
+                    </i:Interaction.Behaviors>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <layoutPanel:CustomerLayoutPanel
+                                Columns="4"
+                                ShowModeButton="True"
+                                Style="{StaticResource Jg.All.CustomerLayoutPanelStyle}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="ItemDropped">
+                                        <triggerActions:EventToCommand Command="{Binding ItemDroppedCommand}" PassEventArgsToCommand="True" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </layoutPanel:CustomerLayoutPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

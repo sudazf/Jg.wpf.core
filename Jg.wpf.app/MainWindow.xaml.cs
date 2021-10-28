@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Jg.wpf.app.Models;
@@ -39,7 +38,7 @@ namespace Jg.wpf.app
 
         private void UIElement_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            MenuToggleButton.IsChecked = false;
+            //MenuToggleButton.IsChecked = false;
         }
 
         private void MenuToggleButton_OnClick(object sender, RoutedEventArgs e)

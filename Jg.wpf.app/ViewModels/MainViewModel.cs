@@ -38,8 +38,12 @@ namespace Jg.wpf.app.ViewModels
                 if (!string.IsNullOrEmpty(_searchKeyword))
                 {
                     DemoItems = _defaultItems.Where(i => i.Name.ToLower().Contains(_searchKeyword.ToLower())).ToList();
-                    RaisePropertyChanged(()=> DemoItems);
                 }
+                else
+                {
+                    DemoItems = _defaultItems;
+                }
+                RaisePropertyChanged(() => DemoItems);
             }
         }
 

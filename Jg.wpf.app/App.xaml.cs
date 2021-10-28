@@ -13,8 +13,7 @@ namespace Jg.wpf.app
         {
             ServiceManager.Init(Current.Dispatcher);
 
-            var themes = ServiceManager.GetService<IThemeService>();
-            themes.ApplyBase(false);
+            ServiceManager.GetService<IThemeService>()?.ApplyBase(false);
         }
     }
 }

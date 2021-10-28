@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+    <SolidColorBrush x:Key="TabHeaderHighlightBrush" Color="#DEDEDE" po:Freeze="True" />
+    <SolidColorBrush x:Key="TabHeaderInactiveBrush" Color="Gray" po:Freeze="True" />
+    
+</ResourceDictionary>

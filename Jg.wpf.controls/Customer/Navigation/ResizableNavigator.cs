@@ -38,17 +38,20 @@ namespace Jg.wpf.controls.Customer.Navigation
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
-            _items = new List<NavigatorItem>();
-            foreach (var group in this.Items)
+            if (_items == null)
             {
-                if (group is NavigatorGroup ng)
+                _items = new List<NavigatorItem>();
+                foreach (var group in this.Items)
                 {
-                    foreach (var ngItem in ng.Items)
+                    if (group is NavigatorGroup ng)
                     {
-                        if (ngItem is NavigatorItem ni)
+                        foreach (var ngItem in ng.Items)
                         {
-                            ni.OnNavigated += OnNavigated;
-                            _items.Add(ni);
+                            if (ngItem is NavigatorItem ni)
+                            {
+                                ni.OnNavigated += OnNavigated;
+                                _items.Add(ni);
+                            }
                         }
                     }
                 }

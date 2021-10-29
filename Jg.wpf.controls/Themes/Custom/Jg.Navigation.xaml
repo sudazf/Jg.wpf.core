@@ -21,7 +21,7 @@
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             Style="{StaticResource Jg.NavigationExpander}">
-                            <ItemsPresenter Margin="2,0,10,0" />
+                            <ItemsPresenter Margin="2 0 2 0" />
                         </Expander>
                     </Border>
                 </ControlTemplate>
@@ -79,12 +79,12 @@
                 <ControlTemplate TargetType="{x:Type navigation:ResizableNavigator}">
                     <Grid Margin="0,0,8,0" HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" MinWidth="46" />
+                            <ColumnDefinition Width="200" MinWidth="60" MaxWidth="400" />
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0">
-                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer Margin="0 0 8 0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                                 <ItemsPresenter />
                             </ScrollViewer>
                         </Border>

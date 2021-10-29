@@ -17,13 +17,25 @@
                 <navigation:NavigatorItem Icon="Apple" Display="菜单一" />
                 <navigation:NavigatorItem Icon="Apple" Display="菜单二" />
                 <navigation:NavigatorItem Icon="Apple" Display="菜单三" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单四" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单五" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单六" />
             </navigation:NavigatorGroup>
             <navigation:NavigatorGroup GroupName="菜单组合二">
                 <navigation:NavigatorItem Icon="Apple" Display="菜单一" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单二" />
                 <navigation:NavigatorItem Icon="Apple" Display="菜单三" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单四" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单五" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单六" />
             </navigation:NavigatorGroup>
             <navigation:NavigatorGroup GroupName="菜单组合三">
                 <navigation:NavigatorItem Icon="Apple" Display="菜单一" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单二" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单三" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单四" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单五" />
+                <navigation:NavigatorItem Icon="Apple" Display="菜单六" />
             </navigation:NavigatorGroup>
         </navigation:ResizableNavigator>
     </Grid>

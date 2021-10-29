@@ -90,7 +90,7 @@
                                           Focusable="False"
                                           IsTabStop="False"
                                           DockPanel.Dock="Top"
-                                          Margin="2 0 10 0"
+                                          Margin="2 0 2 0"
                                           BorderThickness="0" Cursor="Hand"
                                           IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           Style="{StaticResource Jg.HorizontalHeaderStyle}"

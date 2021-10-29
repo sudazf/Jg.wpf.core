@@ -5,6 +5,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Expander.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 
@@ -53,4 +54,60 @@
         </Style.Triggers>
     </Style>
 
+
+    <Style x:Key="Jg.HorizontalHeaderStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="Border" Background="{TemplateBinding Background}" 
+                            CornerRadius="0"
+                            Padding="{Binding Path=(materialDesign:ExpanderAssist.HorizontalHeaderPadding) , RelativeSource={RelativeSource AncestorType=Expander, AncestorLevel=1}}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ToggleButton x:Name="ExpanderButton"
+                                          Grid.Column="0"
+                                          VerticalAlignment="Center"
+                                          RenderTransformOrigin="0.5 0.5"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsChecked="{Binding Path=IsChecked, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MaterialDesignExpanderToggleButton}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ExpandDirection, RelativeSource={RelativeSource AncestorType=Expander, AncestorLevel=1}}" Value="Up">
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <RotateTransform Angle="180"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
+                            </ToggleButton>
+
+                            <ContentPresenter Grid.Column="2"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"/>
+
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Border" Value="{DynamicResource ItemMouseOverBackground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

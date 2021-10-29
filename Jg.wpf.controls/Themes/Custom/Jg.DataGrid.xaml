@@ -13,7 +13,7 @@
         x:Key="Jg.AnimationScrolling.DataGrid"
         BasedOn="{StaticResource MaterialDesignDataGrid}"
         TargetType="DataGrid">
-
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGrid}">

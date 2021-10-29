@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.0.1.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
@@ -78,11 +80,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Custom\Jg.Expander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Custom\Jg.ItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Custom\Jg.ListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Custom\Jg.Navigation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,12 +121,16 @@
     <Compile Include="Behaviors\HexTextBoxBehaviour.cs" />
     <Compile Include="Behaviors\ItemControlDragBehavior.cs" />
     <Compile Include="Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converter\ExpanderRotateAngleConverter.cs" />
     <Compile Include="Converter\HexStringConverter.cs" />
     <Compile Include="Converter\InverseBoolConverter.cs" />
     <Compile Include="Converter\LocalizationConverterExtension.cs" />
     <Compile Include="Converter\LocalizationExtension.cs" />
     <Compile Include="Converter\MathConverter.cs" />
     <Compile Include="Customer\LayoutPanel\CustomerLayoutPanel.cs" />
+    <Compile Include="Customer\Navigation\NavigatorGroup.cs" />
+    <Compile Include="Customer\Navigation\NavigatorItem.cs" />
+    <Compile Include="Customer\Navigation\ResizableNavigator.cs" />
     <Compile Include="Customer\NumericTextBox\NumericTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

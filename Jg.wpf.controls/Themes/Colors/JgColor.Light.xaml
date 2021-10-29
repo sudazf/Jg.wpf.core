@@ -1,12 +1,24 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-        <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Blue.xaml" />
-        </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="TabHeaderHighlightBrush" Color="{StaticResource Primary500}" po:Freeze="True" />
-    <SolidColorBrush x:Key="TabHeaderInactiveBrush" Color="#89000000" po:Freeze="True" />
+    <SolidColorBrush
+        x:Key="TabHeaderHighlightBrush"
+        po:Freeze="True"
+        Color="{StaticResource Primary500}" />
+    <SolidColorBrush
+        x:Key="TabHeaderInactiveBrush"
+        po:Freeze="True"
+        Color="#89000000" />
+
+    <SolidColorBrush x:Key="TextForeground" po:Freeze="True" Color="#1E1E1E" />
+    <SolidColorBrush x:Key="TextSelectedForeground" po:Freeze="True" Color="White" />
+    <SolidColorBrush x:Key="ItemSelectedBackground" Color="{StaticResource Primary500}" po:Freeze="True" />
+    <SolidColorBrush x:Key="ItemMouseOverBackground" Color="LightGray" po:Freeze="True" />
 
 </ResourceDictionary>

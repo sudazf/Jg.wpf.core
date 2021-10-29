@@ -87,11 +87,8 @@ namespace Jg.wpf.core.Service.ThemeService
                             AddResourceDictionary(mergedDictionaries, resourceDictionaryMergedDictionary.Source.LocalPath);
                         }
                     }
-                    else
-                    {
-                        mergedDictionaries.Add(resourceDictionary);
-                    }
-
+         
+                    mergedDictionaries.Add(resourceDictionary);
                 }
                 catch (IOException e)
                 {

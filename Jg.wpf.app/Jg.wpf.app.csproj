@@ -81,8 +81,14 @@
     <Compile Include="Controls\DraggableListBox.xaml.cs">
       <DependentUpon>DraggableListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NavigationRail.xaml.cs">
+      <DependentUpon>NavigationRail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NavigationRailDemo.xaml.cs">
       <DependentUpon>NavigationRailDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NavigationResizable.xaml.cs">
+      <DependentUpon>NavigationResizable.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DraggableViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -102,7 +108,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\NavigationRail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\NavigationRailDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NavigationResizable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

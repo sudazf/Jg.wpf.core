@@ -4,5 +4,10 @@
 
     <SolidColorBrush x:Key="TabHeaderHighlightBrush" Color="#DEDEDE" po:Freeze="True" />
     <SolidColorBrush x:Key="TabHeaderInactiveBrush" Color="Gray" po:Freeze="True" />
-    
+
+    <SolidColorBrush x:Key="TextForeground" Color="#DEDEDE" po:Freeze="True" />
+    <SolidColorBrush x:Key="TextSelectedForeground" po:Freeze="True" Color="#1E1E1E" />
+    <SolidColorBrush x:Key="ItemSelectedBackground" Color="Gray" po:Freeze="True" />
+    <SolidColorBrush x:Key="ItemMouseOverBackground" Color="LightGray" po:Freeze="True" />
+
 </ResourceDictionary>

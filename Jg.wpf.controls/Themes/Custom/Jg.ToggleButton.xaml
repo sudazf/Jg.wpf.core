@@ -97,13 +97,19 @@
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"/>
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Foreground" Value="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor,AncestorLevel=1,AncestorType=ToggleButton}}" />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
 
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Border" Value="{DynamicResource ItemMouseOverBackground}" />
+                            <Setter Property="Background" TargetName="Border" Value="{DynamicResource MouseOverItemBackground}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -17,8 +17,10 @@
         Color="#89000000" />
 
     <SolidColorBrush x:Key="TextForeground" po:Freeze="True" Color="#1E1E1E" />
-    <SolidColorBrush x:Key="TextSelectedForeground" po:Freeze="True" Color="White" />
-    <SolidColorBrush x:Key="ItemSelectedBackground" Color="{StaticResource Primary500}" po:Freeze="True" />
-    <SolidColorBrush x:Key="ItemMouseOverBackground" Color="LightGray" po:Freeze="True" />
+    <SolidColorBrush x:Key="SelectedTextForeground" po:Freeze="True" Color="White" />
+    <SolidColorBrush x:Key="SelectedItemBackground" Color="{StaticResource Primary500}" po:Freeze="True" />
+    <SolidColorBrush x:Key="MouseOverItemTextForeground" Color="White" po:Freeze="True" />
+    <SolidColorBrush x:Key="MouseOverItemBackground" Color="LightGray" po:Freeze="True" />
+    <SolidColorBrush x:Key="MenuHeaderForeground" Color="#1E1E1E" po:Freeze="True" />
 
 </ResourceDictionary>

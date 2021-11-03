@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DynamicDataDisplay">
+      <HintPath>..\Libs\DynamicDisplayChart\DynamicDataDisplay.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.0.1.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\MaterialDesign\MaterialDesignColors.dll</HintPath>
@@ -69,6 +72,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\DisplayChartDemo.xaml.cs">
+      <DependentUpon>DisplayChartDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DraggableDataGrid.xaml.cs">
       <DependentUpon>DraggableDataGrid.xaml</DependentUpon>
     </Compile>
@@ -92,6 +98,10 @@
     </Compile>
     <Compile Include="ViewModels\DraggableViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Page Include="Controls\DisplayChartDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DraggableDataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -174,6 +184,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)..\Libs\MaterialDesign\*.dll" "$(TargetDir)" /S /Y
+xcopy "$(SolutionDir)..\Libs\DynamicDisplayChart\*.dll" "$(TargetDir)" /S /Y
 rd /s /q "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
   </PropertyGroup>
 </Project>

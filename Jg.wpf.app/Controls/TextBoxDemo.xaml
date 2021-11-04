@@ -59,20 +59,49 @@
             Grid.Row="1"
             Grid.Column="1"
             Orientation="Horizontal">
+
+            <ComboBox
+                Width="60"
+                Margin="4 4 16 4"
+                Padding="0 2"
+                VerticalContentAlignment="Center"
+                ItemsSource="{Binding Bits}"
+                SelectedItem="{Binding SelectBit}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Margin="4"
+                                VerticalAlignment="Center"
+                                Text="{Binding}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="4"
+                                VerticalAlignment="Center"
+                                Text="位" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <controls:HexTextBox
-                Width="100"
+                Width="160"
                 Margin="4,4,4,4"
                 VerticalAlignment="Center"
+                Bit="{Binding SelectBit}"
                 Style="{StaticResource Jg.HexTextBox}"
                 Text="{Binding HexValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
-                Margin="16 4 4 4"
+                Margin="16,4,4,4"
                 VerticalAlignment="Center"
                 Text="Dec: " />
 
             <TextBox
-                Width="100"
+                Width="160"
                 Margin="4,4,4,4"
                 VerticalAlignment="Center"
                 Foreground="LightGray"

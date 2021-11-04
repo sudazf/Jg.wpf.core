@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Jg.wpf.core.Notify;
 
 namespace Jg.wpf.app.ViewModels
@@ -6,9 +7,21 @@ namespace Jg.wpf.app.ViewModels
     public class TextBoxDemoViewModel : ViewModelBase
     {
         private string _hexValue;
+        private int _selectBit;
 
-        public ushort DecValue { get; set; }
-
+        public int SelectBit
+        {
+            get => _selectBit;
+            set
+            {
+                _selectBit = value;
+                HexValue = "0";
+                RaisePropertyChanged(()=> SelectBit);
+                RaisePropertyChanged(() => HexValue);
+            }
+        }
+        public List<int> Bits { get; }
+        public string DecValue { get; set; }
         public string HexValue
         {
             get => _hexValue;
@@ -25,7 +38,21 @@ namespace Jg.wpf.app.ViewModels
                     }
                     try
                     {
-                        DecValue = Convert.ToUInt16(input, 16);
+                        switch (SelectBit)
+                        {
+                            case 16:
+                                DecValue = Convert.ToUInt16(input, 16).ToString();
+                                break;
+                            case 32:
+                                DecValue = Convert.ToUInt32(input, 16).ToString();
+                                break;
+                            case 64:
+                                DecValue = Convert.ToUInt64(input, 16).ToString();
+                                break;
+                            default:
+                                DecValue = Convert.ToUInt16(input, 16).ToString();
+                                break;
+                        }
                         RaisePropertyChanged(() => DecValue);
                         _hexValue = value;
                     }
@@ -39,6 +66,12 @@ namespace Jg.wpf.app.ViewModels
 
         public TextBoxDemoViewModel()
         {
+            Bits = new List<int>
+            {
+                16,32,64
+            };
+
+            SelectBit = Bits[0];
             HexValue = "12AE";
         }
 
@@ -51,6 +84,5 @@ namespace Jg.wpf.app.ViewModels
             var reg = new System.Text.RegularExpressions.Regex("^[0-9A-Fa-f]*$");
             return reg.IsMatch(text);
         }
-
     }
 }

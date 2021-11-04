@@ -27,6 +27,7 @@
         BasedOn="{StaticResource Jg.DefaultTextBox}"
         TargetType="{x:Type customer:HexTextBox}">
         <Setter Property="InputMethod.IsInputMethodEnabled" Value="False" />
+        <Setter Property="materialDesign:TextFieldAssist.PrefixText" Value="0x" />
 
     </Style>
 

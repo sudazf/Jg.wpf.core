@@ -7,6 +7,16 @@ namespace Jg.wpf.controls.Customer
 {
     public class HexTextBox : TextBox
     {
+        public int Bit
+        {
+            get => (int)GetValue(BitProperty);
+            set => SetValue(BitProperty, value);
+        }
+
+        public static readonly DependencyProperty BitProperty =
+            DependencyProperty.Register("Bit", typeof(int), typeof(HexTextBox), new PropertyMetadata(16));
+
+
         public HexTextBox()
         {
             PreviewTextInput += OnPreviewTextInput;
@@ -50,7 +60,7 @@ namespace Jg.wpf.controls.Customer
                 replaceOrInsert = textBox.Text.Insert(textBox.SelectionStart, e.Text);
             }
 
-            e.Handled = !IsHex(replaceOrInsert) || !Is16Bit(replaceOrInsert);
+            e.Handled = !IsHex(replaceOrInsert) || !IsValidBit(replaceOrInsert);
         }
 
         private void OnCustomGotFocus(object sender, RoutedEventArgs e)
@@ -78,11 +88,23 @@ namespace Jg.wpf.controls.Customer
             return res;
         }
 
-        private bool Is16Bit(string text)
+        private bool IsValidBit(string text)
         {
             try
             {
-                Convert.ToUInt16(text, 16);
+                switch (Bit)
+                {
+                    case 16:
+                        Convert.ToUInt16(text, 16);
+                        break;
+                    case 32:
+                        Convert.ToUInt32(text, 16);
+                        break;
+                    case 64:
+                        Convert.ToUInt64(text, 16);
+                        break;
+                }
+
                 return true;
             }
             catch (Exception e)

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Jg.wpf.controls.Customer.NumericTextBox
+namespace Jg.wpf.controls.Customer
 {
     public class NumericTextBox : TextBox
     {

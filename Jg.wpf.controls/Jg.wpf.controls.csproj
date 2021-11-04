@@ -130,6 +130,7 @@
     <Compile Include="Converter\LocalizationConverterExtension.cs" />
     <Compile Include="Converter\LocalizationExtension.cs" />
     <Compile Include="Converter\MathConverter.cs" />
+    <Compile Include="Customer\HexTextBox\HexTextBox.cs" />
     <Compile Include="Customer\LayoutPanel\CustomerLayoutPanel.cs" />
     <Compile Include="Customer\Navigation\NavigatorGroup.cs" />
     <Compile Include="Customer\Navigation\NavigatorItem.cs" />

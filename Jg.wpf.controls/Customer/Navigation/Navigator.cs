@@ -6,7 +6,7 @@ using System.Windows.Controls.Primitives;
 
 namespace Jg.wpf.controls.Customer.Navigation
 {
-    public class ResizableNavigator : Selector
+    public class Navigator : Selector
     {
         private List<NavigatorItem> _items;
 
@@ -19,7 +19,7 @@ namespace Jg.wpf.controls.Customer.Navigation
         }
 
         public static readonly DependencyProperty ContentProperty =
-            DependencyProperty.Register("Content", typeof(FrameworkElement), typeof(ResizableNavigator), new PropertyMetadata(null));
+            DependencyProperty.Register("Content", typeof(FrameworkElement), typeof(Navigator), new PropertyMetadata(null));
 
 
         public DataTemplateSelector DataTemplateSelector    
@@ -29,9 +29,9 @@ namespace Jg.wpf.controls.Customer.Navigation
         }
 
         public static readonly DependencyProperty DataTemplateSelectorProperty =
-            DependencyProperty.Register("DataTemplateSelector", typeof(DataTemplateSelector), typeof(ResizableNavigator), new PropertyMetadata(null));
+            DependencyProperty.Register("DataTemplateSelector", typeof(DataTemplateSelector), typeof(Navigator), new PropertyMetadata(null));
 
-        public ResizableNavigator()
+        public Navigator()
         {
             Loaded += OnControlLoaded;
         }

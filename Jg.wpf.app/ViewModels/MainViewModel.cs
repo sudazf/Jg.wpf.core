@@ -52,9 +52,9 @@ namespace Jg.wpf.app.ViewModels
             _defaultItems = new List<DemoItem>()
             {
                 new DemoItem("Navigation", "NavigationRailDemo", null),
-                new DemoItem("Draggable", "DraggableDemo", new DraggableDemoViewModel()),
-                new DemoItem("DisplayChart", "DisplayChartDemo", null),
-                new DemoItem("CustomTextBox", "TextBoxDemo", new TextBoxDemoViewModel()),
+                new DemoItem("Draggable Item", "DraggableDemo", new DraggableDemoViewModel()),
+                new DemoItem("Display Chart", "DisplayChartDemo", null),
+                new DemoItem("Custom TextBox", "TextBoxDemo", new TextBoxDemoViewModel()),
 
             };
             DemoItems = _defaultItems;

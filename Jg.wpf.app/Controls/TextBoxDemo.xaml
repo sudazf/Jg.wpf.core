@@ -23,7 +23,7 @@
         <TextBlock
             Margin="4"
             VerticalAlignment="Center"
-            Text="Numeric: " />
+            Text="Numeric TextBox: " />
 
         <StackPanel
             Grid.Row="0"
@@ -53,7 +53,8 @@
             Grid.Row="1"
             Margin="4"
             VerticalAlignment="Center"
-            Text="Hex: " />
+            HorizontalAlignment="Right"
+            Text="Hex TextBox: " />
 
         <StackPanel
             Grid.Row="1"

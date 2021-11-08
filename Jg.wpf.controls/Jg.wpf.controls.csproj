@@ -134,7 +134,7 @@
     <Compile Include="Customer\LayoutPanel\CustomerLayoutPanel.cs" />
     <Compile Include="Customer\Navigation\NavigatorGroup.cs" />
     <Compile Include="Customer\Navigation\NavigatorItem.cs" />
-    <Compile Include="Customer\Navigation\ResizableNavigator.cs" />
+    <Compile Include="Customer\Navigation\Navigator.cs" />
     <Compile Include="Customer\NumericTextBox\NumericTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

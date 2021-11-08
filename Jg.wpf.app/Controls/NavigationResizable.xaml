@@ -3,16 +3,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Jg.wpf.app.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:navigation="clr-namespace:Jg.wpf.controls.Customer.Navigation;assembly=Jg.wpf.controls"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
     <Grid>
-        <navigation:ResizableNavigator x:Name="Menu">
+        <navigation:Navigator x:Name="Menu">
             <navigation:NavigatorGroup GroupName="菜单组合一">
                 <navigation:NavigatorItem Icon="Apple" Display="菜单一" />
                 <navigation:NavigatorItem Icon="Apple" Display="菜单二" />
@@ -37,6 +35,6 @@
                 <navigation:NavigatorItem Icon="Apple" Display="菜单五" />
                 <navigation:NavigatorItem Icon="Apple" Display="菜单六" />
             </navigation:NavigatorGroup>
-        </navigation:ResizableNavigator>
+        </navigation:Navigator>
     </Grid>
 </UserControl>

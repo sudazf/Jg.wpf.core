@@ -64,6 +64,8 @@ namespace Jg.wpf.app.ViewModels
             }
         }
 
+        public double ValidateValue { get; set; }
+
         public TextBoxDemoViewModel()
         {
             Bits = new List<int>
@@ -73,6 +75,7 @@ namespace Jg.wpf.app.ViewModels
 
             SelectBit = Bits[0];
             HexValue = "12AE";
+            ValidateValue = 999.999;
         }
 
         private bool IsValid(string text)

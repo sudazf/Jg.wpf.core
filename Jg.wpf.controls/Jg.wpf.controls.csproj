@@ -121,6 +121,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assist\BindingProxy.cs" />
     <Compile Include="Behaviors\HexTextBoxBehaviour.cs" />
     <Compile Include="Behaviors\ItemControlDragBehavior.cs" />
     <Compile Include="Converter\BoolToVisibilityConverter.cs" />

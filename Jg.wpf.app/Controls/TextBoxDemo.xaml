@@ -6,12 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
+    xmlns:controls1="clr-namespace:Jg.wpf.app.Controls"
+    xmlns:assist="clr-namespace:Jg.wpf.controls.Assist;assembly=Jg.wpf.controls"
     d:DataContext="{d:DesignInstance viewModels:TextBoxDemoViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
@@ -45,7 +48,7 @@
                 Margin="4"
                 VerticalAlignment="Center"
                 Foreground="LightGray"
-                Text="(0 ~ 1000, 小数位最多 3, 单位 cm)" />
+                Text="(0 ~ 1000, 小数位最多3位, 单位cm, 不能手动输入超过上下限, 若超过上下限自动修正到上下限临界值)" />
 
         </StackPanel>
 
@@ -111,6 +114,54 @@
 
         </StackPanel>
 
+        <TextBlock
+            Grid.Row="2"
+            Margin="4"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Text="Numeric Validator: " />
+
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            Orientation="Horizontal">
+
+            <controls:NumericTextBox
+                x:Name="ValidationTextBox"
+                Width="100"
+                Margin="4"
+                VerticalAlignment="Center"
+                Decimals="3"
+                Max="1000"
+                Min="0"
+                CanOutOfRange="True"
+                Style="{StaticResource Jg.NumericTextBox}"
+                Unit="cm">
+                <controls:NumericTextBox.Resources>
+                    <assist:BindingProxy x:Key="Proxy" Data="{Binding  ElementName=ValidationTextBox}" />
+                </controls:NumericTextBox.Resources>
+                <controls:NumericTextBox.Text>
+                    <Binding Path="ValidateValue" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <controls1:NumericValidationRule ValidatesOnTargetUpdated="True">
+                                <controls1:NumericValidationRule.Wrapper>
+                                    <controls1:NumericValidationWrapper Min="{Binding Data.Min, Source={StaticResource Proxy}}" 
+                                                                        Max="{Binding Data.Max, Source={StaticResource Proxy}}" 
+                                                                        Decimals="{Binding Data.Decimals, Source={StaticResource Proxy}}" />
+                                </controls1:NumericValidationRule.Wrapper>
+                            </controls1:NumericValidationRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </controls:NumericTextBox.Text>
+            </controls:NumericTextBox>
+
+            <TextBlock
+                Margin="4"
+                VerticalAlignment="Center"
+                Foreground="LightGray"
+                Text="(0 ~ 1000, 小数位最多3位, 单位cm, 可以手动输入超过上下限, 若超过上下限失去焦点进行验证)" />
+
+        </StackPanel>
 
     </Grid>
 </UserControl>

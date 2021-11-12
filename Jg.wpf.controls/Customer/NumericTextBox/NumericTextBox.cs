@@ -49,6 +49,18 @@ namespace Jg.wpf.controls.Customer
         public static readonly DependencyProperty UnitProperty =
             DependencyProperty.Register("Unit", typeof(string), typeof(NumericTextBox), new PropertyMetadata(""));
 
+        /// <summary>
+        /// if set to true, should use ValidationRule manually.
+        /// </summary>
+        public bool CanOutOfRange
+        {
+            get => (bool)GetValue(CanOutOfRangeProperty);
+            set => SetValue(CanOutOfRangeProperty, value);
+        }
+
+        public static readonly DependencyProperty CanOutOfRangeProperty =
+            DependencyProperty.Register("CanOutOfRange", typeof(bool), typeof(NumericTextBox), new PropertyMetadata(false));
+
 
         private static void OnDecimalsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -62,9 +74,24 @@ namespace Jg.wpf.controls.Customer
         {
             UpdateRegex();
             PreviewTextInput += OnPreviewTextInput;
+            KeyDown += OnCustomKeyDown;
             GotFocus += OnCustomGotFocus;
             LostFocus += OnCustomLostFocus;
             DataObject.AddPastingHandler(this, PasteHandle);
+        }
+
+        private void OnCustomKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var request = new TraversalRequest(FocusNavigationDirection.Next);
+
+                if (Keyboard.FocusedElement is UIElement elementWithFocus)
+                {
+                    elementWithFocus.MoveFocus(request);
+                }
+                e.Handled = true;
+            }
         }
 
         private void OnCustomGotFocus(object sender, RoutedEventArgs e)
@@ -74,11 +101,20 @@ namespace Jg.wpf.controls.Customer
 
         private void OnCustomLostFocus(object sender, RoutedEventArgs e)
         {
+            if (CanOutOfRange)
+            {
+                return;
+            }
+
             if (double.TryParse(Text, out var res))
             {
                 if (res < Min)
                 {
                     Text = Min.ToString(CultureInfo.InvariantCulture);
+                }
+                else if(res > Max)
+                {
+                    Text = Max.ToString(CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -107,6 +143,7 @@ namespace Jg.wpf.controls.Customer
                  e.KeyboardDevice.Modifiers != ModifierKeys.Shift) ||
                 e.Key == Key.Back || e.Key == Key.Left || e.Key == Key.Right ||
                 e.Key == Key.Enter || e.Key == Key.Decimal ||
+                e.Key == Key.Delete ||
                 e.Key == Key.OemPeriod || e.Key == Key.OemMinus || e.Key == Key.Subtract || e.Key == Key.End
                 || e.Key == Key.Home || e.Key == Key.Tab || e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
@@ -139,11 +176,14 @@ namespace Jg.wpf.controls.Customer
             }
             else
             {
-                if (double.TryParse(value, out var res))
+                if (!CanOutOfRange)
                 {
-                    if (res > Max)
+                    if (double.TryParse(value, out var res))
                     {
-                        result = false;
+                        if (res > Max || res < Min)
+                        {
+                            result = false;
+                        }
                     }
                 }
             }

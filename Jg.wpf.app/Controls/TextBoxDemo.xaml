@@ -48,7 +48,7 @@
                 Margin="4"
                 VerticalAlignment="Center"
                 Foreground="LightGray"
-                Text="(0 ~ 1000, 小数位最多3位, 单位cm, 不能手动输入超过上下限, 若超过上下限自动修正到上下限临界值)" />
+                Text="(范围: 0 ~ 1000, 最多小数位: 3, 无法输入超过上下限, 若超过自动修正到上下限临界值)" />
 
         </StackPanel>
 
@@ -159,7 +159,7 @@
                 Margin="4"
                 VerticalAlignment="Center"
                 Foreground="LightGray"
-                Text="(0 ~ 1000, 小数位最多3位, 单位cm, 可以手动输入超过上下限, 若超过上下限失去焦点进行验证)" />
+                Text="(范围: 0 ~ 1000, 最多小数位: 3, 可以输入超过上下限, 在失去焦点时进行验证)" />
 
         </StackPanel>
 

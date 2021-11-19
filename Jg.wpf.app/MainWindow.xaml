@@ -10,8 +10,8 @@
     Title="MainWindow"
     Width="1000"
     Height="600"
-    Background="{DynamicResource MaterialDesignPaper}"
     d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+    Style="{StaticResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <materialDesign:DialogHost

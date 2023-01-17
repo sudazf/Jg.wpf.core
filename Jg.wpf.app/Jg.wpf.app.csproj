@@ -102,12 +102,16 @@
     <Compile Include="Controls\NavigationResizable.xaml.cs">
       <DependentUpon>NavigationResizable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RefreshPerFrameDemo.xaml.cs">
+      <DependentUpon>RefreshPerFrameDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextBoxDemo.xaml.cs">
       <DependentUpon>TextBoxDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DraggableViewModel.cs" />
     <Compile Include="ViewModels\ListViewViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RefreshPerFrameViewModel.cs" />
     <Compile Include="ViewModels\TextBoxDemoViewModel.cs" />
     <Page Include="Controls\DisplayChartDemo.xaml">
       <SubType>Designer</SubType>
@@ -142,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NavigationResizable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RefreshPerFrameDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,6 +209,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Roasted Chicken.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Image\duke.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -6,11 +6,11 @@ using Jg.wpf.app.ViewModels;
 namespace Jg.wpf.app.Controls
 {
     /// <summary>
-    /// RefreshPerFrameDemo.xaml 的交互逻辑
+    /// RefreshPerFrameDemo2.xaml 的交互逻辑
     /// </summary>
-    public partial class RefreshPerFrameDemo : UserControl
+    public partial class RefreshPerFrameDemo2 : UserControl
     {
-        public RefreshPerFrameDemo()
+        public RefreshPerFrameDemo2()
         {
             InitializeComponent();
 
@@ -19,12 +19,13 @@ namespace Jg.wpf.app.Controls
 
         private void OnRendering(object sender, RenderingEventArgs e)
         {
-            if (DataContext is RefreshPerFrameViewModel vm)
+            if (DataContext is RefreshPerFrameViewModel2 vm2)
             {
-                vm.Refresh();
+                vm2.UpdateImages();
             }
         }
     }
+
 
     public static class CompositionTargetEx
     {
@@ -51,10 +52,10 @@ namespace Jg.wpf.app.Controls
             }
         }
 
-        static void CompositionTarget_Rendering(object sender, EventArgs e)
+        private static void CompositionTarget_Rendering(object sender, EventArgs e)
         {
             RenderingEventArgs args = (RenderingEventArgs)e;
-            if (args.RenderingTime - _last < TimeSpan.FromMilliseconds(30))
+            if (args.RenderingTime - _last < TimeSpan.FromMilliseconds(200))
             {
                 return;
             }

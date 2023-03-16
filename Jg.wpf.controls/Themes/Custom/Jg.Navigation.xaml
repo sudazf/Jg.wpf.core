@@ -91,7 +91,6 @@
                                 Width="200"
                                 MinWidth="60"
                                 MaxWidth="400" />
-                            <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0">
@@ -107,7 +106,7 @@
                             Width="8"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Stretch" />
-                        <Border Grid.Column="2">
+                        <Border Grid.Column="1">
                             <ContentPresenter Content="{TemplateBinding Content}" />
                         </Border>
                     </Grid>

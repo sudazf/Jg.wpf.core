@@ -56,7 +56,8 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("Display Chart", "DisplayChartDemo", null),
                 new DemoItem("Custom TextBox", "TextBoxDemo", new TextBoxDemoViewModel()),
                 new DemoItem("ListView","ListViewDemo",new ListViewViewModel()),
-                new DemoItem("Refresh per frame","RefreshPerFrameDemo",new RefreshPerFrameViewModel()),
+                new DemoItem("Refresh Default","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
+                new DemoItem("Refresh Queue","RefreshPerFrameDemo2",new RefreshPerFrameViewModel2()),
 
             };
             DemoItems = _defaultItems;

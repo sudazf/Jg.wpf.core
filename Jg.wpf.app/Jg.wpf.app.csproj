@@ -102,8 +102,11 @@
     <Compile Include="Controls\NavigationResizable.xaml.cs">
       <DependentUpon>NavigationResizable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RefreshPerFrameDemo.xaml.cs">
-      <DependentUpon>RefreshPerFrameDemo.xaml</DependentUpon>
+    <Compile Include="Controls\RefreshPerFrameDemo1.xaml.cs">
+      <DependentUpon>RefreshPerFrameDemo1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RefreshPerFrameDemo2.xaml.cs">
+      <DependentUpon>RefreshPerFrameDemo2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TextBoxDemo.xaml.cs">
       <DependentUpon>TextBoxDemo.xaml</DependentUpon>
@@ -111,7 +114,8 @@
     <Compile Include="ViewModels\DraggableViewModel.cs" />
     <Compile Include="ViewModels\ListViewViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\RefreshPerFrameViewModel.cs" />
+    <Compile Include="ViewModels\RefreshPerFrameViewModel1.cs" />
+    <Compile Include="ViewModels\RefreshPerFrameViewModel2.cs" />
     <Compile Include="ViewModels\TextBoxDemoViewModel.cs" />
     <Page Include="Controls\DisplayChartDemo.xaml">
       <SubType>Designer</SubType>
@@ -149,7 +153,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\RefreshPerFrameDemo.xaml">
+    <Page Include="Controls\RefreshPerFrameDemo1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RefreshPerFrameDemo2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

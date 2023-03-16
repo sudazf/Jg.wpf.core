@@ -14,15 +14,12 @@
         x:Key="Jg.TabControl"
         BasedOn="{StaticResource MaterialDesignTabControl}"
         TargetType="{x:Type TabControl}">
-        <Setter Property="mde:TabControlAssist.TabHeaderHighlightBrush" Value="{DynamicResource TabHeaderHighlightBrush}" />
-        <Setter Property="mde:TabControlAssist.TabHeaderInactiveBrush" Value="{DynamicResource TabHeaderInactiveBrush}" />
     </Style>
 
     <Style
         x:Key="Jg.UniformHeader.TabControl"
         BasedOn="{StaticResource Jg.TabControl}"
         TargetType="{x:Type TabControl}">
-        <Setter Property="mde:TabControlAssist.TabHeaderHorizontalAlignment" Value="Stretch" />
     </Style>
 
     <Style

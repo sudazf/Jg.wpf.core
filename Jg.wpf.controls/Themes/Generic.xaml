@@ -4,7 +4,7 @@
 
         <!-- This is the current way to setup your app's initial theme -->
         <materialDesign:BundledTheme
-            BaseTheme="Dark"
+            BaseTheme="Light"
             ColorAdjustment="{materialDesign:ColorAdjustment}"
             PrimaryColor="Blue"
             SecondaryColor="Lime" />

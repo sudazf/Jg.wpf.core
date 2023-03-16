@@ -33,14 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MaterialDesignColors">
-      <HintPath>..\Libs\MaterialDesign\MaterialDesignColors.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf">
-      <HintPath>..\Libs\MaterialDesign\MaterialDesignThemes.Wpf.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -63,17 +63,16 @@
     <Compile Include="Profilers\MemoryMonitor.cs" />
     <Compile Include="Profilers\Profiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\FileService\FileDialogServiceImp.cs" />
-    <Compile Include="Service\FileService\IFileDialogService.cs" />
+    <Compile Include="Service\FileService\FileServiceImp.cs" />
+    <Compile Include="Service\FileService\FileTypes\BinaryFileImp.cs" />
+    <Compile Include="Service\FileService\FileTypes\JsonFileImp.cs" />
+    <Compile Include="Service\FileService\FileTypes\TxtFileImp.cs" />
+    <Compile Include="Service\FileService\FileTypes\XmlFileImp.cs" />
     <Compile Include="Service\FileService\IFileService.cs" />
-    <Compile Include="Service\FileService\IXmlFileService.cs" />
-    <Compile Include="Service\FileService\TxtFileServiceImp.cs" />
-    <Compile Include="Service\FileService\XmlFileServiceImp.cs" />
     <Compile Include="Service\Resource\ResourceManager.cs" />
     <Compile Include="Service\ServiceManager.cs" />
     <Compile Include="Service\ServiceRegistration.cs" />
     <Compile Include="Service\ThemeService\IThemeService.cs" />
-    <Compile Include="Service\ThemeService\ThemeServiceImp.cs" />
     <Compile Include="Service\ThreadService\CustomTaskScheduler.cs" />
     <Compile Include="Service\ThreadService\DispatcherHelper.cs" />
     <Compile Include="Service\ThreadService\DispatcherServiceImp.cs" />

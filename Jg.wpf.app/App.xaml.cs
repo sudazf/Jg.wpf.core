@@ -12,8 +12,6 @@ namespace Jg.wpf.app
         protected override void OnStartup(StartupEventArgs e)
         {
             ServiceManager.Init(Current.Dispatcher);
-
-            ServiceManager.GetService<IThemeService>()?.ApplyBase(false);
         }
     }
 }

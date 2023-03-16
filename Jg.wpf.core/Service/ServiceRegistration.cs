@@ -31,10 +31,7 @@ namespace Jg.wpf.core.Service
             TranslateHelper.Initialize(language);
 
             ServiceManager.RegisterService("DispatcherService", new DispatcherServiceImp(dispatcher));
-            ServiceManager.RegisterService("FileDialogService", new FileDialogServiceImp());
-            ServiceManager.RegisterService("XmlFileService", new XmlFileServiceImp());
-            ServiceManager.RegisterService("TxtFileService", new TxtFileServiceImp());
-            ServiceManager.RegisterService("ThemeService", new ThemeServiceImp());
+            ServiceManager.RegisterService("FileService", new FileServiceImp());
         }
     }
 }

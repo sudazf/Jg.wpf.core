@@ -46,9 +46,6 @@
     <Reference Include="MaterialDesignColors, Version=2.1.2.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\Jg.wpf.core\packages\MaterialDesignColors.2.1.2\lib\net462\MaterialDesignColors.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignExtensions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c5ebccebe084d64f, processorArchitecture=MSIL">
-      <HintPath>..\Jg.wpf.core\packages\MaterialDesignExtensions.3.3.0\lib\net45\MaterialDesignExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.8.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\Jg.wpf.core\packages\MaterialDesignThemes.4.8.0\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
@@ -212,6 +209,10 @@
     <ProjectReference Include="..\Jg.wpf.controls\Jg.wpf.controls.csproj">
       <Project>{8133d388-288a-4876-bdd5-56a8e7e34836}</Project>
       <Name>Jg.wpf.controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jg.wpf.core\Jg.wpf.core.csproj">
+      <Project>{ae32aa46-4536-4be7-9589-1cf857821759}</Project>
+      <Name>Jg.wpf.core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

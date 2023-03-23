@@ -107,6 +107,9 @@
     <Compile Include="Controls\RefreshPerFrameDemo2.xaml.cs">
       <DependentUpon>RefreshPerFrameDemo2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ScrollViewerAnimationDemo.xaml.cs">
+      <DependentUpon>ScrollViewerAnimationDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextBoxDemo.xaml.cs">
       <DependentUpon>TextBoxDemo.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RefreshPerFrameViewModel1.cs" />
     <Compile Include="ViewModels\RefreshPerFrameViewModel2.cs" />
+    <Compile Include="ViewModels\ScrollViewerAnimationViewModel.cs" />
     <Compile Include="ViewModels\TextBoxDemoViewModel.cs" />
     <Page Include="Controls\DisplayChartDemo.xaml">
       <SubType>Designer</SubType>
@@ -157,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RefreshPerFrameDemo2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ScrollViewerAnimationDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -58,6 +58,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("ListView","ListViewDemo",new ListViewViewModel()),
                 new DemoItem("Refresh Default","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
                 new DemoItem("Refresh Queue","RefreshPerFrameDemo2",new RefreshPerFrameViewModel2()),
+                new DemoItem("ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
 
             };
             DemoItems = _defaultItems;

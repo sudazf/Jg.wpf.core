@@ -81,6 +81,9 @@
     <Compile Include="Service\ThreadService\TaskManagerFactory.cs" />
     <Compile Include="Service\ThreadService\TaskProxy.cs" />
     <Compile Include="Service\ThreadService\ThreadManager.cs" />
+    <Compile Include="Utility\Animations\AnimationUtil.cs" />
+    <Compile Include="Utility\Animations\BrushAnimation.cs" />
+    <Compile Include="Utility\Animations\CornerRadiusAnimation.cs" />
     <Compile Include="Utility\JsonNewtonsoft.cs" />
     <Compile Include="Utility\TranslateHelper.cs" />
   </ItemGroup>

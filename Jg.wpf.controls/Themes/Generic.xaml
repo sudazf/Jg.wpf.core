@@ -18,6 +18,7 @@
 
         <!--  Custom  -->
         <ResourceDictionary Source="Custom/Jg.TextBlock.xaml" />
+        <ResourceDictionary Source="Custom/Jg.ScrollViewer.xaml" />
         <ResourceDictionary Source="Custom/Jg.ItemControl.xaml" />
         <ResourceDictionary Source="Custom/Jg.CustomerLayoutPanel.xaml" />
         <ResourceDictionary Source="Custom/Jg.ToggleButton.xaml" />

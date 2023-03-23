@@ -95,6 +95,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Custom\Jg.ScrollViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Custom\Jg.TabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assist\BindingProxy.cs" />
+    <Compile Include="Assist\ScrollViewerHelper.cs" />
     <Compile Include="Behaviors\HexTextBoxBehaviour.cs" />
     <Compile Include="Behaviors\ItemControlDragBehavior.cs" />
     <Compile Include="Converter\BoolToVisibilityConverter.cs" />

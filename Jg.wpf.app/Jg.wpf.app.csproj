@@ -74,9 +74,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\DisplayChartDemo.xaml.cs">
-      <DependentUpon>DisplayChartDemo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DraggableDataGrid.xaml.cs">
       <DependentUpon>DraggableDataGrid.xaml</DependentUpon>
     </Compile>
@@ -120,10 +117,6 @@
     <Compile Include="ViewModels\RefreshPerFrameViewModel2.cs" />
     <Compile Include="ViewModels\ScrollViewerAnimationViewModel.cs" />
     <Compile Include="ViewModels\TextBoxDemoViewModel.cs" />
-    <Page Include="Controls\DisplayChartDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\DraggableDataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,8 +225,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)..\Libs\DynamicDisplayChart\*.dll" "$(TargetDir)" /S /Y
-rd /s /q "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
+    <PostBuildEvent>rd /s /q "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\Jg.wpf.core\packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets" Condition="Exists('..\Jg.wpf.core\packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -53,7 +53,6 @@ namespace Jg.wpf.app.ViewModels
             {
                 new DemoItem("Navigation", "NavigationRailDemo", null),
                 new DemoItem("Draggable Item", "DraggableDemo", new DraggableDemoViewModel()),
-                new DemoItem("Display Chart", "DisplayChartDemo", null),
                 new DemoItem("Custom TextBox", "TextBoxDemo", new TextBoxDemoViewModel()),
                 new DemoItem("ListView","ListViewDemo",new ListViewViewModel()),
                 new DemoItem("Refresh Default","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
 using Jg.wpf.core.Service;
 using Jg.wpf.core.Service.ThemeService;
 
@@ -12,6 +14,9 @@ namespace Jg.wpf.app
         protected override void OnStartup(StartupEventArgs e)
         {
             ServiceManager.Init(Current.Dispatcher);
+
+            var themes = ServiceManager.GetService<IThemeService>();
+            themes.Apply(true);
         }
     }
 }

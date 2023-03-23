@@ -73,6 +73,7 @@
     <Compile Include="Service\ServiceManager.cs" />
     <Compile Include="Service\ServiceRegistration.cs" />
     <Compile Include="Service\ThemeService\IThemeService.cs" />
+    <Compile Include="Service\ThemeService\ThemesServiceImp.cs" />
     <Compile Include="Service\ThreadService\CustomTaskScheduler.cs" />
     <Compile Include="Service\ThreadService\DispatcherHelper.cs" />
     <Compile Include="Service\ThreadService\DispatcherServiceImp.cs" />

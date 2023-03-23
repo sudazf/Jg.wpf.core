@@ -30,6 +30,7 @@ namespace Jg.wpf.core.Service
             Logger.Initialize();
             TranslateHelper.Initialize(language);
 
+            ServiceManager.RegisterService("ThemesService", new ThemesServiceImp());
             ServiceManager.RegisterService("DispatcherService", new DispatcherServiceImp(dispatcher));
             ServiceManager.RegisterService("FileService", new FileServiceImp());
         }

@@ -1,0 +1,20 @@
+﻿<UserControl
+    x:Class="Jg.wpf.app.Controls.AutocompleteDemo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:autocompletes="clr-namespace:Jg.wpf.controls.Customer.Autocompletes;assembly=Jg.wpf.controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Jg.wpf.app.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:AutocompleteViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <autocompletes:TextBoxSuggestions Margin="16" Width="200" Height="32" Style="{StaticResource Jg.TextBoxSuggestions}" 
+                                          TextBoxSuggestionsSource="{Binding TextBoxSuggestionsSource}">
+            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </autocompletes:TextBoxSuggestions>
+    </Grid>
+</UserControl>

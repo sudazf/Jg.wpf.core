@@ -125,13 +125,22 @@
     <Compile Include="Assist\ScrollViewerHelper.cs" />
     <Compile Include="Behaviors\HexTextBoxBehaviour.cs" />
     <Compile Include="Behaviors\ItemControlDragBehavior.cs" />
+    <Compile Include="Converter\BooleanOrConverter.cs" />
     <Compile Include="Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converter\EmptyEnumerableToBoolConverter.cs" />
     <Compile Include="Converter\ExpanderRotateAngleConverter.cs" />
     <Compile Include="Converter\HexStringConverter.cs" />
     <Compile Include="Converter\InverseBoolConverter.cs" />
     <Compile Include="Converter\LocalizationConverterExtension.cs" />
     <Compile Include="Converter\LocalizationExtension.cs" />
     <Compile Include="Converter\MathConverter.cs" />
+    <Compile Include="Customer\Autocompletes\AutocompleteController.cs" />
+    <Compile Include="Customer\Autocompletes\AutocompletePopup.cs" />
+    <Compile Include="Customer\Autocompletes\ControlWithAutocompletePopup.cs" />
+    <Compile Include="Customer\Autocompletes\IAutocompleteSource.cs" />
+    <Compile Include="Customer\Autocompletes\ITextBoxSuggestionsSource.cs" />
+    <Compile Include="Customer\Autocompletes\TextBoxSuggestions.cs" />
+    <Compile Include="Customer\Autocompletes\TextBoxSuggestionsCommands.cs" />
     <Compile Include="Customer\HexTextBox\HexTextBox.cs" />
     <Compile Include="Customer\LayoutPanel\CustomerLayoutPanel.cs" />
     <Compile Include="Customer\Navigation\NavigatorGroup.cs" />
@@ -169,6 +178,7 @@
       <Name>Jg.wpf.core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\Jg.wpf.core\packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets" Condition="Exists('..\Jg.wpf.core\packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

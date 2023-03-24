@@ -74,6 +74,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\AutocompleteDemo.xaml.cs">
+      <DependentUpon>AutocompleteDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DraggableDataGrid.xaml.cs">
       <DependentUpon>DraggableDataGrid.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,7 @@
     <Compile Include="Controls\TextBoxDemo.xaml.cs">
       <DependentUpon>TextBoxDemo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AutocompleteViewModel.cs" />
     <Compile Include="ViewModels\DraggableViewModel.cs" />
     <Compile Include="ViewModels\ListViewViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -117,6 +121,10 @@
     <Compile Include="ViewModels\RefreshPerFrameViewModel2.cs" />
     <Compile Include="ViewModels\ScrollViewerAnimationViewModel.cs" />
     <Compile Include="ViewModels\TextBoxDemoViewModel.cs" />
+    <Page Include="Controls\AutocompleteDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DraggableDataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

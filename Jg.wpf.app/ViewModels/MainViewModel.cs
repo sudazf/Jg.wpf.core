@@ -58,7 +58,8 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("Refresh Default","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
                 new DemoItem("Refresh Queue","RefreshPerFrameDemo2",new RefreshPerFrameViewModel2()),
                 new DemoItem("ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
-
+                new DemoItem("Autocomplete","AutocompleteDemo",new AutocompleteViewModel()),
+                
             };
             DemoItems = _defaultItems;
 

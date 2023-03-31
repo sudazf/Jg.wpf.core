@@ -110,6 +110,9 @@
     <Compile Include="Controls\ScrollViewerAnimationDemo.xaml.cs">
       <DependentUpon>ScrollViewerAnimationDemo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TabControlDemo.xaml.cs">
+      <DependentUpon>TabControlDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextBoxDemo.xaml.cs">
       <DependentUpon>TextBoxDemo.xaml</DependentUpon>
     </Compile>
@@ -166,6 +169,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ScrollViewerAnimationDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TabControlDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

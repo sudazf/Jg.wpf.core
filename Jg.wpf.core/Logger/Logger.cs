@@ -12,38 +12,19 @@ namespace Jg.wpf.core.Log
 {
     public class Logger
     {
-        #region Fields and Events (2) 
-
-        // Fields (2) 
-
         private static TraceLevel _traceLevel;
         private static readonly object Mutex = new object();
         private const double BytesPerGB = 1000 * 1000 * 1024;
-        //private static DriveInfo _driveInfo;
+        public static bool LogTime { get; set; }
 
-        #endregion Fields and Events 
-
-        #region Properties (4) 
-
-        /// <summary>
-        /// Note Lock the type of Logger before you call this property
-        /// </summary>
         public static Dictionary<string, TraceLevel> AssemblyFilters { get; } = new Dictionary<string, TraceLevel>();
 
         public static bool Filter { get; set; }
 
         public static string FileName { get; set; }
 
-        /// <summary>
-        /// Indicate whether the logger shall be ignored
-        /// This is used when logger level is verbose and some cyclically code is running(e.g., cineloop progress) which create lot of log info.
-        /// </summary>
         public static bool Ignore { get; set; }
 
-        /// <summary>
-        /// Indicate whether the logger shall be ignored
-        /// This is used when some cyclically code is running(e.g., read native temperature) which create lot of log info.
-        /// </summary>
         public static bool IgnoreNative { get; set; }
 
         public static TraceLevel LogLevel
@@ -63,34 +44,18 @@ namespace Jg.wpf.core.Log
 
         [ThreadStatic]
         public static TraceLevel CurrentLoggertraceLevel;
-        /// <summary>
-        /// True to show the assembly and method names for the source of the log, false to disable this.
-        /// </summary>
+
         public static bool ShowPath { get; set; }
-
-        /// <summary>
-        /// True to log native trace result, false to not log native trace result.
-        /// There are some issue when step into .net code when native trace is forwarded to Logger, so before debuging, you can off this flag.
-        /// </summary>
         public static LogType ShowLogType { get; set; }
-
-        #endregion Properties 
-
-        #region Methods (6) 
 
         static Logger()
         {
             LogTime = true;
         }
-        // Methods (6) 
-
-        // NOTE: Please keep this format!
         private static readonly string _infoTag = "I ; ";
-        //private static readonly string _debguTag = "D ; ";
         private static readonly string _warnTag = "W ; ";
         private static readonly string _errorTag = "E ; ";
         private static readonly string _verboseTag = "V ; ";
-        //private static readonly string _fatalTag = "F ; ";
         private const string NativeLogHeader = "NAT:";
 
         private static int _lastFlush;
@@ -211,11 +176,6 @@ namespace Jg.wpf.core.Log
             WriteLineIf(ShowLogType != LogType.Native, TraceLevel.Verbose, format, args, 2);
         }
 
-        /// <summary>
-        /// Write the log information no matter the trace level.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <remarks>Only use this if necessary. Else there will be too much log information during debugging</remarks>
         public static void ForceWriteLine(string message)
         {
             WriteLineIf(ShowLogType != LogType.Native, TraceLevel.Off, message, null, 2);
@@ -361,14 +321,6 @@ namespace Jg.wpf.core.Log
             }
         }
 
-        /// <summary>
-        /// Indicate whether to output time stamp for log message. You can set to false if some debugger tool has already provided this.
-        /// </summary>
-        public static bool LogTime { get; set; }
-
-        /// <summary>
-        /// Force flush, so the information cached in trace listeners will be output to the interesting media(such as debug window or the log file)
-        /// </summary>
         public static void Flush()
         {
             lock (Mutex)
@@ -388,8 +340,6 @@ namespace Jg.wpf.core.Log
                 }
             }
         }
-
-        #endregion Methods 
     }
 
     public enum LogType

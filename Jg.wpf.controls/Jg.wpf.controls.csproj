@@ -124,7 +124,10 @@
     <Compile Include="Assist\BindingProxy.cs" />
     <Compile Include="Assist\ScrollViewerHelper.cs" />
     <Compile Include="Behaviors\HexTextBoxBehaviour.cs" />
+    <Compile Include="Behaviors\IndicatorScrollableBehavior.cs" />
     <Compile Include="Behaviors\ItemControlDragBehavior.cs" />
+    <Compile Include="Behaviors\JgBehavior.cs" />
+    <Compile Include="Behaviors\ScrollableBehavior.cs" />
     <Compile Include="Converter\BooleanOrConverter.cs" />
     <Compile Include="Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Converter\EmptyEnumerableToBoolConverter.cs" />
@@ -142,6 +145,7 @@
     <Compile Include="Customer\Autocompletes\TextBoxSuggestions.cs" />
     <Compile Include="Customer\Autocompletes\TextBoxSuggestionsCommands.cs" />
     <Compile Include="Customer\HexTextBox\HexTextBox.cs" />
+    <Compile Include="Customer\JScrollViewer\JScrollViewer.cs" />
     <Compile Include="Customer\LayoutPanel\CustomerLayoutPanel.cs" />
     <Compile Include="Customer\Navigation\NavigatorGroup.cs" />
     <Compile Include="Customer\Navigation\NavigatorItem.cs" />

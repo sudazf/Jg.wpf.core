@@ -21,6 +21,8 @@ namespace Jg.wpf.app.ViewModels
                 "IIIIIIII",
                 "JJJJJJJJ",
                 "KKKKKKKK",
+                "LLLLLLLL",
+                "MMMMMMMM",
             };
         }
     }

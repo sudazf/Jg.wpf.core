@@ -59,7 +59,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("Refresh Queue","RefreshPerFrameDemo2",new RefreshPerFrameViewModel2()),
                 new DemoItem("ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
                 new DemoItem("Autocomplete","AutocompleteDemo",new AutocompleteViewModel()),
-                new DemoItem("Animation TabControl","TabControlDemo", null),
+                new DemoItem("TabControl Animation","TabControlDemo", null),
                 
             };
             DemoItems = _defaultItems;

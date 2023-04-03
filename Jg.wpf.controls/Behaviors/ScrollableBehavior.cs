@@ -12,15 +12,6 @@ namespace Jg.wpf.controls.Behaviors
 {
     public class ScrollableBehavior : JgBehavior<JScrollViewer>
     {
-        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
-            "IsEnabled", typeof(bool), typeof(ScrollableBehavior), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
-
-        public static void SetIsEnabled(DependencyObject element, bool value)
-        {
-            element.SetValue(IsEnabledProperty, value);
-        }
-
-
         public static readonly DependencyProperty SelectorProperty = DependencyProperty.Register(
             "Selector", typeof(Selector), typeof(ScrollableBehavior), new PropertyMetadata(null));
 
@@ -42,76 +33,14 @@ namespace Jg.wpf.controls.Behaviors
         {
             return (JgOrientation)element.GetValue(OrientationProperty);
         }
-
-        public static readonly DependencyProperty MaskLengthProperty = DependencyProperty.RegisterAttached(
-            "MaskLength", typeof(double), typeof(ScrollableBehavior), new PropertyMetadata(120.0));
-
-        public static void SetMaskLength(DependencyObject element, double value)
-        {
-            element.SetValue(MaskLengthProperty, value);
-        }
-
-        public static double GetMaskLength(DependencyObject element)
-        {
-            return (double)element.GetValue(MaskLengthProperty);
-        }
-
-        public static readonly DependencyProperty MaskBrushProperty = DependencyProperty.RegisterAttached(
-            "MaskBrush", typeof(SolidColorBrush), typeof(ScrollableBehavior), new PropertyMetadata(Brushes.Transparent));
-
-        public static void SetMaskBrush(DependencyObject element, SolidColorBrush value)
-        {
-            element.SetValue(MaskBrushProperty, value);
-        }
-
-        public static SolidColorBrush GetMaskBrush(DependencyObject element)
-        {
-            return (SolidColorBrush)element.GetValue(MaskBrushProperty);
-        }
-
-        public static readonly DependencyPropertyKey StartMaskBackgroundPropertyKey = DependencyProperty.RegisterReadOnly(
-            "StartMaskBackground", typeof(Brush), typeof(ScrollableBehavior), new PropertyMetadata(Brushes.Transparent));
-
-        public Brush StartMaskBackground
-        {
-            get { return (Brush)GetValue(StartMaskBackgroundPropertyKey.DependencyProperty); }
-            private set { SetValue(StartMaskBackgroundPropertyKey, value); }
-        }
-
-        public static readonly DependencyPropertyKey EndMaskBackgroundPropertyKey = DependencyProperty.RegisterReadOnly(
-            "EndMaskBackground", typeof(Brush), typeof(ScrollableBehavior), new PropertyMetadata(Brushes.Transparent));
-
-        public Brush EndMaskBackground
-        {
-            get { return (Brush)GetValue(EndMaskBackgroundPropertyKey.DependencyProperty); }
-            private set { SetValue(EndMaskBackgroundPropertyKey, value); }
-        }
-
-        public static readonly DependencyPropertyKey StartMaskOpacityPropertyKey = DependencyProperty.RegisterReadOnly(
-            "StartMaskOpacity", typeof(double), typeof(ScrollableBehavior), new PropertyMetadata(0.0));
-
-        public double StartMaskOpacity
-        {
-            get { return (double)GetValue(StartMaskOpacityPropertyKey.DependencyProperty); }
-            private set { SetValue(StartMaskOpacityPropertyKey, value); }
-        }
-
-        public static readonly DependencyPropertyKey EndMaskOpacityPropertyKey = DependencyProperty.RegisterReadOnly(
-            "EndMaskOpacity", typeof(double), typeof(ScrollableBehavior), new PropertyMetadata(0.0));
-
-        public double EndMaskOpacity
-        {
-            get { return (double)GetValue(EndMaskOpacityPropertyKey.DependencyProperty); }
-            private set { SetValue(EndMaskOpacityPropertyKey, value); }
-        }
-
+ 
         private static readonly DependencyProperty ScrollExtentWidthProperty = DependencyProperty.Register(
             "ScrollExtentWidth", typeof(double), typeof(ScrollableBehavior), new PropertyMetadata(0.0, ScrollExtentSizePropertyChangedCallback));
 
         private double ScrollExtentWidth
         {
-            get { return (double)GetValue(ScrollExtentWidthProperty); }
-            set { SetValue(ScrollExtentWidthProperty, value); }
+            get => (double)GetValue(ScrollExtentWidthProperty);
+            set => SetValue(ScrollExtentWidthProperty, value);
         }
 
         private static readonly DependencyProperty ScrollExtentHeightProperty = DependencyProperty.Register(
@@ -119,9 +48,33 @@ namespace Jg.wpf.controls.Behaviors
 
         private double ScrollExtentHeight
         {
-            get { return (double)GetValue(ScrollExtentHeightProperty); }
-            set { SetValue(ScrollExtentHeightProperty, value); }
+            get => (double)GetValue(ScrollExtentHeightProperty);
+            set => SetValue(ScrollExtentHeightProperty, value);
         }
+
+
+
+
+        public HorizontalAlignment IndicatorHorizontalAlignment
+        {
+            get => (HorizontalAlignment)GetValue(IndicatorHorizontalAlignmentProperty);
+            set => SetValue(IndicatorHorizontalAlignmentProperty, value);
+        }
+
+        public static readonly DependencyProperty IndicatorHorizontalAlignmentProperty =
+            DependencyProperty.Register("IndicatorHorizontalAlignment", typeof(HorizontalAlignment), typeof(ScrollableBehavior), new PropertyMetadata(HorizontalAlignment.Left));
+
+
+        public VerticalAlignment IndicatorVerticalAlignment
+        {
+            get => (VerticalAlignment)GetValue(IndicatorVerticalAlignmentProperty);
+            set => SetValue(IndicatorVerticalAlignmentProperty, value);
+        }
+
+        public static readonly DependencyProperty IndicatorVerticalAlignmentProperty =
+            DependencyProperty.Register("IndicatorVerticalAlignment", typeof(VerticalAlignment), typeof(ScrollableBehavior), new PropertyMetadata(VerticalAlignment.Bottom));
+
+
 
         private static void ScrollExtentSizePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -170,48 +123,7 @@ namespace Jg.wpf.controls.Behaviors
 
         private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (sender is ScrollViewer scrollViewer)
-            {
-                var maskLength = GetMaskLength(scrollViewer);
-                var maskColor = GetMaskBrush(scrollViewer).Color;
-                Point gradientPoint1, gradientPoint2;
-                switch (GetOrientation(AssociatedObject))
-                {
-                    case JgOrientation.Horizontal:
-                    default:
-                        gradientPoint1 = new Point(0, 0);
-                        gradientPoint2 = new Point(1, 0);
-                        UpdateMaskOpacity(scrollViewer.HorizontalOffset, scrollViewer.ExtentWidth, scrollViewer.ViewportWidth, maskLength, maskColor, gradientPoint1, gradientPoint2);
-                        break;
-                    case JgOrientation.Vertical:
-                        gradientPoint1 = new Point(0, 0);
-                        gradientPoint2 = new Point(0, 1);
-                        UpdateMaskOpacity(scrollViewer.VerticalOffset, scrollViewer.ExtentHeight, scrollViewer.ViewportHeight, maskLength, maskColor, gradientPoint1, gradientPoint2);
-                        break;
-                }
-            }
-        }
-
-        private void UpdateMaskOpacity(double offset, double extentLength, double viewportLength, double maskLength, Color maskColor, Point gradientPoint1, Point gradientPoint2)
-        {
-            var startColor = maskColor;
-            var endColor = Color.FromArgb(0, maskColor.R, maskColor.G, maskColor.B);
-            LinearGradientBrush startGradientBrush = new LinearGradientBrush();
-            startGradientBrush.StartPoint = gradientPoint1;
-            startGradientBrush.EndPoint = gradientPoint2;
-            startGradientBrush.GradientStops.Add(new GradientStop(startColor, 0));
-            startGradientBrush.GradientStops.Add(new GradientStop(endColor, 1));
-            StartMaskBackground = startGradientBrush;
-
-            LinearGradientBrush endGradientBrush = new LinearGradientBrush();
-            endGradientBrush.StartPoint = gradientPoint2;
-            endGradientBrush.EndPoint = gradientPoint1;
-            endGradientBrush.GradientStops.Add(new GradientStop(startColor, 0));
-            endGradientBrush.GradientStops.Add(new GradientStop(endColor, 1));
-            EndMaskBackground = endGradientBrush;
-
-            StartMaskOpacity = Math.Min(maskLength, offset * 3) / maskLength;
-            EndMaskOpacity = Math.Min(maskLength, (extentLength - offset - viewportLength) * 3) / maskLength;
+   
         }
 
         protected virtual void OnSelectionChanged(ContentControl selectedElement, ScrollViewer scrollViewer, Point point)
@@ -251,7 +163,7 @@ namespace Jg.wpf.controls.Behaviors
         private void ScrollAnimation(double rectBegin, double rectEnd, double scrollOffset, double scrollLength,
             double scrollExtentLength, ScrollViewer scrollViewer, DependencyProperty offsetProperty)
         {
-            var length = GetMaskLength(scrollViewer);
+            var length = 0;
             double begin = rectBegin - length;
             double end = rectEnd + length;
             double offset;

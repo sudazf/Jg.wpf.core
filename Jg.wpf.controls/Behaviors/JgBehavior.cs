@@ -9,20 +9,14 @@ namespace Jg.wpf.controls.Behaviors
 
         protected sealed override void OnAttached()
         {
-            if (CheckCanRegister())
+            if (AssociatedObject != null)
             {
-                if (AssociatedObject != null)
-                {
-                    AssociatedObject.Loaded += OnAssociatedObjectLoaded;
-                    AssociatedObject.Unloaded += OnAssociatedObjectUnLoaded;
-                }
-                OnAssociatedObjectRegistered();
+                AssociatedObject.Loaded += OnAssociatedObjectLoaded;
+                AssociatedObject.Unloaded += OnAssociatedObjectUnLoaded;
             }
+            OnAssociatedObjectRegistered();
         }
-        protected virtual bool CheckCanRegister()
-        {
-            return AssociatedObject != null;
-        }
+
         protected virtual void OnAssociatedObjectRegistered()
         {
 
@@ -54,13 +48,10 @@ namespace Jg.wpf.controls.Behaviors
             {
                 _isCleanedUp = true;
                 OnCleanUp();
-                if (CheckCanRegister())
+                if (AssociatedObject != null)
                 {
-                    if (AssociatedObject != null)
-                    {
-                        AssociatedObject.Loaded -= OnAssociatedObjectLoaded;
-                        AssociatedObject.Unloaded -= OnAssociatedObjectUnLoaded;
-                    }
+                    AssociatedObject.Loaded -= OnAssociatedObjectLoaded;
+                    AssociatedObject.Unloaded -= OnAssociatedObjectUnLoaded;
                 }
             }
         }

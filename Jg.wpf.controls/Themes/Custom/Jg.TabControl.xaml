@@ -274,7 +274,7 @@
 
     </Style>
 
-    <DataTemplate x:Key="ScrollableSelector.BottomLine.IndicatorTemplate">
+    <DataTemplate x:Key="ScrollableSelector.Horizontal.IndicatorTemplate">
         <Rectangle
             Height="4"
             VerticalAlignment="Bottom"
@@ -283,126 +283,139 @@
             RadiusY="2" />
     </DataTemplate>
 
+    <DataTemplate x:Key="ScrollableSelector.Vertical.IndicatorTemplate">
+        <Rectangle
+            Width="4"
+            Fill="{DynamicResource PrimaryHueMidBrush}"
+            RadiusX="2"
+            RadiusY="2" />
+    </DataTemplate>
+
     <Style
-        x:Key="Jg.HorizontalAnimation.TabControl"
+        x:Key="Jg.Animation.TabControl"
         BasedOn="{StaticResource MaterialDesignNavigationRailTabControl}"
         TargetType="{x:Type TabControl}">
-        <Setter Property="TabStripPlacement" Value="Top" />
-        <Setter Property="behaviors:IndicatorScrollBehavior.IndicatorTemplate" Value="{StaticResource ScrollableSelector.BottomLine.IndicatorTemplate}" />
+        <Setter Property="behaviors:IndicatorScrollBehavior.IndicatorTemplate" Value="{StaticResource ScrollableSelector.Horizontal.IndicatorTemplate}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource Jg.Animation.UnderLine.TabItem}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
+        <Setter Property="Margin" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
-                    <DockPanel Background="{TemplateBinding Background}" KeyboardNavigation.TabNavigation="Local">
-                        <!--  tabs  -->
-                        <Grid
-                            x:Name="TabGrid"
-                            DockPanel.Dock="Left"
-                            SnapsToDevicePixels="True">
-                            <wpf:Card
-                                x:Name="shadowCard"
-                                wpf:ElevationAssist.Elevation="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ElevationAssist.Elevation)}"
-                                wpf:ShadowAssist.ShadowEdges="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ShadowAssist.ShadowEdges)}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                UniformCornerRadius="0"
-                                Visibility="Visible" />
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <DockPanel Background="{TemplateBinding Background}" KeyboardNavigation.TabNavigation="Local">
+                            <!--  tabs  -->
+                            <Grid
+                                x:Name="TabGrid"
+                                DockPanel.Dock="Left"
+                                SnapsToDevicePixels="True">
+                                <wpf:Card
+                                    x:Name="shadowCard"
+                                    wpf:ElevationAssist.Elevation="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ElevationAssist.Elevation)}"
+                                    wpf:ShadowAssist.ShadowEdges="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ShadowAssist.ShadowEdges)}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    UniformCornerRadius="0"
+                                    Visibility="Visible" />
 
+                                <wpf:ColorZone
+                                    x:Name="PART_HeaderCard"
+                                    VerticalAlignment="Stretch"
+                                    wpf:ColorZoneAssist.Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ColorZoneAssist.Background)}"
+                                    wpf:ColorZoneAssist.Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ColorZoneAssist.Foreground)}"
+                                    Focusable="False"
+                                    Mode="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ColorZoneAssist.Mode)}">
+                                    <Grid Background="{Binding ElementName=PART_HeaderCard, Path=Background}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="1*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <ContentPresenter
+                                            x:Name="FloatingContentPanel"
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:NavigationRailAssist.FloatingContent)}"
+                                            Focusable="False" />
+                                        <UniformGrid
+                                            x:Name="HeaderPanel"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Columns="1"
+                                            Focusable="False"
+                                            IsItemsHost="True"
+                                            Rows="0" />
+
+                                        <controls:JScrollViewer
+                                            x:Name="Indicator"
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2">
+                                            <Grid>
+                                                <ContentPresenter
+                                                    x:Name="PART_Indicator"
+                                                    HorizontalAlignment="{TemplateBinding behaviors:ScrollableBehavior.IndicatorHorizontalAlignment}"
+                                                    VerticalAlignment="{TemplateBinding behaviors:ScrollableBehavior.IndicatorVerticalAlignment}"
+                                                    ContentTemplate="{TemplateBinding behaviors:IndicatorScrollBehavior.IndicatorTemplate}"
+                                                    IsHitTestVisible="False" />
+                                                <TabPanel
+                                                    x:Name="PART_HeaderPanel"
+                                                    IsItemsHost="True"
+                                                    KeyboardNavigation.TabIndex="1" />
+                                            </Grid>
+                                            <i:Interaction.Behaviors>
+                                                <behaviors:IndicatorScrollBehavior Selector="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                            </i:Interaction.Behaviors>
+                                        </controls:JScrollViewer>
+
+                                        <Rectangle
+                                            x:Name="DividerRect"
+                                            Grid.RowSpan="2"
+                                            Width="1"
+                                            Height="Auto"
+                                            Fill="{DynamicResource MaterialDesignDivider}"
+                                            Visibility="Collapsed" />
+                                    </Grid>
+                                </wpf:ColorZone>
+
+                            </Grid>
+                            <!--  selected content  -->
                             <wpf:ColorZone
-                                x:Name="PART_HeaderCard"
+                                x:Name="PART_HeaderCardSelectedContent"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                wpf:ColorZoneAssist.Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ColorZoneAssist.Background)}"
-                                wpf:ColorZoneAssist.Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ColorZoneAssist.Foreground)}"
-                                Focusable="False"
-                                Mode="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ColorZoneAssist.Mode)}">
-                                <Grid Background="{Binding ElementName=PART_HeaderCard, Path=Background}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="1*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="1*" />
-                                    </Grid.ColumnDefinitions>
-                                    <ContentPresenter
-                                        x:Name="FloatingContentPanel"
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:NavigationRailAssist.FloatingContent)}"
-                                        Focusable="False" />
-                                    <UniformGrid
-                                        x:Name="HeaderPanel"
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        Columns="1"
-                                        Focusable="False"
-                                        IsItemsHost="True"
-                                        Rows="0" />
+                                Background="{x:Null}"
+                                Foreground="{DynamicResource MaterialDesignBody}"
+                                Mode="Standard">
 
-                                    <Rectangle
-                                        x:Name="DividerRect"
-                                        Grid.RowSpan="2"
-                                        Width="1"
-                                        Height="Auto"
-                                        HorizontalAlignment="Right"
-                                        Fill="{DynamicResource MaterialDesignDivider}"
-                                        Visibility="Collapsed" />
-                                </Grid>
+                                <ContentPresenter
+                                    x:Name="PART_SelectedContentHost"
+                                    Margin="{TemplateBinding Padding}"
+                                    ContentSource="SelectedContent"
+                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                    Focusable="False"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </wpf:ColorZone>
-                            <controls:JScrollViewer
-                                behaviors:ScrollableBehavior.MaskBrush="{TemplateBinding behaviors:ScrollableBehavior.MaskBrush}"
-                                behaviors:ScrollableBehavior.MaskLength="{TemplateBinding behaviors:ScrollableBehavior.MaskLength}"
-                                behaviors:ScrollableBehavior.Orientation="Horizontal"
-                                HorizontalScrollBarVisibility="Hidden"
-                                PanningMode="HorizontalOnly"
-                                VerticalScrollBarVisibility="Disabled">
-                                <Grid>
-                                    <ContentPresenter
-                                        x:Name="PART_Indicator"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Bottom"
-                                        ContentTemplate="{TemplateBinding behaviors:IndicatorScrollBehavior.IndicatorTemplate}"
-                                        IsHitTestVisible="False" />
-                                    <TabPanel
-                                        x:Name="PART_HeaderPanel"
-                                        IsItemsHost="True"
-                                        KeyboardNavigation.TabIndex="1" />
-                                </Grid>
-                                <i:Interaction.Behaviors>
-                                    <behaviors:IndicatorScrollBehavior Selector="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
-                                </i:Interaction.Behaviors>
-                            </controls:JScrollViewer>
-                        </Grid>
-                        <!--  selected content  -->
-                        <wpf:ColorZone
-                            x:Name="PART_HeaderCardSelectedContent"
-                            Padding="{TemplateBinding Padding}"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            Background="{x:Null}"
-                            Foreground="{DynamicResource MaterialDesignBody}"
-                            Mode="Standard">
 
-                            <ContentPresenter
-                                x:Name="PART_SelectedContentHost"
-                                Margin="{TemplateBinding Padding}"
-                                ContentSource="SelectedContent"
-                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}"
-                                ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                Focusable="False"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </wpf:ColorZone>
+                        </DockPanel>
+                    </Border>
 
-                        <!--<Grid DockPanel.Dock="Left">
-
-                        </Grid>-->
-                    </DockPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="wpf:ElevationAssist.Elevation" Value="Dp0">
                             <Setter TargetName="DividerRect" Property="Visibility" Value="Visible" />
@@ -412,7 +425,6 @@
                             <Setter TargetName="PART_HeaderCard" Property="Background" Value="Transparent" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Top">
-                            <Setter Property="BorderThickness" Value="0,0,0,1" />
                             <Setter Property="wpf:ShadowAssist.ShadowEdges" Value="Bottom" />
                             <Setter TargetName="DividerRect" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="DividerRect" Property="Grid.RowSpan" Value="1" />
@@ -425,9 +437,17 @@
                             <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
                             <Setter TargetName="HeaderPanel" Property="Rows" Value="1" />
                             <Setter TargetName="TabGrid" Property="DockPanel.Dock" Value="Top" />
+
+                            <Setter TargetName="Indicator" Property="behaviors:ScrollableBehavior.Orientation" Value="Horizontal" />
+                            <Setter TargetName="Indicator" Property="HorizontalScrollBarVisibility" Value="Hidden" />
+                            <Setter TargetName="Indicator" Property="VerticalScrollBarVisibility" Value="Disabled" />
+                            <Setter TargetName="Indicator" Property="PanningMode" Value="HorizontalOnly" />
+
+                            <Setter Property="behaviors:IndicatorScrollBehavior.IndicatorTemplate" Value="{StaticResource ScrollableSelector.Horizontal.IndicatorTemplate}" />
+                            <Setter Property="behaviors:ScrollableBehavior.IndicatorHorizontalAlignment" Value="Left" />
+                            <Setter Property="behaviors:ScrollableBehavior.IndicatorVerticalAlignment" Value="Bottom" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
-                            <Setter Property="BorderThickness" Value="0,1,0,0" />
                             <Setter Property="wpf:ShadowAssist.ShadowEdges" Value="Top" />
                             <Setter TargetName="DividerRect" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="DividerRect" Property="Grid.RowSpan" Value="1" />
@@ -440,12 +460,46 @@
                             <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
                             <Setter TargetName="HeaderPanel" Property="Rows" Value="1" />
                             <Setter TargetName="TabGrid" Property="DockPanel.Dock" Value="Bottom" />
+
+                            <Setter TargetName="Indicator" Property="behaviors:ScrollableBehavior.Orientation" Value="Horizontal" />
+                            <Setter TargetName="Indicator" Property="HorizontalScrollBarVisibility" Value="Hidden" />
+                            <Setter TargetName="Indicator" Property="VerticalScrollBarVisibility" Value="Disabled" />
+                            <Setter TargetName="Indicator" Property="PanningMode" Value="HorizontalOnly" />
+
+                            <Setter Property="behaviors:IndicatorScrollBehavior.IndicatorTemplate" Value="{StaticResource ScrollableSelector.Horizontal.IndicatorTemplate}" />
+                            <Setter Property="behaviors:ScrollableBehavior.IndicatorHorizontalAlignment" Value="Left" />
+                            <Setter Property="behaviors:ScrollableBehavior.IndicatorVerticalAlignment" Value="Top" />
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter TargetName="TabGrid" Property="DockPanel.Dock" Value="Left" />
+
+                            <Setter TargetName="Indicator" Property="behaviors:ScrollableBehavior.Orientation" Value="Vertical" />
+                            <Setter TargetName="Indicator" Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                            <Setter TargetName="Indicator" Property="VerticalScrollBarVisibility" Value="Hidden" />
+                            <Setter TargetName="Indicator" Property="PanningMode" Value="VerticalOnly" />
+
+                            <Setter TargetName="DividerRect" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="DividerRect" Property="Grid.Column" Value="1" />
+
+                            <Setter TargetName="TabGrid" Property="DockPanel.Dock" Value="Left" />
+                            <Setter Property="behaviors:IndicatorScrollBehavior.IndicatorTemplate" Value="{StaticResource ScrollableSelector.Vertical.IndicatorTemplate}" />
+                            <Setter Property="behaviors:ScrollableBehavior.IndicatorHorizontalAlignment" Value="Left" />
+                            <Setter Property="behaviors:ScrollableBehavior.IndicatorVerticalAlignment" Value="Top" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
-                            <Setter Property="BorderThickness" Value="1,0,0,0" />
-                            <Setter Property="wpf:ShadowAssist.ShadowEdges" Value="Left" />
-                            <Setter TargetName="DividerRect" Property="HorizontalAlignment" Value="Left" />
                             <Setter TargetName="TabGrid" Property="DockPanel.Dock" Value="Right" />
+
+                            <Setter TargetName="Indicator" Property="behaviors:ScrollableBehavior.Orientation" Value="Vertical" />
+                            <Setter TargetName="Indicator" Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                            <Setter TargetName="Indicator" Property="VerticalScrollBarVisibility" Value="Hidden" />
+                            <Setter TargetName="Indicator" Property="PanningMode" Value="VerticalOnly" />
+
+                            <Setter TargetName="DividerRect" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="DividerRect" Property="Grid.Column" Value="0" />
+
+                            <Setter Property="behaviors:IndicatorScrollBehavior.IndicatorTemplate" Value="{StaticResource ScrollableSelector.Vertical.IndicatorTemplate}" />
+                            <Setter Property="behaviors:ScrollableBehavior.IndicatorHorizontalAlignment" Value="Right" />
+                            <Setter Property="behaviors:ScrollableBehavior.IndicatorVerticalAlignment" Value="Top" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

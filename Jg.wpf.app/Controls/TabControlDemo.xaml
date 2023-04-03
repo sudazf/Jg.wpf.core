@@ -7,12 +7,114 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TabControl Style="{StaticResource Jg.HorizontalAnimation.TabControl}">
-            <TabItem Header="标题1111111" />
-            <TabItem Header="标题222" />
-            <TabItem Header="标题333333" />
-            <TabItem Header="标题444444" />
-            <TabItem Header="标题555555" />
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TabControl 
+            TabStripPlacement="Top"
+            Style="{StaticResource Jg.Animation.TabControl}">
+            <TabItem Header="标题1111111">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 1" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题222">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 2" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题333333">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 3" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题444444">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 4" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <TabControl Grid.Row="1"  Grid.Column="0"
+            TabStripPlacement="Left"
+            Style="{StaticResource Jg.Animation.TabControl}">
+            <TabItem Header="标题1111111">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 1" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题222">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 2" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题333333">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 3" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题444444">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 4" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <TabControl Grid.Row="0"  Grid.Column="1"
+                    TabStripPlacement="Bottom"
+                    Style="{StaticResource Jg.Animation.TabControl}">
+            <TabItem Header="标题1111111">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 1" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题222">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 2" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题333333">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 3" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题444444">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 4" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+ 
+        </TabControl>
+
+        <TabControl Grid.Row="1"  Grid.Column="1"
+                    TabStripPlacement="Right"
+                    Style="{StaticResource Jg.Animation.TabControl}">
+            <TabItem Header="标题1111111">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 1" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题222">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 2" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题333333">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 3" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="标题444444">
+                <Grid>
+                    <TextBlock Margin="4" Text="Tab 4" FontSize="40" Foreground="LightGray" />
+                </Grid>
+            </TabItem>
+   
         </TabControl>
     </Grid>
 </UserControl>

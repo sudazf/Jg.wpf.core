@@ -71,10 +71,10 @@ namespace Jg.wpf.core.Service.FileService
                     data = _jsonFileImp.Load<T>(filePath);
                     break;
                 case FileType.Binary:
-                    _binaryFileImp.Load<T>(filePath);
+                    data = _binaryFileImp.Load<T>(filePath);
                     break;
                 case FileType.Xml:
-                    _xmlFileImp.Load<T>(filePath);
+                    data = _xmlFileImp.Load<T>(filePath);
                     break;
                 case FileType.Csv:
                     break;

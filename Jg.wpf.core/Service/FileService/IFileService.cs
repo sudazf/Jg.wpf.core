@@ -2,8 +2,8 @@
 {
     public interface IFileService
     {
-        void Save(string filePath, object fileObject, FileType type);
-        void SaveAs(object fileObject, FileType fileType, string folderPath);
+        void Save<T>(string filePath, T fileObject, FileType type);
+        void SaveAs<T>(T fileObject, FileType fileType, string folderPath);
 
         T Load<T>(string filePath, FileType fileType);
         T LoadFromFolder<T>(string folderPath, FileType fileType);

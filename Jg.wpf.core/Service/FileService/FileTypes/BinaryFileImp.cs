@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Jg.wpf.core.Utility;
+using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -41,6 +43,23 @@ namespace Jg.wpf.core.Service.FileService.FileTypes
             {
                 Console.WriteLine(exception);
                 return default;
+            }
+        }
+
+        public void SaveAs<T>(string folderPath, T fileObject)
+        {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "Save-" + DateTime.Now.ToString("yyyyMMddHHmm") + ".binary";
+            if (!string.IsNullOrEmpty(folderPath))
+            {
+                if (!Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
+                saveFileDialog.InitialDirectory = folderPath;
+            }
+
+            var res = saveFileDialog.ShowDialog();
+            if (res != null && res.Value)
+            {
+                Save(saveFileDialog.FileName, fileObject);
             }
         }
     }

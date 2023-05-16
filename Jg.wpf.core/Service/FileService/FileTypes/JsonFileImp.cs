@@ -25,7 +25,7 @@ namespace Jg.wpf.core.Service.FileService.FileTypes
             }
         }
 
-        public bool SaveAs(object fileObject, string folderPath)
+        public bool SaveAs(string folderPath, object fileObject)
         {
             var extension = "json";
             var saveFileDialog = new SaveFileDialog();

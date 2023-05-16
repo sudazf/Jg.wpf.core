@@ -18,7 +18,7 @@ namespace Jg.wpf.core.Service.FileService
             _xmlFileImp = new XmlFileImp();
         }
 
-        public void Save(string filePath, object fileObject, FileType fileType)
+        public void Save<T>(string filePath, T fileObject, FileType fileType)
         {
             switch (fileType)
             {
@@ -39,17 +39,18 @@ namespace Jg.wpf.core.Service.FileService
             }
         }
 
-        public void SaveAs(object fileObject, FileType fileType, string folderPath)
+        public void SaveAs<T>(T fileObject, FileType fileType, string folderPath)
         {
             switch (fileType)
             {
                 case FileType.Txt:
-                    _txtFileImp.SaveAs(fileType, folderPath);
+                    _txtFileImp.SaveAs(folderPath, fileObject);
                     break;
                 case FileType.Json:
-                    _jsonFileImp.SaveAs(fileType, folderPath);
+                    _jsonFileImp.SaveAs(folderPath, fileObject);
                     break;
                 case FileType.Binary:
+                    _binaryFileImp.SaveAs(folderPath, fileObject);
                     break;
                 case FileType.Xml:
                     break;

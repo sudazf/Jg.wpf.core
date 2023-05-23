@@ -151,6 +151,8 @@
     <Compile Include="Customer\Navigation\NavigatorItem.cs" />
     <Compile Include="Customer\Navigation\Navigator.cs" />
     <Compile Include="Customer\NumericTextBox\NumericTextBox.cs" />
+    <Compile Include="Customer\SelectAll\SelectAllEventArgs.cs" />
+    <Compile Include="Customer\SelectAll\SelectAllListBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

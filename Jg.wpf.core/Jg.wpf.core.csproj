@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Command\CommandBase.cs" />
     <Compile Include="Command\JCommand.cs" />
+    <Compile Include="Extensions\Types\ISelectable.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Notify\ViewModelBase.cs" />
     <Compile Include="Profilers\Dispatcher.cs" />

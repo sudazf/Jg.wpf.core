@@ -1,29 +1,43 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:selectAll="clr-namespace:Jg.wpf.controls.Customer.SelectAll">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="Jg.ToolVerticalToggleListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource MaterialDesignToolVerticalToggleListBox}">
+    <Style
+        x:Key="Jg.ToolVerticalToggleListBox"
+        BasedOn="{StaticResource MaterialDesignToolVerticalToggleListBox}"
+        TargetType="{x:Type ListBox}">
         <Setter Property="materialDesign:ListBoxAssist.IsToggle" Value="False" />
 
     </Style>
 
-    <Style x:Key="Jg.ToolToggleListBoxItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MaterialDesignToolToggleListBoxItem}">
+    <Style
+        x:Key="Jg.ToolToggleListBoxItem"
+        BasedOn="{StaticResource MaterialDesignToolToggleListBoxItem}"
+        TargetType="{x:Type ListBoxItem}" />
 
-    </Style>
-
-    <Style x:Key="Jg.AnimationScrolling.ListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource MaterialDesignListBox}">
+    <Style
+        x:Key="Jg.AnimationScrolling.ListBox"
+        BasedOn="{StaticResource MaterialDesignListBox}"
+        TargetType="{x:Type ListBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+                    <Border
+                        x:Name="Bd"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
+                        <ScrollViewer Padding="{TemplateBinding Padding}" Focusable="false">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                 <i:Interaction.Behaviors>
                                     <ei:FluidMoveBehavior />
@@ -34,11 +48,222 @@
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsGrouping" Value="true"/>
-                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                <Condition Property="IsGrouping" Value="true" />
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
                         </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Jg.SelectAll.Horizontal.ListBox" TargetType="selectAll:SelectAllListBox">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type selectAll:SelectAllListBox}">
+                    <Border
+                        Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1">
+                        <ScrollViewer x:Name="scrollViewer" Focusable="False">
+                            <ScrollViewer.Template>
+                                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border
+                                            x:Name="selectAllBorder"
+                                            Grid.Column="0"
+                                            Margin="0 0 0 0"
+                                            BorderBrush="Gray"
+                                            BorderThickness="0,0,1,0"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                                            <CheckBox
+                                                Margin="4"
+                                                HorizontalAlignment="Center"
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType=selectAll:SelectAllListBox, AncestorLevel=1}, Path=SelectAllCommand}"
+                                                Content="全选"
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType=selectAll:SelectAllListBox, AncestorLevel=1}, Path=IsSelectAll}"
+                                                IsEnabled="{Binding Path=IsEditable, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=selectAll:SelectAllListBox}}" />
+                                        </Border>
+                                        <Grid Grid.Row="0" Grid.Column="1">
+                                            <Border
+                                                x:Name="ContentBorder"
+                                                Margin="0 0 0 1"
+                                                BorderBrush="Gray"
+                                                BorderThickness="0"
+                                                UseLayoutRounding="True" SnapsToDevicePixels="True" />
+                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" />
+                                        </Grid>
+                                        <!--  垂直滑动条  -->
+                                        <ScrollBar
+                                            x:Name="PART_VerticalScrollBar"
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2"
+                                            Maximum="{TemplateBinding ScrollableHeight}"
+                                            Orientation="Vertical"
+                                            ViewportSize="{TemplateBinding ViewportHeight}"
+                                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <!--  横向滑动条  -->
+                                        <ScrollBar
+                                            x:Name="PART_HorizontalScrollBar"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="3"
+                                            Maximum="{TemplateBinding ScrollableWidth}"
+                                            Orientation="Horizontal"
+                                            ViewportSize="{TemplateBinding ViewportWidth}"
+                                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                            Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ComputedHorizontalScrollBarVisibility}" Value="Visible">
+                                            <Setter TargetName="selectAllBorder" Property="BorderThickness" Value="0,0,1,1" />
+                                            <Setter TargetName="selectAllBorder" Property="Margin" Value="0,0,0,1" />
+                                            <Setter TargetName="ContentBorder" Property="BorderThickness" Value="0,0,0,1" />
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ScrollViewer.Template>
+                            <Border
+                                x:Name="ItemsPresenterBorder"
+                                Margin="0"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                                <ItemsPresenter Margin="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Border>
+                        </ScrollViewer>
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Jg.SelectAll.Vertical.ListBox" TargetType="selectAll:SelectAllListBox">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsItemsHost="True" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type selectAll:SelectAllListBox}">
+                    <Border
+                        Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1">
+                        <ScrollViewer x:Name="scrollViewer" Focusable="False">
+                            <ScrollViewer.Template>
+                                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border
+                                            x:Name="selectAllBorder"
+                                            Grid.Column="0"
+                                            Margin="0"
+                                            BorderBrush="Gray"
+                                            BorderThickness="0,0,0,1"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Border BorderThickness="0 0 1 0">
+                                                    <CheckBox
+                                                        Margin="4"
+                                                        HorizontalAlignment="Left"
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=selectAll:SelectAllListBox, AncestorLevel=1}, Path=SelectAllCommand}"
+                                                        Content="全选"
+                                                        IsChecked="{Binding RelativeSource={RelativeSource AncestorType=selectAll:SelectAllListBox, AncestorLevel=1}, Path=IsSelectAll}"
+                                                        IsEnabled="{Binding Path=IsEditable, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=selectAll:SelectAllListBox}}" />
+                                                </Border>
+
+                                                <ContentPresenter Grid.Column="1" Content="{Binding ColumnHeader,RelativeSource={RelativeSource Mode=FindAncestor,AncestorLevel=1,AncestorType=selectAll:SelectAllListBox}}" />
+                                            </Grid>
+                                        </Border>
+                                        <Grid Grid.Row="1" Grid.Column="0">
+                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" />
+                                        </Grid>
+                                        <!--  垂直滑动条  -->
+                                        <ScrollBar
+                                            x:Name="PART_VerticalScrollBar"
+                                            Grid.Row="0"
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1"
+                                            Maximum="{TemplateBinding ScrollableHeight}"
+                                            Orientation="Vertical"
+                                            ViewportSize="{TemplateBinding ViewportHeight}"
+                                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <!--  横向滑动条  -->
+                                        <ScrollBar
+                                            x:Name="PART_HorizontalScrollBar"
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            Maximum="{TemplateBinding ScrollableWidth}"
+                                            Orientation="Horizontal"
+                                            ViewportSize="{TemplateBinding ViewportWidth}"
+                                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                            Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ComputedVerticalScrollBarVisibility}" Value="Visible">
+                                            <Setter TargetName="selectAllBorder" Property="BorderThickness" Value="0,0,1,1" />
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ScrollViewer.Template>
+                            <Border
+                                x:Name="ItemsPresenterBorder"
+                                Margin="0"
+                                BorderBrush="Gray"
+                                BorderThickness="0,0,0,0">
+                                <ItemsPresenter Margin="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Border>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=scrollViewer, Path=ComputedHorizontalScrollBarVisibility}" Value="Visible">
+                            <Setter TargetName="ItemsPresenterBorder" Property="BorderThickness" Value="0,0,0,1" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

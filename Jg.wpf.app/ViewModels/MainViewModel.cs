@@ -60,7 +60,8 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
                 new DemoItem("Autocomplete","AutocompleteDemo",new AutocompleteViewModel()),
                 new DemoItem("TabControl Animation","TabControlDemo", null),
-                
+                new DemoItem("ListBox with Select All","SelectAllListDemo", new SelectAllListViewModel()),
+
             };
             DemoItems = _defaultItems;
 

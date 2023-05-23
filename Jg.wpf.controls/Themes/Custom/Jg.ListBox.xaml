@@ -8,6 +8,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.ScrollViewer.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 
@@ -62,7 +63,7 @@
     <Style x:Key="Jg.SelectAll.Horizontal.ListBox" TargetType="selectAll:SelectAllListBox">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
-
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -78,7 +79,10 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="1">
-                        <ScrollViewer x:Name="scrollViewer" Focusable="False">
+                        <ScrollViewer
+                            x:Name="scrollViewer"
+                            Focusable="False"
+                            Style="{StaticResource Jg.Horizontal.AnimationScrollViewer}">
                             <ScrollViewer.Template>
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
                                     <Grid>
@@ -94,7 +98,7 @@
                                         <Border
                                             x:Name="selectAllBorder"
                                             Grid.Column="0"
-                                            Margin="0 0 0 0"
+                                            Margin="0,0,0,0"
                                             BorderBrush="Gray"
                                             BorderThickness="0,0,1,0"
                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -110,10 +114,11 @@
                                         <Grid Grid.Row="0" Grid.Column="1">
                                             <Border
                                                 x:Name="ContentBorder"
-                                                Margin="0 0 0 1"
+                                                Margin="0,0,0,1"
                                                 BorderBrush="Gray"
                                                 BorderThickness="0"
-                                                UseLayoutRounding="True" SnapsToDevicePixels="True" />
+                                                SnapsToDevicePixels="True"
+                                                UseLayoutRounding="True" />
                                             <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" />
                                         </Grid>
                                         <!--  垂直滑动条  -->
@@ -164,6 +169,9 @@
     </Style>
 
     <Style x:Key="Jg.SelectAll.Vertical.ListBox" TargetType="selectAll:SelectAllListBox">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -179,7 +187,10 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="1">
-                        <ScrollViewer x:Name="scrollViewer" Focusable="False">
+                        <ScrollViewer
+                            x:Name="scrollViewer"
+                            Focusable="False"
+                            Style="{StaticResource Jg.Vertical.AnimationScrollViewer}">
                             <ScrollViewer.Template>
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
                                     <Grid>
@@ -205,7 +216,7 @@
                                                     <ColumnDefinition Width="auto" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Border BorderThickness="0 0 1 0">
+                                                <Border BorderThickness="0,0,1,0">
                                                     <CheckBox
                                                         Margin="4"
                                                         HorizontalAlignment="Left"
@@ -215,7 +226,7 @@
                                                         IsEnabled="{Binding Path=IsEditable, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=selectAll:SelectAllListBox}}" />
                                                 </Border>
 
-                                                <ContentPresenter Grid.Column="1" Content="{Binding ColumnHeader,RelativeSource={RelativeSource Mode=FindAncestor,AncestorLevel=1,AncestorType=selectAll:SelectAllListBox}}" />
+                                                <ContentPresenter Grid.Column="1" Content="{Binding ColumnHeader, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=selectAll:SelectAllListBox}}" />
                                             </Grid>
                                         </Border>
                                         <Grid Grid.Row="1" Grid.Column="0">

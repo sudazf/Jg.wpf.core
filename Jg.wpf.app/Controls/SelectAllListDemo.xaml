@@ -10,6 +10,7 @@
     d:DataContext="{d:DesignInstance viewModels:SelectAllListViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    FontFamily="宋体"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -44,7 +45,7 @@
                         <TextBlock
                             Margin="16,4"
                             VerticalAlignment="Center"
-                            Text="{Binding Price}" />
+                            Text="{Binding Price,StringFormat={}{0:F1}}" />
                     </StackPanel>
                 </DataTemplate>
             </selectAll:SelectAllListBox.ItemTemplate>
@@ -61,7 +62,7 @@
                     <TextBlock
                         Margin="16,4"
                         VerticalAlignment="Center"
-                        Text="价格" />
+                        Text="价格（元/斤）" />
                 </StackPanel>
             </selectAll:SelectAllListBox.ColumnHeader>
         </selectAll:SelectAllListBox>
@@ -92,7 +93,7 @@
                         <TextBlock
                             Margin="16,4"
                             VerticalAlignment="Center"
-                            Text="{Binding Price}" />
+                            Text="{Binding Price,StringFormat={}{0:F1}}" />
                     </StackPanel>
                 </DataTemplate>
             </selectAll:SelectAllListBox.ItemTemplate>
@@ -109,7 +110,7 @@
                     <TextBlock
                         Margin="16,4"
                         VerticalAlignment="Center"
-                        Text="价格" />
+                        Text="价格（元/斤）" />
                 </StackPanel>
             </selectAll:SelectAllListBox.ColumnHeader>
         </selectAll:SelectAllListBox>
@@ -118,6 +119,7 @@
             Grid.Row="1"
             Margin="4"
             ItemsSource="{Binding Foods2}"
+            OnSelectAllChanged="SelectAllListBox_OnSelectAllChanged"
             Style="{StaticResource Jg.SelectAll.Horizontal.ListBox}">
             <selectAll:SelectAllListBox.ItemTemplate>
                 <DataTemplate>
@@ -133,11 +135,11 @@
                         <TextBlock
                             Margin="4"
                             VerticalAlignment="Center"
-                            Text="{Binding Description}" />
+                            Text="{Binding Description, StringFormat=({0})}" />
                         <TextBlock
                             Margin="4"
                             VerticalAlignment="Center"
-                            Text="{Binding Price}" />
+                            Text="{Binding Price,StringFormat={}{0:F1}元/斤}" />
                     </StackPanel>
                 </DataTemplate>
             </selectAll:SelectAllListBox.ItemTemplate>
@@ -165,11 +167,11 @@
                         <TextBlock
                             Margin="4"
                             VerticalAlignment="Center"
-                            Text="{Binding Description}" />
+                            Text="{Binding Description, StringFormat=({0})}" />
                         <TextBlock
                             Margin="4"
                             VerticalAlignment="Center"
-                            Text="{Binding Price}" />
+                            Text="{Binding Price,StringFormat={}{0:F1}元/斤}" />
                     </StackPanel>
                 </DataTemplate>
             </selectAll:SelectAllListBox.ItemTemplate>

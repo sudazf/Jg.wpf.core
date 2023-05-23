@@ -79,8 +79,6 @@ namespace Jg.wpf.controls.Customer.SelectAll
         {
             if (ItemsSource is IEnumerable<ISelectable> selectors)
             {
-                RaiseEvent(new SelectAllEventArgs(OnSelectAllChangedEvent, this, IsSelectAll != null && IsSelectAll.Value));
-
                 foreach (var selector in selectors)
                 {
                     selector.OnSelectedChanged -= OnCustomSelectionChanged;
@@ -92,6 +90,8 @@ namespace Jg.wpf.controls.Customer.SelectAll
 
                     selector.OnSelectedChanged += OnCustomSelectionChanged;
                 }
+
+                RaiseEvent(new SelectAllEventArgs(OnSelectAllChangedEvent, this, IsSelectAll != null && IsSelectAll.Value));
             }
         }
         private bool CanSelectAll(object arg)

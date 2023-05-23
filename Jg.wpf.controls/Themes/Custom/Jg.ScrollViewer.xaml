@@ -5,6 +5,11 @@
 
     <Style x:Key="Jg.AnimationScrollViewer" TargetType="ScrollViewer">
         <Setter Property="assist:ScrollViewerHelper.Regist" Value="True" />
+        <Setter Property="assist:ScrollViewerHelper.AnimationDuration" Value="0:0:0.5" />
+        <Setter Property="assist:ScrollViewerHelper.AnimationEase" Value="CubicOut" />
+        <Setter Property="assist:ScrollViewerHelper.MouseWheelDelta" Value="96" />
+        <Setter Property="assist:ScrollViewerHelper.ScrollBarPosition" Value="Outside" />
+        <Setter Property="assist:ScrollViewerHelper.ScrollBarThickness" Value="16" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ScrollViewer">
@@ -71,6 +76,20 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="Jg.Vertical.AnimationScrollViewer" TargetType="ScrollViewer" 
+           BasedOn="{StaticResource Jg.AnimationScrollViewer}">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="assist:ScrollViewerHelper.WheelScrollingDirection" Value="Vertical" />
+    </Style>
+
+    <Style x:Key="Jg.Horizontal.AnimationScrollViewer" TargetType="ScrollViewer" 
+           BasedOn="{StaticResource Jg.AnimationScrollViewer}">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="assist:ScrollViewerHelper.WheelScrollingDirection" Value="Horizontal" />
     </Style>
 
 </ResourceDictionary>

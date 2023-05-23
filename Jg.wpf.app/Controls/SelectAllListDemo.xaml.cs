@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Jg.wpf.controls.Customer.SelectAll;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Jg.wpf.app.Controls
 {
@@ -23,6 +12,15 @@ namespace Jg.wpf.app.Controls
         public SelectAllListDemo()
         {
             InitializeComponent();
+        }
+
+        private void SelectAllListBox_OnSelectAllChanged(object sender, RoutedEventArgs e)
+        {
+            if (e is SelectAllEventArgs arg)
+            {
+                MessageBox.Show(arg.IsSelectAll ? "已手动全选" : "已手动取消全选", "系统提示", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
         }
     }
 }

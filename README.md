@@ -13,7 +13,7 @@ Jige's MVVM core for WPF
     </Application.Resources>
     ```    
 
-2. Way to get one of Jg.wpf.core service
+2. Way to get service of Jg.wpf.core
 
     init service
     ```cs
@@ -25,7 +25,7 @@ Jige's MVVM core for WPF
         }
     }
     ```
-    get service
+    get service, e.g.
     ```cs
     var fileService = ServiceManager.GetService<IFileService>();
     ```

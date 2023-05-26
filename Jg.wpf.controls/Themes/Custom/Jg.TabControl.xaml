@@ -300,6 +300,8 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
         <Setter Property="Margin" Value="4" />
+        <Setter Property="wpf:ElevationAssist.Elevation" Value="Dp0" />
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -426,6 +428,7 @@
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Top">
                             <Setter Property="wpf:ShadowAssist.ShadowEdges" Value="Bottom" />
+                            <Setter TargetName="DividerRect" Property="Grid.Row" Value="1" />
                             <Setter TargetName="DividerRect" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="DividerRect" Property="Grid.RowSpan" Value="1" />
                             <Setter TargetName="DividerRect" Property="Height" Value="1" />

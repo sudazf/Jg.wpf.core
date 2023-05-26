@@ -109,7 +109,7 @@ namespace Jg.wpf.controls.Behaviors
             }
         }
 
-        protected override void OnCleanUp()
+        protected override void OnAssociatedObjectUnloaded()
         {
             if (Selector != null)
             {

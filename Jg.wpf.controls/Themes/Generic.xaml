@@ -17,17 +17,17 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
 
         <!--  Custom  -->
-        <ResourceDictionary Source="Custom/Jg.TextBlock.xaml" />
-        <ResourceDictionary Source="Custom/Jg.ScrollViewer.xaml" />
-        <ResourceDictionary Source="Custom/Jg.ItemControl.xaml" />
-        <ResourceDictionary Source="Custom/Jg.CustomerLayoutPanel.xaml" />
-        <ResourceDictionary Source="Custom/Jg.ToggleButton.xaml" />
-        <ResourceDictionary Source="Custom/Jg.TextBox.xaml" />
-        <ResourceDictionary Source="Custom/Jg.ListBox.xaml" />
-        <ResourceDictionary Source="Custom/Jg.TabControl.xaml" />
-        <ResourceDictionary Source="Custom/Jg.DataGrid.xaml" />
-        <ResourceDictionary Source="Custom/Jg.Expander.xaml" />
-        <ResourceDictionary Source="Custom/Jg.Navigation.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.ScrollViewer.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.ItemControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.CustomerLayoutPanel.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.ToggleButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.ListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.TabControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.DataGrid.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.Expander.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.Navigation.xaml" />
         
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

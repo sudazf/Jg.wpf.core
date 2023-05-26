@@ -7,57 +7,56 @@ namespace Jg.wpf.controls.Behaviors
     {
         private bool _isCleanedUp;
 
-        protected sealed override void OnAttached()
+        protected override void OnAttached()
         {
             if (AssociatedObject != null)
             {
                 AssociatedObject.Loaded += OnAssociatedObjectLoaded;
                 AssociatedObject.Unloaded += OnAssociatedObjectUnLoaded;
             }
-            OnAssociatedObjectRegistered();
         }
 
-        protected virtual void OnAssociatedObjectRegistered()
-        {
-
-        }
-        protected virtual void OnAssociatedObjectLoaded(object sender)
-        {
-            OnAssociatedObjectLoaded();
-        }
         protected virtual void OnAssociatedObjectLoaded()
         {
 
         }
-        protected sealed override void OnDetaching()
-        {
-            CleanUp();
-        }
-        protected virtual void OnCleanUp()
+
+        protected virtual void OnAssociatedObjectUnloaded()
         {
 
+        }
+
+        protected virtual void OnCleanUp()
+        {
+            if (AssociatedObject != null)
+            {
+                AssociatedObject.Loaded -= OnAssociatedObjectLoaded;
+                AssociatedObject.Unloaded -= OnAssociatedObjectUnLoaded;
+            }
+        }
+
+        private void OnAssociatedObjectLoaded(object sender, RoutedEventArgs e)
+        {
+            OnAssociatedObjectLoaded();
         }
 
         private void OnAssociatedObjectUnLoaded(object sender, RoutedEventArgs e)
         {
+            OnAssociatedObjectUnloaded();
+        }
+
+        protected override void OnDetaching()
+        {
             CleanUp();
         }
+
         private void CleanUp()
         {
             if (!_isCleanedUp)
             {
                 _isCleanedUp = true;
                 OnCleanUp();
-                if (AssociatedObject != null)
-                {
-                    AssociatedObject.Loaded -= OnAssociatedObjectLoaded;
-                    AssociatedObject.Unloaded -= OnAssociatedObjectUnLoaded;
-                }
             }
-        }
-        private void OnAssociatedObjectLoaded(object sender, RoutedEventArgs e)
-        {
-            OnAssociatedObjectLoaded(sender);
         }
     }
 

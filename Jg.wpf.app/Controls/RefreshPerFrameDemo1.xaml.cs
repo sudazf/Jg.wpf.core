@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Jg.wpf.app.ViewModels;
+﻿using System.Windows.Controls;
 
 namespace Jg.wpf.app.Controls
 {

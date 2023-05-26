@@ -63,7 +63,7 @@
                     <TextBlock
                         Margin="16,4"
                         VerticalAlignment="Center"
-                        Text="将刷新率调整至1ms后，界面会变得卡顿" />
+                        Text="刷新率越高，界面越卡顿" />
                     
                 </StackPanel>
             </Border>

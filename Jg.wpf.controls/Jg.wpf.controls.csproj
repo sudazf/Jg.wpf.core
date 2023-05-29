@@ -137,6 +137,7 @@
     <Compile Include="Converter\LocalizationConverterExtension.cs" />
     <Compile Include="Converter\LocalizationExtension.cs" />
     <Compile Include="Converter\MathConverter.cs" />
+    <Compile Include="Converter\StringFormatConverter.cs" />
     <Compile Include="Customer\Autocompletes\AutocompleteController.cs" />
     <Compile Include="Customer\Autocompletes\AutocompletePopup.cs" />
     <Compile Include="Customer\Autocompletes\ControlWithAutocompletePopup.cs" />

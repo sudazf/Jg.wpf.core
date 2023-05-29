@@ -109,7 +109,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Border" Value="{DynamicResource MouseOverItemBackground}" />
+                            <Setter Property="Background" TargetName="Border" Value="{DynamicResource PrimaryHueLightBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

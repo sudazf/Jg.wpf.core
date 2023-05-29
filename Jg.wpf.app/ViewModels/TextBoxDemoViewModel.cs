@@ -65,6 +65,7 @@ namespace Jg.wpf.app.ViewModels
         }
 
         public double ValidateValue { get; set; }
+        public int Decimals { get; set; } = 2;
 
         public TextBoxDemoViewModel()
         {

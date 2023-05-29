@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -117,5 +118,28 @@ namespace Jg.wpf.app.Controls
         }
 
         
+    }
+
+    public class MyValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            try
+            {
+                var currentValue = double.Parse(value.ToString());
+                if (currentValue > 1000)
+                {
+                    return new ValidationResult(false, "Value must <= 1000");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ValidationResult(false, e.Message);
+            }
+
+
+            return ValidationResult.ValidResult;
+        }
     }
 }

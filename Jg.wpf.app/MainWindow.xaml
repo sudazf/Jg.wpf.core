@@ -90,7 +90,9 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <ContentControl x:Name="MainContent" Grid.Row="1" />
+                    <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1">
+                        <ContentControl x:Name="MainContent" />
+                    </Border>
 
                     <materialDesign:Snackbar
                         x:Name="MainSnackbar"

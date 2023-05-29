@@ -7,11 +7,11 @@
     xmlns:navigation="clr-namespace:Jg.wpf.controls.Customer.Navigation;assembly=Jg.wpf.controls"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    FontFamily="宋体"
     mc:Ignorable="d">
-
     <Grid>
         <navigation:Navigator x:Name="Menu">
-            <navigation:NavigatorGroup GroupName="菜单组合一">
+            <navigation:NavigatorGroup GroupName="菜单系列一">
                 <navigation:NavigatorItem Icon="Apple" Display="菜单一" />
                 <navigation:NavigatorItem Icon="Apple" Display="菜单二" />
                 <navigation:NavigatorItem Icon="Apple" Display="菜单三" />

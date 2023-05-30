@@ -126,10 +126,17 @@ namespace Jg.wpf.app.Controls
         {
             try
             {
-                var currentValue = double.Parse(value.ToString());
-                if (currentValue > 1000)
+                if (value != null)
                 {
-                    return new ValidationResult(false, "Value must <= 1000");
+                    var currentValue = double.Parse(value.ToString());
+                    if (currentValue > 1000)
+                    {
+                        return new ValidationResult(false, "Value must <= 1000");
+                    }
+                }
+                else
+                {
+                    return new ValidationResult(false, "Value must be set");
                 }
             }
             catch (Exception e)

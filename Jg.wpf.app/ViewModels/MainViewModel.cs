@@ -22,10 +22,12 @@ namespace Jg.wpf.app.ViewModels
             get => _selectedDemo;
             set
             {
-                _selectedDemo = value;
-                RaisePropertyChanged(()=> SelectedDemo);
-
-                OnSelectDemo?.Invoke(this, _selectedDemo);
+                if (value != null)
+                {
+                    _selectedDemo = value;
+                    RaisePropertyChanged(() => SelectedDemo);
+                    OnSelectDemo?.Invoke(this, _selectedDemo);
+                }
             }
         }
 
@@ -51,16 +53,14 @@ namespace Jg.wpf.app.ViewModels
         {
             _defaultItems = new List<DemoItem>()
             {
-                new DemoItem("Navigation", "NavigationRailDemo", null),
-                new DemoItem("Draggable Item", "DraggableDemo", new DraggableDemoViewModel()),
-                new DemoItem("Custom TextBox", "TextBoxDemo", new TextBoxDemoViewModel()),
-                new DemoItem("ListView","ListViewDemo",new ListViewViewModel()),
-                new DemoItem("Ui performance","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
-                new DemoItem("ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
-                new DemoItem("Autocomplete","AutocompleteDemo",new AutocompleteViewModel()),
-                new DemoItem("TabControl Animation","TabControlDemo", null),
-                new DemoItem("ListBox with Select All","SelectAllListDemo", new SelectAllListViewModel()),
-
+                new DemoItem("1. Navigation", "NavigationRailDemo", null),
+                new DemoItem("2. TextBox", "TextBoxDemo", new TextBoxDemoViewModel()),
+                new DemoItem("3. Autocomplete","AutocompleteDemo",new AutocompleteViewModel()),
+                new DemoItem("4. ListBox with Select All","SelectAllListDemo", new SelectAllListViewModel()),
+                new DemoItem("5. TabControl Animation","TabControlDemo", null),
+                new DemoItem("6. Dragging animation", "DraggableDemo", new DraggableDemoViewModel()),
+                new DemoItem("7. ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
+                new DemoItem("8. Performance","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
             };
             DemoItems = _defaultItems;
 

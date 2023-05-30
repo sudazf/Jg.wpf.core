@@ -12,13 +12,13 @@
     mc:Ignorable="d">
     <Grid>
         <TabControl Style="{StaticResource Jg.Animation.TabControl}">
-            <TabItem HorizontalContentAlignment="Stretch" Header="Draggable DataGrid">
+            <TabItem HorizontalContentAlignment="Stretch" Header="DataGrid">
                 <local:DraggableDataGrid DataContext="{Binding DraggableDataGridViewModel}" />
             </TabItem>
-            <TabItem Header="Draggable ItemsControl">
+            <TabItem Header="ItemsControl">
                 <local:DraggableItemsControl DataContext="{Binding DraggableItemsControlViewModel}" />
             </TabItem>
-            <TabItem Header="Draggable ListBox">
+            <TabItem Header="ListBox">
                 <local:DraggableListBox DataContext="{Binding DraggableListBoxViewModel}" />
             </TabItem>
         </TabControl>

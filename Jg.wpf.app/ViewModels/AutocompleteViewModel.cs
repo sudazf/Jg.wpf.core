@@ -31,11 +31,11 @@ namespace Jg.wpf.app.ViewModels
 
     public class OperatingSystemTextBoxSuggestionsSource : TextBoxSuggestionsSource
     {
-        private List<string> m_operatingSystemItems;
+        private List<string> _items;
 
         public OperatingSystemTextBoxSuggestionsSource()
         {
-            m_operatingSystemItems = new List<string>()
+            _items = new List<string>()
             {
                 "Android Gingerbread",
                 "Android Icecream Sandwich",
@@ -63,7 +63,7 @@ namespace Jg.wpf.app.ViewModels
             searchTerm = searchTerm ?? string.Empty;
             searchTerm = searchTerm.ToLower();
 
-            return m_operatingSystemItems.Where(item => item.ToLower().Contains(searchTerm));
+            return _items.Where(item => item.ToLower().Contains(searchTerm));
         }
     }
 }

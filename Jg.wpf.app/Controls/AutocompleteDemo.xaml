@@ -10,11 +10,25 @@
     d:DataContext="{d:DesignInstance viewModels:AutocompleteViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    FontSize="30"
     mc:Ignorable="d">
     <Grid>
-        <autocompletes:TextBoxSuggestions Margin="16" Width="200" Height="32" Style="{StaticResource Jg.TextBoxSuggestions}" 
-                                          TextBoxSuggestionsSource="{Binding TextBoxSuggestionsSource}">
-            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        </autocompletes:TextBoxSuggestions>
+        <StackPanel
+            Margin="0 16 0 0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <TextBlock
+                Margin="4"
+                VerticalAlignment="Center"
+                Text="Type System name: " />
+            <autocompletes:TextBoxSuggestions
+                Width="300"
+                Margin="4"
+                Style="{StaticResource Jg.TextBoxSuggestions}"
+                TextBoxSuggestionsSource="{Binding TextBoxSuggestionsSource}">
+                <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </autocompletes:TextBoxSuggestions>
+        </StackPanel>
     </Grid>
 </UserControl>

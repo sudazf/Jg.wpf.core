@@ -11,10 +11,10 @@
     mc:Ignorable="d">
     <Grid>
         <TabControl Style="{StaticResource Jg.UniformHeader.TabControl}">
-            <TabItem Header="Navigation Rail">
+            <TabItem Header="Material Design Navigation">
                 <controls:NavigationRail />
             </TabItem>
-            <TabItem Header="Navigation Resizable">
+            <TabItem Header="Custom Navigation">
                 <controls:NavigationResizable />
             </TabItem>
         </TabControl>

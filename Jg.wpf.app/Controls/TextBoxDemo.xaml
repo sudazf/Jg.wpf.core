@@ -13,7 +13,130 @@
     d:DataContext="{d:DesignInstance viewModels:TextBoxDemoViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    FontFamily="宋体"
+    FontSize="14"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="MyValidationErrorTemplate">
+            <ControlTemplate.Resources>
+                <materialDesign:ThicknessCloneConverter x:Key="FloatingHintValidationErrorTextMarginConverter" CloneEdges="Left" />
+                <materialDesign:ThicknessCloneConverter
+                    x:Key="FilledValidationErrorTextMarginConverter"
+                    CloneEdges="Left"
+                    FixedBottom="2"
+                    FixedTop="2" />
+                <materialDesign:ThicknessCloneConverter
+                    x:Key="OutlinedValidationErrorTextMarginConverter"
+                    CloneEdges="Left"
+                    FixedTop="2" />
+
+                <DataTemplate DataType="{x:Type ValidationError}">
+                    <TextBlock
+                        MaxWidth="{Binding ElementName=Placeholder, Path=ActualWidth}"
+                        Margin="2"
+                        HorizontalAlignment="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.HorizontalAlignment)}"
+                        FontSize="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.FontSize)}"
+                        Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                        Text="{Binding ErrorContent, Mode=OneTime}"
+                        TextWrapping="Wrap"
+                        UseLayoutRounding="false" />
+                </DataTemplate>
+            </ControlTemplate.Resources>
+            <StackPanel>
+                <AdornedElementPlaceholder Name="Placeholder" />
+                <Border
+                    x:Name="DefaultErrorViewer"
+                    Margin="{Binding ElementName=Placeholder, Path=AdornedElement.Padding, Converter={StaticResource FloatingHintValidationErrorTextMarginConverter}}"
+                    Background="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.Background)}"
+                    Visibility="Collapsed">
+                    <TextBlock
+                        MaxWidth="{Binding ElementName=Placeholder, Path=ActualWidth}"
+                        Margin="0,2"
+                        HorizontalAlignment="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.HorizontalAlignment)}"
+                        FontSize="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.FontSize)}"
+                        Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                        Text="{Binding ErrorContent, Mode=OneTime}"
+                        TextWrapping="Wrap"
+                        UseLayoutRounding="false" />
+                </Border>
+                <materialDesign:PopupEx
+                    x:Name="ValidationPopup"
+                    AllowsTransparency="True"
+                    IsOpen="False"
+                    Placement="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.PopupPlacement)}"
+                    PlacementTarget="{Binding ElementName=Placeholder, Mode=OneWay}">
+                    <Border x:Name="PopupBorder" Background="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.Background)}">
+                        <TextBlock
+                            Margin="0,2"
+                            HorizontalAlignment="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.HorizontalAlignment)}"
+                            FontSize="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.FontSize)}"
+                            Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"
+                            Text="{Binding ErrorContent, Mode=OneTime}"
+                            TextWrapping="Wrap"
+                            UseLayoutRounding="false" />
+                    </Border>
+                </materialDesign:PopupEx>
+            </StackPanel>
+            <ControlTemplate.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.OnlyShowOnFocus)}" Value="False" />
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.UsePopup)}" Value="True" />
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.Suppress)}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.OnlyShowOnFocus)}" Value="False" />
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.UsePopup)}" Value="False" />
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.Suppress)}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter TargetName="DefaultErrorViewer" Property="Visibility" Value="Visible" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.OnlyShowOnFocus)}" Value="True" />
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.UsePopup)}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter TargetName="ValidationPopup" Property="IsOpen" Value="{Binding ElementName=Placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.OnlyShowOnFocus)}" Value="True" />
+                        <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.UsePopup)}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter TargetName="DefaultErrorViewer" Property="Visibility" Value="{Binding ElementName=Placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+
+                <DataTrigger Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.Background)}" Value="{x:Null}">
+                    <Setter TargetName="DefaultErrorViewer" Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+                    <Setter TargetName="PopupBorder" Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:TextFieldAssist.HasOutlinedTextField)}" Value="True">
+                    <Setter TargetName="DefaultErrorViewer" Property="Margin" Value="{Binding ElementName=Placeholder, Path=AdornedElement.Padding, Converter={StaticResource OutlinedValidationErrorTextMarginConverter}}" />
+                    <Setter TargetName="ValidationPopup" Property="VerticalOffset" Value="2" />
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:TextFieldAssist.HasFilledTextField)}" Value="True">
+                    <Setter TargetName="DefaultErrorViewer" Property="Margin" Value="{Binding ElementName=Placeholder, Path=AdornedElement.Padding, Converter={StaticResource OutlinedValidationErrorTextMarginConverter}}" />
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -22,220 +145,193 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
 
-        <TextBlock
-            Margin="4"
-            VerticalAlignment="Center"
-            Text="Numeric TextBox: " />
+        <GroupBox Grid.Row="0" Header="Numeric">
+            <StackPanel Orientation="Horizontal">
 
-        <StackPanel
-            Grid.Row="0"
-            Grid.Column="1"
-            Orientation="Horizontal">
+                <controls:NumericTextBox
+                    Width="100"
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Decimals="3"
+                    Max="1000"
+                    Min="0"
+                    Style="{StaticResource Jg.NumericTextBox}"
+                    Text="999.999"
+                    Unit="cm" />
 
-            <controls:NumericTextBox
-                Width="100"
-                Margin="4"
-                VerticalAlignment="Center"
-                Decimals="3"
-                Max="1000"
-                Min="0"
-                Style="{StaticResource Jg.NumericTextBox}"
-                Text="999.999"
-                Unit="cm" />
+                <TextBlock
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Foreground="Gray"
+                    Text="范围: 0 ~ 1000, 最多小数位: 3, 无法输入超过上下限, 若超过自动修正到上下限临界值" />
 
-            <TextBlock
-                Margin="4"
-                VerticalAlignment="Center"
-                Foreground="LightGray"
-                Text="(范围: 0 ~ 1000, 最多小数位: 3, 无法输入超过上下限, 若超过自动修正到上下限临界值)" />
+            </StackPanel>
+        </GroupBox>
 
-        </StackPanel>
+        <GroupBox Grid.Row="1" Header="Hex">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox
+                    Width="60"
+                    Margin="4,4,16,4"
+                    Padding="0,2"
+                    VerticalContentAlignment="Center"
+                    ItemsSource="{Binding Bits}"
+                    SelectedItem="{Binding SelectBit}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    Text="位" />
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <controls:HexTextBox
+                    Width="160"
+                    Margin="4,4,4,4"
+                    VerticalAlignment="Center"
+                    Bit="{Binding SelectBit}"
+                    Style="{StaticResource Jg.HexTextBox}"
+                    Text="{Binding HexValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBlock
-            Grid.Row="1"
-            Margin="4"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            Text="Hex TextBox: " />
+                <TextBlock
+                    Margin="16,4,4,4"
+                    VerticalAlignment="Center"
+                    Text="Dec value: " />
 
-        <StackPanel
-            Grid.Row="1"
-            Grid.Column="1"
-            Orientation="Horizontal">
+                <TextBox
+                    Width="160"
+                    Margin="4,4,4,4"
+                    VerticalAlignment="Center"
+                    Foreground="Gray"
+                    IsReadOnly="True"
+                    Text="{Binding DecValue}" />
 
-            <ComboBox
-                Width="60"
-                Margin="4,4,16,4"
-                Padding="0,2"
-                VerticalContentAlignment="Center"
-                ItemsSource="{Binding Bits}"
-                SelectedItem="{Binding SelectBit}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="{Binding}" />
-                            <TextBlock
-                                Grid.Column="1"
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="位" />
-                        </Grid>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <controls:HexTextBox
-                Width="160"
-                Margin="4,4,4,4"
-                VerticalAlignment="Center"
-                Bit="{Binding SelectBit}"
-                Style="{StaticResource Jg.HexTextBox}"
-                Text="{Binding HexValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </GroupBox>
 
-            <TextBlock
-                Margin="16,4,4,4"
-                VerticalAlignment="Center"
-                Text="Dec: " />
+        <GroupBox Grid.Row="2" Header="Validation">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-            <TextBox
-                Width="160"
-                Margin="4,4,4,4"
-                VerticalAlignment="Center"
-                Foreground="LightGray"
-                IsReadOnly="True"
-                Text="{Binding DecValue}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBox
+                        Width="100"
+                        Margin="4"
+                        Validation.ErrorTemplate="{StaticResource MyValidationErrorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="ValidateValue" StringFormat="{}{0:F2}">
+                                <Binding.ValidationRules>
+                                    <controls1:MyValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-        </StackPanel>
+                    <TextBlock
+                        Margin="4"
+                        VerticalAlignment="Center"
+                        Foreground="Gray"
+                        Text="material design validation" />
 
-        <TextBlock
-            Grid.Row="2"
-            Margin="4"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            Text="Numeric Validator: " />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBox Width="100" Margin="4">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1">
+                                        <AdornedElementPlaceholder x:Name="controlWithError" />
+                                    </Border>
+                                    <TextBlock
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        FontFamily="宋体"
+                                        Foreground="Red"
+                                        Text="{Binding ErrorContent}" />
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                        <TextBox.Text>
+                            <Binding Path="ValidateValue" StringFormat="{}{0:F2}">
+                                <Binding.ValidationRules>
+                                    <controls1:MyValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-        <StackPanel
-            Grid.Row="2"
-            Grid.Column="1"
-            Orientation="Horizontal">
+                    <TextBlock
+                        Margin="4"
+                        VerticalAlignment="Center"
+                        Foreground="Gray"
+                        Text="custom validation" />
 
-            <controls:NumericTextBox
-                x:Name="ValidationTextBox"
-                Width="100"
-                Margin="4"
-                VerticalAlignment="Center"
-                CanOutOfRange="True"
-                Decimals="3"
-                Max="1000"
-                Min="0"
-                Style="{StaticResource Jg.NumericTextBox}"
-                Unit="cm">
-                <controls:NumericTextBox.Resources>
-                    <assist:BindingProxy x:Key="Proxy" Data="{Binding ElementName=ValidationTextBox}" />
-                </controls:NumericTextBox.Resources>
-                <controls:NumericTextBox.Text>
-                    <Binding Mode="TwoWay" Path="ValidateValue">
-                        <Binding.ValidationRules>
-                            <controls1:NumericValidationRule ValidatesOnTargetUpdated="True">
-                                <controls1:NumericValidationRule.Wrapper>
-                                    <controls1:NumericValidationWrapper
-                                        Decimals="{Binding Data.Decimals, Source={StaticResource Proxy}}"
-                                        Max="{Binding Data.Max, Source={StaticResource Proxy}}"
-                                        Min="{Binding Data.Min, Source={StaticResource Proxy}}" />
-                                </controls1:NumericValidationRule.Wrapper>
-                            </controls1:NumericValidationRule>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </controls:NumericTextBox.Text>
-            </controls:NumericTextBox>
+                </StackPanel>
+            </Grid>
 
-            <TextBlock
-                Margin="4"
-                VerticalAlignment="Center"
-                Foreground="LightGray"
-                Text="(范围: 0 ~ 1000, 最多小数位: 3, 可以输入超过上下限, 在失去焦点时进行验证)" />
+        </GroupBox>
 
+        <GroupBox Grid.Row="3" Header="Format">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox
+                        Width="100"
+                        Margin="4"
+                        materialDesign:TextFieldAssist.HasClearButton="True"
+                        Validation.ErrorTemplate="{StaticResource MyValidationErrorTemplate}">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{converter:StringFormatConverter}">
+                                <Binding Path="ValidateValue" />
+                                <Binding Path="Decimals" />
 
+                                <MultiBinding.ValidationRules>
+                                    <controls1:MyValidationRule />
+                                </MultiBinding.ValidationRules>
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
-        </StackPanel>
+                    <TextBlock
+                        Margin="4"
+                        VerticalAlignment="Center"
+                        Foreground="Gray"
+                        Text="dynamic decimals format." />
 
-        <TextBlock
-            Grid.Row="3"
-            Margin="4"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            Text="Custom Validation: " />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
 
-        <StackPanel
-            Grid.Row="3"
-            Grid.Column="1"
-            Orientation="Horizontal">
-            <TextBox
-                Width="100"
-                Margin="4">
-                <Validation.ErrorTemplate>
-                    <ControlTemplate>
-                        <DockPanel>
-                            <Border BorderBrush="Red" BorderThickness="1">
-                                <AdornedElementPlaceholder x:Name="controlWithError" />
-                            </Border>
-                            <TextBlock
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Foreground="Red"
-                                FontFamily="宋体"
-                                Text="{Binding ErrorContent}" />
-                        </DockPanel>
-                    </ControlTemplate>
-                </Validation.ErrorTemplate>
-                <TextBox.Text>
-                    <Binding
-                        Path="ValidateValue"
-                        StringFormat="{}{0:F2}">
-                        <Binding.ValidationRules>
-                            <controls1:MyValidationRule />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-        </StackPanel>
+        <GroupBox Grid.Row="4" Header="Password">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <PasswordBox
+                        Margin="4 0 4 8"
+                        Width="200"
+                        materialDesign:HintAssist.HelperText="Bounding Password"
+                        materialDesign:HintAssist.Hint="Password"
+                        materialDesign:PasswordBoxAssist.Password="{Binding Password, Mode=TwoWay}"
+                        materialDesign:TextFieldAssist.HasClearButton="True"
+                        Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" />
 
-        <TextBlock
-            Grid.Row="4"
-            Margin="4"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            Text="dynamic format: " />
-
-        <StackPanel
-            Grid.Row="4"
-            Grid.Column="1"
-            Orientation="Horizontal">
-            <TextBox
-                Width="100"
-                Margin="4">
-                <TextBox.Text>
-                    <MultiBinding Converter="{converter:StringFormatConverter}">
-                        <Binding Path="ValidateValue"/>
-                        <Binding Path="Decimals"/>
-
-                        <MultiBinding.ValidationRules>
-                            <controls1:MyValidationRule />
-                        </MultiBinding.ValidationRules>
-                    </MultiBinding>
-                </TextBox.Text>
-            </TextBox>
-        </StackPanel>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>

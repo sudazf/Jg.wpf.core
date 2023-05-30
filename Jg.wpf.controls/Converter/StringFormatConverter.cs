@@ -22,7 +22,9 @@ namespace Jg.wpf.controls.Converter
             {
                 var value = (double)values[0];
                 var decimals = (int)values[1];
-                return Math.Round(value, decimals).ToString(CultureInfo.InvariantCulture);
+
+                var formattedValue = string.Format($"{{0:F{decimals}}}", value);
+                return formattedValue;
             }
             return Binding.DoNothing;
         }

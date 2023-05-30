@@ -15,7 +15,7 @@
     mc:Ignorable="d">
     <Grid>
         <TabControl TabStripPlacement="Top" Style="{StaticResource Jg.Animation.TabControl}">
-            <TabItem Header="Dragging Horizontal">
+            <TabItem Header="Horizontal">
                 <ListBox
                     ItemsSource="{Binding Rows}"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -63,7 +63,7 @@
                     </ListBox.ItemsPanel>
                 </ListBox>
             </TabItem>
-            <TabItem Header="Dragging Vertical">
+            <TabItem Header="Vertical">
                 <ListBox ItemsSource="{Binding Rows}" Style="{StaticResource Jg.AnimationScrolling.ListBox}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -105,8 +105,7 @@
                     </ListBox.ItemsPanel>
                 </ListBox>
             </TabItem>
-
-            <TabItem Header="Dragging All">
+            <TabItem Header="All">
                 <ListBox ItemsSource="{Binding Rows}" Style="{StaticResource Jg.AnimationScrolling.ListBox}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>

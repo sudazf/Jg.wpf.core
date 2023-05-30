@@ -9,6 +9,7 @@
     d:DataContext="{d:DesignInstance viewModels:RefreshPerFrameViewModel1}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    FontFamily="宋体"
     mc:Ignorable="d">
     <Grid>
         <Grid>
@@ -38,7 +39,7 @@
                     <TextBlock
                         Margin="16,4"
                         VerticalAlignment="Center"
-                        Text="刷新率: " />
+                        Text="刷新频率: " />
 
                     <Slider
                         Width="200"
@@ -63,7 +64,7 @@
                     <TextBlock
                         Margin="16,4"
                         VerticalAlignment="Center"
-                        Text="刷新率越高，界面越卡顿" />
+                        Text="刷新频率越高，界面越卡顿" />
                     
                 </StackPanel>
             </Border>

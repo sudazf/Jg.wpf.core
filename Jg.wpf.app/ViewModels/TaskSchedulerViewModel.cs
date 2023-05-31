@@ -143,8 +143,12 @@ namespace Jg.wpf.app.ViewModels
                 {
                     try
                     {
-                        taskItem.Percent += 4;
-                        Thread.Sleep(200);
+                        ServiceManager.MainDispatcher.Invoke(() =>
+                        {
+                            taskItem.Percent += 1;
+                        });
+
+                        Thread.Sleep(50);
 
                         proxy.WaitOne();
                     }

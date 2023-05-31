@@ -95,6 +95,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Custom\Jg.ProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Custom\Jg.ScrollViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,10 +137,12 @@
     <Compile Include="Converter\EmptyEnumerableToBoolConverter.cs" />
     <Compile Include="Converter\ExpanderRotateAngleConverter.cs" />
     <Compile Include="Converter\HexStringConverter.cs" />
+    <Compile Include="Converter\IntToSolidColorBrushConverter.cs" />
     <Compile Include="Converter\InverseBoolConverter.cs" />
     <Compile Include="Converter\LocalizationConverterExtension.cs" />
     <Compile Include="Converter\LocalizationExtension.cs" />
     <Compile Include="Converter\MathConverter.cs" />
+    <Compile Include="Converter\PercentToStringConverter.cs" />
     <Compile Include="Converter\StringFormatConverter.cs" />
     <Compile Include="Customer\Autocompletes\AutocompleteController.cs" />
     <Compile Include="Customer\Autocompletes\AutocompletePopup.cs" />
@@ -145,6 +151,7 @@
     <Compile Include="Customer\Autocompletes\ITextBoxSuggestionsSource.cs" />
     <Compile Include="Customer\Autocompletes\TextBoxSuggestions.cs" />
     <Compile Include="Customer\Autocompletes\TextBoxSuggestionsCommands.cs" />
+    <Compile Include="Customer\ContentControls\RelativeAnimatingContentControl.cs" />
     <Compile Include="Customer\HexTextBox\HexTextBox.cs" />
     <Compile Include="Customer\JScrollViewer\JScrollViewer.cs" />
     <Compile Include="Customer\LayoutPanel\CustomerLayoutPanel.cs" />

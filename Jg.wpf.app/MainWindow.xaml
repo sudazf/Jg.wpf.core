@@ -13,6 +13,7 @@
     d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
     Style="{StaticResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
+    Closing="Window_Closing"
     mc:Ignorable="d">
     <materialDesign:DialogHost
         DialogTheme="Inherit"

@@ -61,6 +61,8 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("6. Dragging animation", "DraggableDemo", new DraggableDemoViewModel()),
                 new DemoItem("7. ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
                 new DemoItem("8. Performance","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
+                new DemoItem("9. Task Scheduler","TaskSchedulerDemo",new TaskSchedulerViewModel()),
+                
             };
             DemoItems = _defaultItems;
 

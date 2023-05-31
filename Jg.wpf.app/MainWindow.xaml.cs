@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Jg.wpf.app.Models;
 using Jg.wpf.app.ViewModels;
+using Jg.wpf.core.Service.ThreadService;
 
 namespace Jg.wpf.app
 {
@@ -42,7 +43,6 @@ namespace Jg.wpf.app
             }
         }
 
-
         private void UIElement_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             //MenuToggleButton.IsChecked = false;
@@ -53,6 +53,9 @@ namespace Jg.wpf.app
             DemoItemsSearchBox.Focus();
         }
 
-
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TaskManagerFactory.Instance.Close();
+        }
     }
 }

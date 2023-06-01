@@ -139,6 +139,7 @@
     <Compile Include="Converter\HexStringConverter.cs" />
     <Compile Include="Converter\IntToSolidColorBrushConverter.cs" />
     <Compile Include="Converter\InverseBoolConverter.cs" />
+    <Compile Include="Converter\InverseBoolToVisibilityConverter.cs" />
     <Compile Include="Converter\LocalizationConverterExtension.cs" />
     <Compile Include="Converter\LocalizationExtension.cs" />
     <Compile Include="Converter\MathConverter.cs" />

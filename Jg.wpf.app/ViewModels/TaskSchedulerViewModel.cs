@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using Jg.wpf.core.Command;
@@ -14,17 +13,12 @@ namespace Jg.wpf.app.ViewModels
         private readonly TaskItemsManager _taskItemsManager;
 
         public TaskItemsManager TaskItemsManager => _taskItemsManager;
-
         public JCommand StartNewTaskCommand { get; }
-
-
 
         public TaskSchedulerViewModel()
         {
             _taskItemsManager = new TaskItemsManager();
-
             StartNewTaskCommand = new JCommand("StartNewTaskCommand", OnStartNewTask);
-
         }
 
         private void OnStartNewTask(object obj)
@@ -37,13 +31,85 @@ namespace Jg.wpf.app.ViewModels
                 {
                     newId = _taskItemsManager.TaskItems[exist - 1].Id + 1;
                 }
-                var newTaskItem = new TaskItemViewModel(newId);
 
+                var newTaskItem = new TaskItemViewModel(newId);
                 _taskItemsManager.StartNewTask(newTaskItem);
             }
         }
+    }
 
+    public class TaskItemsManager
+    {
+        private readonly TaskManager _taskManager;
 
+        public ObservableCollection<TaskItemViewModel> TaskItems { get; }
+        public JCommand RemoveTaskCommand { get; }
+
+        public TaskItemsManager()
+        {
+            TaskItems = new ObservableCollection<TaskItemViewModel>();
+            _taskManager = new TaskManager("TaskManagerDemo");
+
+            RemoveTaskCommand = new JCommand("RemoveTaskCommand", OnRemoveTask);
+        }
+
+        public void StartNewTask(TaskItemViewModel newTask)
+        {
+            lock (LockHelper.Locker)
+            {
+                TaskItems.Add(newTask);
+                var proxy = _taskManager.StartNewTaskProxy($"TaskDemo{newTask.Id}", OnTaskRunning, null, newTask);
+                newTask.Proxy = proxy;
+            }
+        }
+
+        private void OnTaskRunning(TaskProxy proxy)
+        {
+            if (proxy.CancelTokenSource.IsCancellationRequested)
+            {
+                return;
+            }
+
+            if (proxy.Tag is TaskItemViewModel taskItem)
+            {
+                taskItem.IsStart = true;
+                while (!proxy.CancelTokenSource.IsCancellationRequested && taskItem.Percent < 100)
+                {
+                    try
+                    {
+                        ServiceManager.MainDispatcher.Invoke(() =>
+                        {
+                            taskItem.Percent += 1;
+                        });
+
+                        Thread.Sleep(50);
+
+                        proxy.WaitOne();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+
+                taskItem.IsStart = false;
+
+                Thread.Sleep(200);
+
+                ServiceManager.MainDispatcher.Invoke(() =>
+                {
+                    TaskItems.Remove(taskItem);
+                });
+            }
+        }
+        private void OnRemoveTask(object obj)
+        {
+            if (obj is TaskItemViewModel taskItem)
+            {
+                taskItem.Proxy.Cancel();
+                TaskItems.Remove(taskItem);
+            }
+        }
     }
 
     public class TaskItemViewModel : ViewModelBase
@@ -79,7 +145,6 @@ namespace Jg.wpf.app.ViewModels
         public JCommand PauseTaskCommand { get; }
         public JCommand CancelTaskCommand { get; }
 
-
         public TaskItemViewModel(int id)
         {
             Id = id;
@@ -105,70 +170,6 @@ namespace Jg.wpf.app.ViewModels
         private void OnCancelTask(object obj)
         {
             Proxy.Cancel();
-        }
-    }
-
-    public class TaskItemsManager
-    {
-        private readonly TaskManager _taskManager;
-        private readonly Dictionary<int, TaskProxy> _proxies;
-
-        public ObservableCollection<TaskItemViewModel> TaskItems { get;}
-
-        public TaskItemsManager()
-        {
-            TaskItems = new ObservableCollection<TaskItemViewModel>();
-
-            _proxies = new Dictionary<int, TaskProxy>();
-            _taskManager = new TaskManager("TaskManagerDemo");
-        }
-
-        public void StartNewTask(TaskItemViewModel newTask)
-        {
-            lock (LockHelper.Locker)
-            {
-                TaskItems.Add(newTask);
-                var proxy = _taskManager.StartNewTaskProxy($"TaskDemo{newTask.Id}", OnTaskRunning, null, newTask);
-                _proxies[newTask.Id] = proxy;
-                newTask.Proxy = proxy;
-            }
-        }
-
-        private void OnTaskRunning(TaskProxy proxy)
-        {
-            if (proxy.Tag is TaskItemViewModel taskItem)
-            {
-                taskItem.IsStart = true;
-                while (!proxy.CancelTokenSource.IsCancellationRequested && taskItem.Percent < 100)
-                {
-                    try
-                    {
-                        ServiceManager.MainDispatcher.Invoke(() =>
-                        {
-                            taskItem.Percent += 1;
-                        });
-
-                        Thread.Sleep(50);
-
-                        proxy.WaitOne();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                }
-
-                taskItem.IsStart = false;
-
-                Thread.Sleep(200);
-
-                ServiceManager.MainDispatcher.Invoke(() =>
-                {
-                    TaskItems.Remove(taskItem);
-                });
-
-                _proxies.Remove(taskItem.Id);
-            }
         }
     }
 

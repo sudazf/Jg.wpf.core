@@ -104,6 +104,23 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
+                <DataGridTemplateColumn
+                    Width="*"
+                    CanUserSort="False"
+                    Header="移除">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Width="80"
+                                Height="32"
+                                HorizontalAlignment="Left"
+                                Command="{Binding DataContext.TaskItemsManager.RemoveTaskCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorLevel=1,AncestorType=DataGrid}}"
+                                CommandParameter="{Binding .}"
+                                Content="移除"
+                                Visibility="{Binding IsStart, Converter={converter:InverseBoolToVisibilityConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
             </DataGrid.Columns>
 

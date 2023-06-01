@@ -1,10 +1,9 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:selectAll="clr-namespace:Jg.wpf.controls.Customer.SelectAll">
+    xmlns:selectAll="clr-namespace:Jg.wpf.controls.Customer.SelectAll"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
@@ -40,9 +39,9 @@
                         SnapsToDevicePixels="true">
                         <ScrollViewer Padding="{TemplateBinding Padding}" Focusable="false">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                <i:Interaction.Behaviors>
-                                    <ei:FluidMoveBehavior />
-                                </i:Interaction.Behaviors>
+                                <b:Interaction.Behaviors>
+                                    <b:FluidMoveBehavior />
+                                </b:Interaction.Behaviors>
                             </ItemsPresenter>
                         </ScrollViewer>
                     </Border>

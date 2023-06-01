@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 using System.Windows.Media;
 using Jg.wpf.controls.Customer.LayoutPanel;
+using Microsoft.Xaml.Behaviors;
 
 namespace Jg.wpf.controls.Behaviors
 {

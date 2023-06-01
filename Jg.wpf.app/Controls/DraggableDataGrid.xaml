@@ -4,11 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="clr-namespace:Jg.wpf.controls.Behaviors;assembly=Jg.wpf.controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:layoutPanel="clr-namespace:Jg.wpf.controls.Customer.LayoutPanel;assembly=Jg.wpf.controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:triggerActions="clr-namespace:Jg.wpf.controls.TriggerActions;assembly=Jg.wpf.controls"
     xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     d:DataContext="{d:DesignInstance viewModels:DraggableViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -50,18 +50,18 @@
         </DataGrid.Columns>
 
 
-        <i:Interaction.Behaviors>
+        <b:Interaction.Behaviors>
             <behaviors:ItemControlDragBehavior DraggingMode="{Binding IsInDraggingMode}" />
-        </i:Interaction.Behaviors>
+        </b:Interaction.Behaviors>
 
         <DataGrid.ItemsPanel>
             <ItemsPanelTemplate>
                 <layoutPanel:CustomerLayoutPanel ShowModeButton="True" Style="{StaticResource Jg.Vertical.CustomerLayoutPanelStyle}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="ItemDropped">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="ItemDropped">
                             <triggerActions:EventToCommand Command="{Binding ItemDroppedCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
                 </layoutPanel:CustomerLayoutPanel>
             </ItemsPanelTemplate>
         </DataGrid.ItemsPanel>

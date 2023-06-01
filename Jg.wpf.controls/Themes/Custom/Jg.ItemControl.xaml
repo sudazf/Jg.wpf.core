@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions">
+                    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+                    xmlns:b="http://schemas.microsoft.com/xaml/behaviors">
 
     <Style x:Key="Jg.ItemsControl.Style" TargetType="ItemsControl">
         <Setter Property="Template">
@@ -32,9 +33,9 @@
                     <Grid>
                         <ScrollViewer CanContentScroll="True">
                             <ItemsPresenter>
-                                <i:Interaction.Behaviors>
-                                    <ei:FluidMoveBehavior />
-                                </i:Interaction.Behaviors>
+                                <b:Interaction.Behaviors>
+                                    <b:FluidMoveBehavior />
+                                </b:Interaction.Behaviors>
                             </ItemsPresenter>
                         </ScrollViewer>
                     </Grid>

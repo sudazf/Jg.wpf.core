@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="clr-namespace:Jg.wpf.controls.Behaviors"
     xmlns:controls="clr-namespace:Jg.wpf.controls.Customer.JScrollViewer"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes">
+    xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TabControl.xaml" />
@@ -378,9 +378,9 @@
                                                     IsItemsHost="True"
                                                     KeyboardNavigation.TabIndex="1" />
                                             </Grid>
-                                            <i:Interaction.Behaviors>
+                                            <b:Interaction.Behaviors>
                                                 <behaviors:IndicatorScrollBehavior Selector="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
-                                            </i:Interaction.Behaviors>
+                                            </b:Interaction.Behaviors>
                                         </controls:JScrollViewer>
 
                                         <Rectangle

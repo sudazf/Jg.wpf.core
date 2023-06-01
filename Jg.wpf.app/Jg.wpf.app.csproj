@@ -84,6 +84,9 @@
     <Compile Include="Controls\DraggableListBox.xaml.cs">
       <DependentUpon>DraggableListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FileFolderDemo.xaml.cs">
+      <DependentUpon>FileFolderDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ListViewDemo.xaml.cs">
       <DependentUpon>ListViewDemo.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,7 @@
     </Compile>
     <Compile Include="ViewModels\AutocompleteViewModel.cs" />
     <Compile Include="ViewModels\DraggableViewModel.cs" />
+    <Compile Include="ViewModels\FileFolderViewModel.cs" />
     <Compile Include="ViewModels\ListViewViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RefreshPerFrameViewModel1.cs" />
@@ -140,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DraggableListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FileFolderDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -243,7 +251,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rd /s /q "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

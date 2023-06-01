@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Jg.wpf.app.Controls;
 using Jg.wpf.app.Models;
 using Jg.wpf.core.Notify;
 
@@ -62,6 +63,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("7. ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
                 new DemoItem("8. Performance","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
                 new DemoItem("9. Task Scheduler","TaskSchedulerDemo",new TaskSchedulerViewModel()),
+                new DemoItem("10. File/Folder Dialog","FileFolderDemo",new FileFolderViewModel()),
                 
             };
             DemoItems = _defaultItems;

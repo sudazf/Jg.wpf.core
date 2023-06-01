@@ -1,5 +1,7 @@
-﻿using Jg.wpf.core.Service.FileService.FileTypes;
-using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Jg.wpf.core.Service.FileService.Custom;
+using Jg.wpf.core.Service.FileService.FileTypes;
+using Microsoft.Win32;
+using System.IO;
 
 namespace Jg.wpf.core.Service.FileService
 {
@@ -107,20 +109,20 @@ namespace Jg.wpf.core.Service.FileService
             return data;
         }
 
-        public string GetFile(string suffix)
+        public string GetFile(string suffix = "")
         {
-            var dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = false;
-            if (!string.IsNullOrEmpty(suffix))
+            var dialog = new OpenFileDialog();
+
+            if (string.IsNullOrEmpty(suffix))
             {
-                dialog.Filters.Add(new CommonFileDialogFilter($"{suffix.ToUpper()} Files", $"*.{suffix}"));
+                dialog.Filter = "all file|*.*";
             }
             else
             {
-                dialog.Filters.Add(new CommonFileDialogFilter("所有文件 Files", "*.*"));
+                dialog.Filter = $"{suffix} file|*.{suffix}|all file|*.*";
             }
 
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            if (dialog.ShowDialog().HasValue)
             {
                 if (string.IsNullOrEmpty(dialog.FileName))
                 {
@@ -133,19 +135,16 @@ namespace Jg.wpf.core.Service.FileService
             return "";
         }
 
-        public string GetFolder(string title)
+        public string GetFolder()
         {
-            var dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            dialog.Title = title;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            var dlg = new FolderPicker
             {
-                if (string.IsNullOrEmpty(dialog.FileName))
-                {
-                    return "";
-                }
+                InputPath = System.AppDomain.CurrentDomain.BaseDirectory
+            };
 
-                return dialog.FileName;
+            if (dlg.ShowDialog() == true)
+            {
+                return dlg.ResultPath;
             }
 
             return "";

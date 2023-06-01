@@ -30,4 +30,7 @@ Jige's MVVM core for WPF
     var fileService = ServiceManager.GetService<IFileService>();
     ```
 
-
+3. some demos:
+![j1](https://github.com/sudazf/Jg.wpf.core/assets/3366672/c5f3c15f-48ac-4ff1-9d33-736eeeb84c7d)
+![j2](https://github.com/sudazf/Jg.wpf.core/assets/3366672/1858608d-c49d-4213-8709-abe6cbbcc345)
+![j3](https://github.com/sudazf/Jg.wpf.core/assets/3366672/203001d7-cb3a-497a-b17e-11484247977e)

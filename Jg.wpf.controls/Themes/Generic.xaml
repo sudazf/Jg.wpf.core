@@ -29,6 +29,7 @@
         <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.Expander.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.Navigation.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.ProgressBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.FastDataGrid.xaml" />
         
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

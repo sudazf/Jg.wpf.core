@@ -64,6 +64,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("8. Performance","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
                 new DemoItem("9. Task Scheduler","TaskSchedulerDemo",new TaskSchedulerViewModel()),
                 new DemoItem("10. File/Folder Dialog","FileFolderDemo",new FileFolderViewModel()),
+                new DemoItem("11. Fast DataGrid","FastDataGridDemo", new FastDataGridViewModel()),
                 
             };
             DemoItems = _defaultItems;

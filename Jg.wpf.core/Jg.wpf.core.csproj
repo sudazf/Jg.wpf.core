@@ -52,6 +52,8 @@
     <Compile Include="Command\CommandBase.cs" />
     <Compile Include="Command\JCommand.cs" />
     <Compile Include="Extensions\Types\ISelectable.cs" />
+    <Compile Include="Extensions\Types\JColor.cs" />
+    <Compile Include="Extensions\Types\JColors.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Notify\ViewModelBase.cs" />
     <Compile Include="Profilers\Dispatcher.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Utility\Animations\AnimationUtil.cs" />
     <Compile Include="Utility\Animations\BrushAnimation.cs" />
     <Compile Include="Utility\Animations\CornerRadiusAnimation.cs" />
+    <Compile Include="Utility\JColorHelper.cs" />
     <Compile Include="Utility\JsonNewtonsoft.cs" />
     <Compile Include="Utility\TranslateHelper.cs" />
   </ItemGroup>

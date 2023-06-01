@@ -84,6 +84,9 @@
     <Compile Include="Controls\DraggableListBox.xaml.cs">
       <DependentUpon>DraggableListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FastDataGridDemo.xaml.cs">
+      <DependentUpon>FastDataGridDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FileFolderDemo.xaml.cs">
       <DependentUpon>FileFolderDemo.xaml</DependentUpon>
     </Compile>
@@ -117,8 +120,12 @@
     <Compile Include="Controls\TextBoxDemo.xaml.cs">
       <DependentUpon>TextBoxDemo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomDemo.cs" />
+    <Compile Include="Models\DemoBase.cs" />
+    <Compile Include="Models\TestItem.cs" />
     <Compile Include="ViewModels\AutocompleteViewModel.cs" />
     <Compile Include="ViewModels\DraggableViewModel.cs" />
+    <Compile Include="ViewModels\FastDataGridViewModel.cs" />
     <Compile Include="ViewModels\FileFolderViewModel.cs" />
     <Compile Include="ViewModels\ListViewViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -144,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DraggableListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FastDataGridDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,6 +259,13 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Image\duke.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\flip_horizontal_small.png" />
+    <Resource Include="Images\flip_transform_small.png" />
+    <Resource Include="Images\flip_vertical_small.png" />
+    <Resource Include="Images\foreign_keysmall.png" />
+    <Resource Include="Images\primary_keysmall.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

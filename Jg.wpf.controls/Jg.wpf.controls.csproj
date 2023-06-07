@@ -1,263 +1,32 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8133D388-288A-4876-BDD5-56A8E7E34836}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <RootNamespace>Jg.wpf.controls</RootNamespace>
-    <AssemblyName>Jg.wpf.controls</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFrameworks>net7.0-windows;net472</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;WPF</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;WPF</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MaterialDesignColors, Version=2.1.4.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
-      <HintPath>..\Jg.wpf.core\packages\MaterialDesignColors.2.1.4\lib\net462\MaterialDesignColors.dll</HintPath>
-    </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=4.9.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
-      <HintPath>..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\Jg.wpf.core\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationFramework.Aero2" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Customer\FastDataGrid\Controls\FastGridControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Colors\JgColor.Dark.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Colors\JgColor.Light.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.CustomerLayoutPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.DataGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.Expander.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.FastDataGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.ItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.ListBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.Navigation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.ProgressBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.ScrollViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.TabControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.TextBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.TextBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Custom\Jg.ToggleButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assist\BindingProxy.cs" />
-    <Compile Include="Assist\ScrollViewerHelper.cs" />
-    <Compile Include="Assist\SelectableColorTextComboBox.cs" />
-    <Compile Include="Behaviors\HexTextBoxBehaviour.cs" />
-    <Compile Include="Behaviors\IndicatorScrollableBehavior.cs" />
-    <Compile Include="Behaviors\ItemControlDragBehavior.cs" />
-    <Compile Include="Behaviors\JgBehavior.cs" />
-    <Compile Include="Behaviors\ScrollableBehavior.cs" />
-    <Compile Include="Converter\BooleanOrConverter.cs" />
-    <Compile Include="Converter\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converter\EmptyEnumerableToBoolConverter.cs" />
-    <Compile Include="Converter\ExpanderRotateAngleConverter.cs" />
-    <Compile Include="Converter\HexStringConverter.cs" />
-    <Compile Include="Converter\IntToSolidColorBrushConverter.cs" />
-    <Compile Include="Converter\InverseBoolConverter.cs" />
-    <Compile Include="Converter\InverseBoolToVisibilityConverter.cs" />
-    <Compile Include="Converter\JColorToBrushConverter.cs" />
-    <Compile Include="Converter\LocalizationConverterExtension.cs" />
-    <Compile Include="Converter\LocalizationExtension.cs" />
-    <Compile Include="Converter\MathConverter.cs" />
-    <Compile Include="Converter\PercentToStringConverter.cs" />
-    <Compile Include="Converter\StringFormatConverter.cs" />
-    <Compile Include="Customer\Autocompletes\AutocompleteController.cs" />
-    <Compile Include="Customer\Autocompletes\AutocompletePopup.cs" />
-    <Compile Include="Customer\Autocompletes\ControlWithAutocompletePopup.cs" />
-    <Compile Include="Customer\Autocompletes\IAutocompleteSource.cs" />
-    <Compile Include="Customer\Autocompletes\ITextBoxSuggestionsSource.cs" />
-    <Compile Include="Customer\Autocompletes\TextBoxSuggestions.cs" />
-    <Compile Include="Customer\Autocompletes\TextBoxSuggestionsCommands.cs" />
-    <Compile Include="Customer\ContentControls\RelativeAnimatingContentControl.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\ActiveSeries.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridBlockImpl.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridCellAddress.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridControl.xaml.cs">
-      <DependentUpon>FastGridControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridControl_Arrange.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridControl_DependencyProps.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridControl_Input.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridControl_Invalidation.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridControl_Render.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridControl_Selection.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\FastGridControl_StyleProps.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\ImageHolder.cs" />
-    <Compile Include="Customer\FastDataGrid\Controls\SeriesSizes.cs" />
-    <Compile Include="Customer\FastDataGrid\EditCellObject.cs" />
-    <Compile Include="Customer\FastDataGrid\EventArgs.cs" />
-    <Compile Include="Customer\FastDataGrid\ExplicitColumnDefinition.cs" />
-    <Compile Include="Customer\FastDataGrid\IFastGridCell.cs" />
-    <Compile Include="Customer\FastDataGrid\IFastGridCellBlock.cs" />
-    <Compile Include="Customer\FastDataGrid\IFastGridModel.cs" />
-    <Compile Include="Customer\FastDataGrid\IFastGridView.cs" />
-    <Compile Include="Customer\FastDataGrid\SelectionChangedEventArgs.cs" />
-    <Compile Include="Customer\FastDataGrid\SelectionQuickCommand.cs" />
-    <Compile Include="Customer\HexTextBox\HexTextBox.cs" />
-    <Compile Include="Customer\JScrollViewer\JScrollViewer.cs" />
-    <Compile Include="Customer\LayoutPanel\CustomerLayoutPanel.cs" />
-    <Compile Include="Customer\Navigation\NavigatorGroup.cs" />
-    <Compile Include="Customer\Navigation\NavigatorItem.cs" />
-    <Compile Include="Customer\Navigation\Navigator.cs" />
-    <Compile Include="Customer\NumericTextBox\NumericTextBox.cs" />
-    <Compile Include="Customer\SelectAll\SelectAllEventArgs.cs" />
-    <Compile Include="Customer\SelectAll\SelectAllListBox.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\BitmapContext.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\BitmapFactory.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\ClearTypeLetterGlyph.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\DpiDetector.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\GrayScaleLetterGlyph.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\IntGeometry.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\LetterGlyphTool.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\NativeMethods.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\PortableFontDesc.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\ScrollingTool.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapAntialiasingExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapBaseExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapBlitExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapContextExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapConvertExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapFillExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapFilterExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapLineExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapShapeExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapSplineExtensions.cs" />
-    <Compile Include="Customer\WriteableBitmapEx\WriteableBitmapTransformationExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="TriggerActions\EventToCommand.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <Resource Include="Resources\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jg.wpf.core\Jg.wpf.core.csproj">
-      <Project>{ae32aa46-4536-4be7-9589-1cf857821759}</Project>
-      <Name>Jg.wpf.core</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Jg.wpf.core\Jg.wpf.core.csproj" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets'))" />
-  </Target>
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
 </Project>

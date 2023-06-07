@@ -61,7 +61,7 @@ namespace System.Windows.Media.Imaging
 
             var res = new List<Item>();
 
-            using (var bmp = new System.Drawing.Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb))
+            using (var bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb))
             {
                 var fg2 = System.Drawing.Color.FromArgb(fontColor.A, fontColor.R, fontColor.G, fontColor.B);
                 var bg2 = System.Drawing.Color.FromArgb(bgColor.A, bgColor.R, bgColor.G, bgColor.B);

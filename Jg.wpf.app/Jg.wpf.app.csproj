@@ -1,263 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2C77207B-8AA0-476D-BCAE-C4959AD5F8A7}</ProjectGuid>
+    <TargetFrameworks>net7.0-windows;net472</TargetFrameworks>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Jg.wpf.app</RootNamespace>
-    <AssemblyName>Jg.wpf.app</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Roasted Chicken.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MaterialDesignColors, Version=2.1.4.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
-      <HintPath>..\Jg.wpf.core\packages\MaterialDesignColors.2.1.4\lib\net462\MaterialDesignColors.dll</HintPath>
-    </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=4.9.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
-      <HintPath>..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\Jg.wpf.core\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Controls\AutocompleteDemo.xaml.cs">
-      <DependentUpon>AutocompleteDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DraggableDataGrid.xaml.cs">
-      <DependentUpon>DraggableDataGrid.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DraggableDemo.xaml.cs">
-      <DependentUpon>DraggableDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DraggableItemsControl.xaml.cs">
-      <DependentUpon>DraggableItemsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DraggableListBox.xaml.cs">
-      <DependentUpon>DraggableListBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FastDataGridDemo.xaml.cs">
-      <DependentUpon>FastDataGridDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FileFolderDemo.xaml.cs">
-      <DependentUpon>FileFolderDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ListViewDemo.xaml.cs">
-      <DependentUpon>ListViewDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\NavigationRail.xaml.cs">
-      <DependentUpon>NavigationRail.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\NavigationRailDemo.xaml.cs">
-      <DependentUpon>NavigationRailDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\NavigationResizable.xaml.cs">
-      <DependentUpon>NavigationResizable.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RefreshPerFrameDemo1.xaml.cs">
-      <DependentUpon>RefreshPerFrameDemo1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ScrollViewerAnimationDemo.xaml.cs">
-      <DependentUpon>ScrollViewerAnimationDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SelectAllListDemo.xaml.cs">
-      <DependentUpon>SelectAllListDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TabControlDemo.xaml.cs">
-      <DependentUpon>TabControlDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TaskSchedulerDemo.xaml.cs">
-      <DependentUpon>TaskSchedulerDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TextBoxDemo.xaml.cs">
-      <DependentUpon>TextBoxDemo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CustomDemo.cs" />
-    <Compile Include="Models\DemoBase.cs" />
-    <Compile Include="Models\TestItem.cs" />
-    <Compile Include="ViewModels\AutocompleteViewModel.cs" />
-    <Compile Include="ViewModels\DraggableViewModel.cs" />
-    <Compile Include="ViewModels\FastDataGridViewModel.cs" />
-    <Compile Include="ViewModels\FileFolderViewModel.cs" />
-    <Compile Include="ViewModels\ListViewViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\RefreshPerFrameViewModel1.cs" />
-    <Compile Include="ViewModels\ScrollViewerAnimationViewModel.cs" />
-    <Compile Include="ViewModels\SelectAllListViewModel.cs" />
-    <Compile Include="ViewModels\TaskSchedulerViewModel.cs" />
-    <Compile Include="ViewModels\TextBoxDemoViewModel.cs" />
-    <Page Include="Controls\AutocompleteDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DraggableDataGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DraggableDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DraggableItemsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DraggableListBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\FastDataGridDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\FileFolderDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ListViewDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\NavigationRail.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\NavigationRailDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\NavigationResizable.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\RefreshPerFrameDemo1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ScrollViewerAnimationDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\SelectAllListDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\TabControlDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\TaskSchedulerDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\TextBoxDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\DemoItem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Jg.wpf.controls\Jg.wpf.controls.csproj">
-      <Project>{8133d388-288a-4876-bdd5-56a8e7e34836}</Project>
-      <Name>Jg.wpf.controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Jg.wpf.core\Jg.wpf.core.csproj">
-      <Project>{ae32aa46-4536-4be7-9589-1cf857821759}</Project>
-      <Name>Jg.wpf.core</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Jg.wpf.controls\Jg.wpf.controls.csproj" />
+    <ProjectReference Include="..\Jg.wpf.core\Jg.wpf.core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Roasted Chicken.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Image\duke.jpg" />
   </ItemGroup>
@@ -268,16 +33,10 @@
     <Resource Include="Images\foreign_keysmall.png" />
     <Resource Include="Images\primary_keysmall.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Jg.wpf.core\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets'))" />
-  </Target>
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+  </ItemGroup>
+  <PropertyGroup />
 </Project>

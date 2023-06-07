@@ -15,7 +15,9 @@ namespace Jg.wpf.core.Service.FileService.FileTypes
                 using (var fStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
                 {
                     BinaryFormatter binFormat = new BinaryFormatter();
+#pragma warning disable SYSLIB0011
                     binFormat.Serialize(fStream, file);
+#pragma warning restore SYSLIB0011
                 }
             }
             catch (Exception exception)
@@ -33,7 +35,9 @@ namespace Jg.wpf.core.Service.FileService.FileTypes
                     var fStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
                     var binFormat = new BinaryFormatter();
                     fStream.Position = 0;
+#pragma warning disable SYSLIB0011
                     return (T)binFormat.Deserialize(fStream);
+#pragma warning restore SYSLIB0011
                 }
 
                 string message = $"Can not find file: {filePath}";

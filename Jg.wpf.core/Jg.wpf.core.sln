@@ -1,13 +1,13 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jg.wpf.controls", "..\Jg.wpf.controls\Jg.wpf.controls.csproj", "{8133D388-288A-4876-BDD5-56A8E7E34836}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jg.wpf.controls", "..\Jg.wpf.controls\Jg.wpf.controls.csproj", "{8133D388-288A-4876-BDD5-56A8E7E34836}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jg.wpf.app", "..\Jg.wpf.app\Jg.wpf.app.csproj", "{2C77207B-8AA0-476D-BCAE-C4959AD5F8A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jg.wpf.app", "..\Jg.wpf.app\Jg.wpf.app.csproj", "{2C77207B-8AA0-476D-BCAE-C4959AD5F8A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jg.wpf.core", "Jg.wpf.core.csproj", "{AE32AA46-4536-4BE7-9589-1CF857821759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jg.wpf.core", "Jg.wpf.core.csproj", "{AE32AA46-4536-4BE7-9589-1CF857821759}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

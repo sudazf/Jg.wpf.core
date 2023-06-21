@@ -20,6 +20,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 var topLeft = new Point(roi.X, roi.Y);
                 var bottomRight = new Point(roi.X + roi.Width,roi.Y + roi.Height);
 
+                var d = pen.Thickness / 2;
+                var guidelines2 = new GuidelineSet(new[] { d }, new[] { d });
+                dc.PushGuidelineSet(guidelines2);
+
                 dc.DrawRectangle(Brushes.Transparent, pen,
                     new Rect(topLeft, bottomRight));
             }
@@ -48,14 +52,42 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 var leftCenter = new Point(topLeft.X, (topLeft.Y + bottomRight.Y) / 2);
                 var rightCenter = new Point(bottomRight.X, (topLeft.Y + bottomRight.Y) / 2);
 
-                dc.DrawEllipse(Brushes.LightGray, _editorPen, topLeft, 5, 5);
-                dc.DrawEllipse(Brushes.LightGray, _editorPen, bottomRight, 5, 5);
-                dc.DrawEllipse(Brushes.LightGray, _editorPen, topRight, 5, 5);
-                dc.DrawEllipse(Brushes.LightGray, _editorPen, bottomLeft, 5, 5);
-                dc.DrawEllipse(Brushes.LightGray, _editorPen, topCenter, 5, 5);
-                dc.DrawEllipse(Brushes.LightGray, _editorPen, bottomCenter, 5, 5);
-                dc.DrawEllipse(Brushes.LightGray, _editorPen, leftCenter, 5, 5);
-                dc.DrawEllipse(Brushes.LightGray, _editorPen, rightCenter, 5, 5);
+                double radius = 12;
+                var d = _editorPen.Thickness / 2;
+                var guidelines = new GuidelineSet(new[] {
+                        d,
+                        topLeft.X - radius / 2 + d,  topLeft.X + radius / 2 + d,
+                        topCenter.X - radius / 2 + d, topCenter.X + radius / 2 + d,
+                        topRight.X - radius / 2 + d,  topRight.X + radius / 2 + d,
+                        leftCenter.X - radius / 2 + d,  leftCenter.X + radius / 2 + d,
+                        rightCenter.X - radius / 2 + d,  rightCenter.X + radius / 2 + d,
+                        bottomLeft.X - radius / 2 + d,  bottomLeft.X + radius / 2 + d,
+                        bottomCenter.X - radius / 2 + d,  bottomCenter.X + radius / 2 + d,
+                        bottomRight.X - radius / 2 + d,  bottomRight.X + radius / 2 + d,
+                    },
+                    new[]
+                    {
+                        d,
+                        topLeft.Y - radius / 2 + d,  topLeft.Y + radius / 2 + d,
+                        topCenter.Y - radius / 2 + d, topCenter.Y + radius / 2 + d,
+                        topRight.Y - radius / 2 + d,  topRight.Y + radius / 2 + d,
+                        leftCenter.Y - radius / 2 + d,  leftCenter.Y + radius / 2 + d,
+                        rightCenter.Y - radius / 2 + d,  rightCenter.Y + radius / 2 + d,
+                        bottomLeft.Y - radius / 2 + d,  bottomLeft.Y + radius / 2 + d,
+                        bottomCenter.Y - radius / 2 + d,  bottomCenter.Y + radius / 2 + d,
+                        bottomRight.Y - radius / 2 + d,  bottomRight.Y + radius / 2 + d,
+                    });
+
+                dc.PushGuidelineSet(guidelines);
+
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(topLeft.X - radius / 2, topLeft.Y - radius / 2, radius, radius));
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(topCenter.X - radius / 2, topCenter.Y - radius / 2, radius, radius));
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(topRight.X - radius / 2, topRight.Y - radius / 2, radius, radius));
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(leftCenter.X - radius / 2, leftCenter.Y - radius / 2, radius, radius));
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(rightCenter.X - radius / 2, rightCenter.Y - radius / 2, radius, radius));
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomLeft.X - radius / 2,bottomLeft.Y - radius / 2, radius, radius));
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomCenter.X - radius / 2, bottomCenter.Y - radius / 2, radius, radius));
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomRight.X - radius / 2, bottomRight.Y - radius / 2, radius, radius));
             }
         }
         public void ClearEditor(Roi hitRoi)

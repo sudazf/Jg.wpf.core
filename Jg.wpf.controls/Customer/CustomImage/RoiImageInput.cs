@@ -316,8 +316,14 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 else
                     offset = 1;
 
-                var topLeft = new Point(_hitRoi.X + offset, _hitRoi.Y+offset);
-                var bottomRight = new Point(_hitRoi.X - offset, _hitRoi.Y - offset);
+                var topLeft = new Point(_hitRoi.X + offset, _hitRoi.Y + offset);
+                var bottomRight = new Point(_hitRoi.X + _hitRoi.Width - offset, _hitRoi.Y +_hitRoi.Height - offset);
+
+                if (topLeft.X <= 0 || topLeft.Y <= 0 ||
+                    bottomRight.X >= ActualWidth || bottomRight.Y >= ActualHeight)
+                {
+                    return;
+                }
 
                 var x = (int)topLeft.X;
                 var y = (int)topLeft.Y;

@@ -1,8 +1,7 @@
-﻿using Jg.wpf.core.Extensions.Types;
-using Jg.wpf.core.Notify;
+﻿using Jg.wpf.core.Notify;
 using System;
 
-namespace Jg.wpf.controls.Customer.CustomImage
+namespace Jg.wpf.core.Extensions.Types.RoiTypes
 {
     public class Roi : ViewModelBase
     {
@@ -79,8 +78,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
         {
             var x = point.X;
             var y = point.Y;
-            return ((x >= _x-5) && (x - _width <= _x + 5) &&
-                    (y >= _y-5) && (y - _height <= _y+ 5));
+            return ((x >= _x - 5) && (x - _width <= _x + 5) &&
+                    (y >= _y - 5) && (y - _height <= _y + 5));
         }
     }
 }

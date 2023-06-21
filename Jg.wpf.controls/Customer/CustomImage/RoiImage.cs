@@ -7,7 +7,18 @@ namespace Jg.wpf.controls.Customer.CustomImage
     {
         private readonly RoiEditorDrawingVisual _editorDrawingVisual;
 
-        protected override int VisualChildrenCount => 1 + RoiSet.Count;
+        protected override int VisualChildrenCount
+        {
+            get
+            {
+                if (RoiSet != null)
+                {
+                    return 1 + RoiSet.Count;
+                }
+
+                return 1;
+            }
+        }
 
         public RoiImage()
         {

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Media;
 using System.Windows;
+using Jg.wpf.core.Extensions.Types.RoiTypes;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Jg.wpf.core.Extensions.Types.RoiTypes;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
@@ -23,6 +24,27 @@ namespace Jg.wpf.controls.Customer.CustomImage
         private static void OnRoisPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var image = (RoiImage)d;
+            if (image.RoiSet != null)
+            {
+                foreach (var roi in image.RoiSet)
+                {
+                    roi.OnRoiChanged -= image.OnRoiChanged;
+                }
+
+                foreach (var visual in image._drawers.Values)
+                {
+                    image.RemoveLogicalChild(visual);
+                    image.RemoveVisualChild(visual);
+                }
+                image._drawers.Clear();
+
+                if (image._hitRoi != null)
+                {
+                    image._editorDrawingVisual.ClearEditor(image._hitRoi);
+                    image._hitRoi = null;
+                }
+            }
+
             var rois = ((List<Roi>)e.NewValue);
             if (rois == null)
             {

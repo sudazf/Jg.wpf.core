@@ -1,12 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net7.0-windows;net472</TargetFrameworks>
-    <Version>2.0.1</Version>
+    <Version>2.0.5</Version>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/sudazf/Jg.wpf.core</PackageProjectUrl>
+    <Description>A light user control library of WPF based on Material Design.</Description>
+    <Authors>Jg</Authors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;DEBUG;WPF</DefineConstants>
@@ -19,6 +22,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Customer\Visuals\**" />
+    <EmbeddedResource Remove="Customer\Visuals\**" />
+    <None Remove="Customer\Visuals\**" />
+    <Page Remove="Customer\Visuals\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -30,8 +39,5 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Customer\Visuals\" />
   </ItemGroup>
 </Project>

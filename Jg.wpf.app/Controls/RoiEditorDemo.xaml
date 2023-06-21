@@ -16,20 +16,32 @@
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-        <customImage:RoiImage
-            x:Name="Image"
-            Width="540"
-            Height="720"
-            RoiSet="{Binding Rois}" />
+        <Grid Background="Orange">
+            <customImage:RoiImage
+                x:Name="Image"
+                RoiSet="{Binding Rois}"
+                Stretch="None" />
+        </Grid>
+
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Margin="4" Text="Roi坐标:" />
-            <ItemsControl
+            <Button
+                Width="120"
+                Height="32"
+                Margin="4"
+                Command="{Binding ShowRoisCommand}"
+                Content="Show Editors" />
+            <TextBlock
                 Grid.Row="1"
+                Margin="4"
+                Text="Roi坐标:" />
+            <ItemsControl
+                Grid.Row="2"
                 Margin="4"
                 ItemsSource="{Binding Rois}">
                 <ItemsControl.ItemTemplate>

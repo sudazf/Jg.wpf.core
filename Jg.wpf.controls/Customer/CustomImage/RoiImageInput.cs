@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using Jg.wpf.core.Extensions.Types.RoiTypes;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
@@ -195,7 +196,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         break;
                     if (bottomRight.X >= this.ActualWidth && xOffset > 0)// 不能往右  xOffset不能大于0
                         break;
-                    if (bottomRight.X >= this.ActualHeight && yOffset > 0)// 不能往下 yOffset不能大于0
+                    if (bottomRight.Y >= this.ActualHeight && yOffset > 0)// 不能往下 yOffset不能大于0
                         break;
 
                     topLeft = CoerceTopLeft(new Point(topLeft.X + xOffset, topLeft.Y + yOffset), this);
@@ -395,13 +396,18 @@ namespace Jg.wpf.controls.Customer.CustomImage
         private Roi HitRoiTest(JPoint point)
         {
             Roi belong = null;
-            foreach (var roi in RoiSet)
+
+            if (RoiSet != null)
             {
-                if (roi.Hit(point))
+                foreach (var roi in RoiSet)
                 {
-                    belong = roi;
-                    break;
+                    if (roi.Hit(point))
+                    {
+                        belong = roi;
+                        break;
+                    }
                 }
+
             }
 
             return belong;

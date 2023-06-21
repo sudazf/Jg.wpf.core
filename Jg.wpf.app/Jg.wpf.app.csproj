@@ -13,6 +13,14 @@
     <ApplicationIcon>Roasted Chicken.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Images\RoiDemo.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\RoiDemo.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Jg.wpf.controls\Jg.wpf.controls.csproj" />
     <ProjectReference Include="..\Jg.wpf.core\Jg.wpf.core.csproj" />
   </ItemGroup>

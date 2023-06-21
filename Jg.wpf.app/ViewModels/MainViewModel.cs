@@ -65,7 +65,8 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("9. Task Scheduler","TaskSchedulerDemo",new TaskSchedulerViewModel()),
                 new DemoItem("10. File/Folder Dialog","FileFolderDemo",new FileFolderViewModel()),
                 new DemoItem("11. Fast DataGrid","FastDataGridDemo", new FastDataGridViewModel()),
-                
+                new DemoItem("12. Roi editor demo","RoiEditorDemo", new RoiEditorViewModel()),
+
             };
             DemoItems = _defaultItems;
 

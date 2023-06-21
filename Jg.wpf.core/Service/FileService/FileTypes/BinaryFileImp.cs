@@ -1,5 +1,4 @@
-﻿using Jg.wpf.core.Utility;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -32,12 +31,14 @@ namespace Jg.wpf.core.Service.FileService.FileTypes
             {
                 if (File.Exists(filePath))
                 {
-                    var fStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-                    var binFormat = new BinaryFormatter();
-                    fStream.Position = 0;
+                    using (var fStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                    {
+                        var binFormat = new BinaryFormatter();
+                        fStream.Position = 0;
 #pragma warning disable SYSLIB0011
-                    return (T)binFormat.Deserialize(fStream);
+                        return (T)binFormat.Deserialize(fStream);
 #pragma warning restore SYSLIB0011
+                    }
                 }
 
                 string message = $"Can not find file: {filePath}";

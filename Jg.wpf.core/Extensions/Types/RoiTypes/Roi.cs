@@ -95,6 +95,11 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             _width = width;
             _height = height;
 
+            RaisePropertyChanged(nameof(X));
+            RaisePropertyChanged(nameof(Y));
+            RaisePropertyChanged(nameof(Width));
+            RaisePropertyChanged(nameof(Height));
+
             OnRoiChanged?.Invoke(this, this);
         }
 

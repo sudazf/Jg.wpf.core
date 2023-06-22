@@ -126,11 +126,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = _hitRoi.Width - offSetX;
                     height = _hitRoi.Height - offSetY;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
                 case OperateType.TopCenter:
@@ -144,11 +140,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
                 case OperateType.TopRightDrag:
@@ -163,11 +155,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
                 case OperateType.LeftCenter:
@@ -180,11 +168,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
                 case OperateType.CenterDrag:
@@ -209,11 +193,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
                 case OperateType.RightCenter:
@@ -226,11 +206,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
                 case OperateType.BottomLeftDrag:
@@ -244,11 +220,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
                 case OperateType.BottomCenter:
@@ -261,11 +233,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
                 case OperateType.BottomRightDrag:
@@ -278,11 +246,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = _hitRoi.Width + offSetX;
                     height = _hitRoi.Height + offSetY;
 
-                    _hitRoi.X = x;
-                    _hitRoi.Y = y;
-                    _hitRoi.Width = width;
-                    _hitRoi.Height = height;
-
+                    _hitRoi.Update(x, y, width, height);
                     _editorDrawingVisual.DrawEditor(_hitRoi);
                     break;
 
@@ -328,11 +292,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 var width = (int)bottomRight.X - (int)topLeft.X;
                 var height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                _hitRoi.X = x;
-                _hitRoi.Y = y;
-                _hitRoi.Width = width;
-                _hitRoi.Height = height;
-
+                _hitRoi.Update(x, y, width, height);
                 _editorDrawingVisual.DrawEditor(_hitRoi);
             }
         }

@@ -88,6 +88,16 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             return Contains(point) && Show;
         }
 
+        public void Update(int x, int y, int width, int height)
+        {
+            _x = x;
+            _y = y;
+            _width = width;
+            _height = height;
+
+            OnRoiChanged?.Invoke(this, this);
+        }
+
         private bool Contains(JPoint point)
         {
             var x = point.X;

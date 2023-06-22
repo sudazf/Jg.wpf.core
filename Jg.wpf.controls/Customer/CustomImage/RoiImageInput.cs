@@ -132,7 +132,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
                 case OperateType.TopCenter:
                     point = CoerceTopCenter(point, this);
@@ -151,7 +150,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
                 case OperateType.TopRightDrag:
                     point = CoerceTopRight(point, this);
@@ -171,7 +169,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
                 case OperateType.LeftCenter:
                     point = CoerceLeftCenter(point, this);
@@ -189,7 +186,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
                 case OperateType.CenterDrag:
                     double xOffset = (point.X - _lastPoint.X);//右方向为正
@@ -219,7 +215,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
                 case OperateType.RightCenter:
                     point = CoerceRightCenter(point, this);
@@ -237,7 +232,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
                 case OperateType.BottomLeftDrag:
                     point = CoerceBottomLeft(point, this);
@@ -256,7 +250,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
                 case OperateType.BottomCenter:
                     point = CoerceBottomCenter(point, this);
@@ -274,7 +267,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
                 case OperateType.BottomRightDrag:
                     point = CoerceBottomRight(point, this);
@@ -292,7 +284,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _hitRoi.Height = height;
 
                     _editorDrawingVisual.DrawEditor(_hitRoi);
-                    _drawers[_hitRoi].DrawRoi(_hitRoi);
                     break;
 
                 default:
@@ -343,8 +334,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 _hitRoi.Height = height;
 
                 _editorDrawingVisual.DrawEditor(_hitRoi);
-                _drawers[_hitRoi].DrawRoi(_hitRoi);
-
             }
         }
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

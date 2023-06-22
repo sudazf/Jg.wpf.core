@@ -47,6 +47,10 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
+                            <CheckBox
+                                Margin="4"
+                                VerticalAlignment="Center"
+                                IsChecked="{Binding Show}" />
                             <TextBlock
                                 Margin="4"
                                 VerticalAlignment="Center"

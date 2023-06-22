@@ -24,6 +24,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
         private static void OnRoisPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var image = (RoiImage)d;
+
+            //remove old RoiSet
             if (image.RoiSet != null)
             {
                 foreach (var roi in image.RoiSet)
@@ -45,6 +47,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 }
             }
 
+            //Add new RoiSet
             var rois = ((List<Roi>)e.NewValue);
             if (rois == null)
             {
@@ -67,8 +70,41 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         private void OnRoiChanged(object sender, Roi roi)
         {
-            _drawers[roi].DrawRoi(roi);
-            _editorDrawingVisual.DrawEditor(roi);
+            if (roi.Show)
+            {
+                //should show
+                if (_drawers.ContainsKey(roi))
+                {
+                    _drawers[roi].DrawRoi(roi);
+                    _editorDrawingVisual.DrawEditor(roi);
+                }
+                else
+                {
+                    var roiVisual = new RoiDrawingVisual();
+
+                    AddLogicalChild(roiVisual);
+                    AddVisualChild(roiVisual);
+
+                    _drawers[roi] = roiVisual;
+                    roiVisual.DrawRoi(roi);
+                }
+            }
+            else
+            {
+                //don't show
+                if (_drawers.ContainsKey(roi))
+                {
+                    RemoveLogicalChild(_drawers[roi]);
+                    RemoveVisualChild(_drawers[roi]);
+
+                    if (roi == _hitRoi)
+                    {
+                        _editorDrawingVisual.ClearEditor(roi);
+                    }
+                    _drawers.Remove(roi);
+                    
+                }
+            }
         }
     }
 }

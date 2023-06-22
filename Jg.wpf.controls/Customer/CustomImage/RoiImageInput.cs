@@ -24,6 +24,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 return;
             }
 
+            if (_hitRoi.Show == false)
+            {
+                return;
+            }
+
             Point point = e.GetPosition(this);
             point.X = (int)point.X;
             point.Y = (int)point.Y;
@@ -299,7 +304,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
-            if (_hitRoi == null)
+            if (_hitRoi == null || !_hitRoi.Show)
             {
                 return;
             }
@@ -353,7 +358,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
             if (hitRoi != null)
             {
                 _hitRoi = hitRoi;
-                _editorDrawingVisual.DrawEditor(hitRoi);
+
+                if (_hitRoi.Show)
+                {
+                    _editorDrawingVisual.DrawEditor(hitRoi);
+                }
             }
             else
             {

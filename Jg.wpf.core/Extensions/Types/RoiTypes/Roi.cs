@@ -9,6 +9,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         private int _y;
         private int _width;
         private int _height;
+        private bool _show;
 
         public event EventHandler<Roi> OnRoiChanged;
 
@@ -57,9 +58,21 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             }
         }
 
+        public bool Show
+        {
+            get => _show;
+            set
+            {
+                if (value == _show) return;
+                _show = value;
+                OnRoiChanged?.Invoke(this, this);
+                RaisePropertyChanged(nameof(Show));
+            }
+        }
+
         public string Color { get; set; }
 
-        public Roi(int x, int y, int width, int height, string color)
+        public Roi(int x, int y, int width, int height, string color, bool show = true)
         {
             _x = x;
             _y = y;
@@ -67,11 +80,12 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             _height = height;
 
             Color = color;
+            Show = show;
         }
 
         public bool Hit(JPoint point)
         {
-            return Contains(point);
+            return Contains(point) && Show;
         }
 
         private bool Contains(JPoint point)

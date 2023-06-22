@@ -32,7 +32,7 @@ namespace Jg.wpf.app.ViewModels
         {
             Rois = new List<Roi>
             {
-                new Roi(85, 70, 105,110, "Red"),
+                new Roi(85, 70, 105,110, "Red", false),
                 new Roi(260, 220, 100,100, "LightGreen"),
                 new Roi(290, 30, 160,110, "DeepPink")
             };

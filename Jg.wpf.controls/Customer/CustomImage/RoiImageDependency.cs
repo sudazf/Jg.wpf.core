@@ -56,15 +56,16 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
             foreach (var roi in rois)
             {
-                var roiVisual = new RoiDrawingVisual();
-
-                image.AddLogicalChild(roiVisual);
-                image.AddVisualChild(roiVisual);
-
-                image._drawers[roi] = roiVisual;
-
                 roi.OnRoiChanged += image.OnRoiChanged;
-                roiVisual.DrawRoi(roi);
+
+                if (roi.Show)
+                {
+                    var roiVisual = new RoiDrawingVisual();
+                    image.AddLogicalChild(roiVisual);
+                    image.AddVisualChild(roiVisual);
+                    image._drawers[roi] = roiVisual;
+                    roiVisual.DrawRoi(roi);
+                }
             }
         }
 
@@ -102,7 +103,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         _editorDrawingVisual.ClearEditor(roi);
                     }
                     _drawers.Remove(roi);
-                    
                 }
             }
         }

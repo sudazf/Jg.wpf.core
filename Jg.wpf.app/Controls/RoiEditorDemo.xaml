@@ -51,6 +51,11 @@
                                 Margin="4"
                                 VerticalAlignment="Center"
                                 IsChecked="{Binding Show}" />
+                            <TextBox
+                                Width="40"
+                                Margin="4"
+                                VerticalAlignment="Center"
+                                Text="{Binding Title}" />
                             <TextBlock
                                 Margin="4"
                                 VerticalAlignment="Center"

@@ -1,6 +1,7 @@
 ﻿using System.Windows.Media;
 using System.Windows;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
+using System.Globalization;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
@@ -27,6 +28,13 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                 dc.DrawRectangle(Brushes.Transparent, pen,
                     new Rect(topLeft, bottomRight));
+
+                if (!string.IsNullOrEmpty(roi.Title))
+                {
+                    dc.DrawText(new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                            new Typeface("宋体"), 14, color, VisualTreeHelper.GetDpi(this).PixelsPerDip),
+                        new Point(roi.X + 10, roi.Y - 20));
+                }
             }
         }
     }

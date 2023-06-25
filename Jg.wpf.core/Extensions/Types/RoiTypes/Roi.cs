@@ -1,5 +1,6 @@
 ﻿using Jg.wpf.core.Notify;
 using System;
+using System.Collections.Generic;
 
 namespace Jg.wpf.core.Extensions.Types.RoiTypes
 {
@@ -12,6 +13,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         private bool _show;
         private string _title;
         private bool _showRoiValue;
+        private string _color;
 
         public event EventHandler<Roi> OnRoiChanged;
 
@@ -70,7 +72,19 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(nameof(Show));
             }
         }
-        public string Color { get; set; }
+
+        public string Color
+        {
+            get => _color;
+            set
+            {
+                if (value == _color) return;
+                _color = value;
+                OnRoiChanged?.Invoke(this, this);
+                RaisePropertyChanged(nameof(Color));
+            }
+        }
+
         public string Title
         {
             get => _title;
@@ -82,7 +96,6 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(nameof(Title));
             }
         }
-
         public bool ShowRoiValue
         {
             get => _showRoiValue;
@@ -94,9 +107,11 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(() => ShowRoiValue);
             }
         }
+        public List<string> Colors { get; private set; }
 
         public Roi(int x, int y, int width, int height, 
-            string color, bool show = true, string title = null, bool showRoiValue = true)
+            string color, bool show = true, string title = null, bool showRoiValue = true,
+            List<string> colors = null)
         {
             _x = x;
             _y = y;
@@ -108,6 +123,25 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             Title = title;
 
             ShowRoiValue = showRoiValue;
+
+            Colors = new List<string>();
+
+            if (colors != null)
+            {
+                foreach (var supportColor in colors)
+                {
+                    Colors.Add(supportColor);
+                }
+
+                if (Colors.Count <= 0)
+                {
+                    ProvideDefaultColors();
+                }
+            }
+            else
+            {
+                ProvideDefaultColors();
+            }
         }
 
         public bool Hit(JPoint point)
@@ -135,6 +169,16 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             var y = point.Y;
             return ((x >= _x - 5) && (x - _width <= _x + 5) &&
                     (y >= _y - 5) && (y - _height <= _y + 5));
+        }
+
+        private void ProvideDefaultColors()
+        {
+            Colors = new List<string>
+            {
+                "Red", "Green", "Blue", "White", 
+                "Black", "Yellow", "Crimson", "DeepPink", 
+                "DarkOrange", "LightGreen"
+            };
         }
     }
 }

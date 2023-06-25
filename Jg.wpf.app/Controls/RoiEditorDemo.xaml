@@ -55,19 +55,7 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox
-                                        Margin="4"
-                                        VerticalAlignment="Center"
-                                        Content="显示/隐藏"
-                                        IsChecked="{Binding Show}" />
-                                    <CheckBox
-                                        Margin="4"
-                                        VerticalAlignment="Center"
-                                        Content="数值"
-                                        IsChecked="{Binding ShowRoiValue}" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                <StackPanel Grid.Row="0" Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4"
                                         VerticalAlignment="Center"
@@ -78,13 +66,13 @@
                                         VerticalAlignment="Center"
                                         Text="{Binding Title}" />
                                 </StackPanel>
-                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                <StackPanel Grid.Row="1" Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4"
                                         VerticalAlignment="Center"
                                         Text=" X:" />
                                     <TextBox
-                                        Width="40"
+                                        Width="50"
                                         Margin="4"
                                         VerticalAlignment="Center"
                                         Text="{Binding X}" />
@@ -93,7 +81,7 @@
                                         VerticalAlignment="Center"
                                         Text="Y:" />
                                     <TextBox
-                                        Width="40"
+                                        Width="50"
                                         Margin="4"
                                         VerticalAlignment="Center"
                                         Text="{Binding Y}" />
@@ -102,7 +90,7 @@
                                         VerticalAlignment="Center"
                                         Text="Width:" />
                                     <TextBox
-                                        Width="40"
+                                        Width="50"
                                         Margin="4"
                                         VerticalAlignment="Center"
                                         Text="{Binding Width}" />
@@ -111,10 +99,48 @@
                                         VerticalAlignment="Center"
                                         Text="Height:" />
                                     <TextBox
-                                        Width="40"
+                                        Width="50"
                                         Margin="4"
                                         VerticalAlignment="Center"
                                         Text="{Binding Height}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                    <CheckBox
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Content="显示/隐藏"
+                                        IsChecked="{Binding Show}" />
+                                    <CheckBox
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Content="数值"
+                                        IsChecked="{Binding ShowRoiValue}" />
+                                    <TextBlock
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="颜色:" />
+                                    <ComboBox
+                                        Width="180"
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        ItemsSource="{Binding Colors}"
+                                        SelectedItem="{Binding Color}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Rectangle
+                                                        Width="80"
+                                                        Height="24"
+                                                        Margin="4"
+                                                        Fill="{Binding .}"
+                                                        Stroke="Black" />
+                                                    <TextBlock Margin="4" 
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding .}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
                                 </StackPanel>
                             </Grid>
                         </Border>

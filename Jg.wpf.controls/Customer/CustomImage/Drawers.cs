@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using System.Windows;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
 using System.Globalization;
@@ -17,42 +18,49 @@ namespace Jg.wpf.controls.Customer.CustomImage
         {
             using (DrawingContext dc = this.RenderOpen())
             {
-                var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
-                var pen = new Pen(color, 1);
-                var topLeft = new Point(roi.X, roi.Y);
-                var bottomRight = new Point(roi.X + roi.Width,roi.Y + roi.Height);
-
-                var d = pen.Thickness / 2;
-                var guidelines2 = new GuidelineSet(new[] { d }, new[] { d });
-                dc.PushGuidelineSet(guidelines2);
-
-                dc.DrawRectangle(Brushes.Transparent, pen,
-                    new Rect(topLeft, bottomRight));
-
-                var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                    new Typeface("宋体"), 14, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
-
-                if (!string.IsNullOrEmpty(roi.Title))
+                try
                 {
-                    var titlePoint = new Point(roi.X, roi.Y + roi.Height + 10);
-                    dc.DrawText(titleText, titlePoint);
-                }
+                    var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
+                    var pen = new Pen(color, 1);
+                    var topLeft = new Point(roi.X, roi.Y);
+                    var bottomRight = new Point(roi.X + roi.Width, roi.Y + roi.Height);
 
-                if (roi.ShowRoiValue)
-                {
-                    var xyValues = $"X:{roi.X} Y:{roi.Y}, W:{roi.Width} H:{roi.Height}";
+                    var d = pen.Thickness / 2;
+                    var guidelines2 = new GuidelineSet(new[] { d }, new[] { d });
+                    dc.PushGuidelineSet(guidelines2);
 
-                    var xyText = new FormattedText(xyValues, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                    dc.DrawRectangle(Brushes.Transparent, pen,
+                        new Rect(topLeft, bottomRight));
+
+                    var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
                         new Typeface("宋体"), 14, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
-        
-                    var xyStartPoint = new Point(roi.X, roi.Y + roi.Height + 10);
 
                     if (!string.IsNullOrEmpty(roi.Title))
                     {
-                        xyStartPoint.X = xyStartPoint.X + titleText.Width + 4;
+                        var titlePoint = new Point(roi.X, roi.Y + roi.Height + 10);
+                        dc.DrawText(titleText, titlePoint);
                     }
 
-                    dc.DrawText(xyText, xyStartPoint);
+                    if (roi.ShowRoiValue)
+                    {
+                        var xyValues = $"X:{roi.X} Y:{roi.Y}, W:{roi.Width} H:{roi.Height}";
+
+                        var xyText = new FormattedText(xyValues, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                            new Typeface("宋体"), 14, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                        var xyStartPoint = new Point(roi.X, roi.Y + roi.Height + 10);
+
+                        if (!string.IsNullOrEmpty(roi.Title))
+                        {
+                            xyStartPoint.X = xyStartPoint.X + titleText.Width + 4;
+                        }
+
+                        dc.DrawText(xyText, xyStartPoint);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
             }
         }

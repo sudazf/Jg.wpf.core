@@ -33,7 +33,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         new Rect(topLeft, bottomRight));
 
                     var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                        new Typeface("宋体"), 14, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+                        new Typeface("宋体"), 14, Brushes.Gray, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
                     if (!string.IsNullOrEmpty(roi.Title))
                     {
@@ -46,7 +46,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         var xyValues = $"X:{roi.X} Y:{roi.Y}, W:{roi.Width} H:{roi.Height}";
 
                         var xyText = new FormattedText(xyValues, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                            new Typeface("宋体"), 14, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+                            new Typeface("宋体"), 14, Brushes.Gray, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
                         var xyStartPoint = new Point(roi.X, roi.Y + roi.Height + 10);
 

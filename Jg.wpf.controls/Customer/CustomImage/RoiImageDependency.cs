@@ -77,7 +77,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 if (_drawers.ContainsKey(roi))
                 {
                     _drawers[roi].DrawRoi(roi);
-                    _editorDrawingVisual.DrawEditor(roi);
+
+                    if (roi == _hitRoi)
+                    {
+                        _editorDrawingVisual.DrawEditor(roi);
+                    }
                 }
                 else
                 {

@@ -35,64 +35,89 @@
                 Height="32"
                 Margin="4"
                 Command="{Binding ShowRoisCommand}"
-                Content="Show Editors" />
-            <TextBlock
-                Grid.Row="1"
-                Margin="4"
-                Text="Roi坐标:" />
+                Content="Demo" />
+
             <ItemsControl
                 Grid.Row="2"
                 Margin="4"
+                BorderBrush="Gray"
+                BorderThickness="0,1,0,0"
                 ItemsSource="{Binding Rois}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                IsChecked="{Binding Show}" />
-                            <TextBox
-                                Width="40"
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="{Binding Title}" />
-                            <TextBlock
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="X:" />
-                            <TextBox
-                                Width="40"
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="{Binding X}" />
-                            <TextBlock
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="Y:" />
-                            <TextBox
-                                Width="40"
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="{Binding Y}" />
-                            <TextBlock
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="Width:" />
-                            <TextBox
-                                Width="40"
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="{Binding Width}" />
-                            <TextBlock
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="Height:" />
-                            <TextBox
-                                Width="40"
-                                Margin="4"
-                                VerticalAlignment="Center"
-                                Text="{Binding Height}" />
-                        </StackPanel>
+                        <Border
+                            BorderBrush="Gray"
+                            BorderThickness="0,0,0,1"
+                            SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Content="显示/隐藏"
+                                        IsChecked="{Binding Show}" />
+                                    <CheckBox
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Content="数值"
+                                        IsChecked="{Binding ShowRoiValue}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="标题:" />
+                                    <TextBox
+                                        Width="100"
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Title}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text=" X:" />
+                                    <TextBox
+                                        Width="40"
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding X}" />
+                                    <TextBlock
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="Y:" />
+                                    <TextBox
+                                        Width="40"
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Y}" />
+                                    <TextBlock
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="Width:" />
+                                    <TextBox
+                                        Width="40"
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Width}" />
+                                    <TextBlock
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="Height:" />
+                                    <TextBox
+                                        Width="40"
+                                        Margin="4"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Height}" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>

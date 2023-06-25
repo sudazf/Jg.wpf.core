@@ -11,6 +11,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         private int _height;
         private bool _show;
         private string _title;
+        private bool _showRoiValue;
 
         public event EventHandler<Roi> OnRoiChanged;
 
@@ -58,7 +59,6 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(nameof(Height));
             }
         }
-
         public bool Show
         {
             get => _show;
@@ -70,9 +70,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(nameof(Show));
             }
         }
-
         public string Color { get; set; }
-
         public string Title
         {
             get => _title;
@@ -85,7 +83,20 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             }
         }
 
-        public Roi(int x, int y, int width, int height, string color, bool show = true, string title = null)
+        public bool ShowRoiValue
+        {
+            get => _showRoiValue;
+            set
+            {
+                if (value == _showRoiValue) return;
+                _showRoiValue = value;
+                OnRoiChanged?.Invoke(this, this);
+                RaisePropertyChanged(() => ShowRoiValue);
+            }
+        }
+
+        public Roi(int x, int y, int width, int height, 
+            string color, bool show = true, string title = null, bool showRoiValue = true)
         {
             _x = x;
             _y = y;
@@ -95,13 +106,14 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             Color = color;
             Show = show;
             Title = title;
+
+            ShowRoiValue = showRoiValue;
         }
 
         public bool Hit(JPoint point)
         {
             return Contains(point) && Show;
         }
-
         public void Update(int x, int y, int width, int height)
         {
             _x = x;

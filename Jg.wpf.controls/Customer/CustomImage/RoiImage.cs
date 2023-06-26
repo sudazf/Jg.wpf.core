@@ -22,6 +22,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         public RoiImage()
         {
+            this.Focusable = true;
+
             _editorDrawingVisual = new RoiEditorDrawingVisual();
 
             this.AddLogicalChild(_editorDrawingVisual);

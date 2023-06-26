@@ -56,16 +56,17 @@ namespace Jg.wpf.app.ViewModels
             {
                 new DemoItem("1. Navigation", "NavigationRailDemo", null),
                 new DemoItem("2. TextBox", "TextBoxDemo", new TextBoxDemoViewModel()),
-                new DemoItem("3. Autocomplete","AutocompleteDemo",new AutocompleteViewModel()),
-                new DemoItem("4. ListBox with Select All","SelectAllListDemo", new SelectAllListViewModel()),
-                new DemoItem("5. TabControl Animation","TabControlDemo", null),
-                new DemoItem("6. Dragging animation", "DraggableDemo", new DraggableDemoViewModel()),
-                new DemoItem("7. ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
-                new DemoItem("8. Performance","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
-                new DemoItem("9. Task Scheduler","TaskSchedulerDemo",new TaskSchedulerViewModel()),
-                new DemoItem("10. File/Folder Dialog","FileFolderDemo",new FileFolderViewModel()),
-                new DemoItem("11. Fast DataGrid","FastDataGridDemo", new FastDataGridViewModel()),
-                new DemoItem("12. Roi editor demo","RoiEditorDemo", new RoiEditorViewModel()),
+                new DemoItem("3. TextBlock", "TextBlockDemo", null),
+                new DemoItem("4. Autocomplete","AutocompleteDemo",new AutocompleteViewModel()),
+                new DemoItem("5. ListBox with Select All","SelectAllListDemo", new SelectAllListViewModel()),
+                new DemoItem("6. TabControl Animation","TabControlDemo", null),
+                new DemoItem("7. Dragging animation", "DraggableDemo", new DraggableDemoViewModel()),
+                new DemoItem("8. ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
+                new DemoItem("9. Performance","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),
+                new DemoItem("10. Task Scheduler","TaskSchedulerDemo",new TaskSchedulerViewModel()),
+                new DemoItem("11. File/Folder Dialog","FileFolderDemo",new FileFolderViewModel()),
+                new DemoItem("12. Fast DataGrid","FastDataGridDemo", new FastDataGridViewModel()),
+                new DemoItem("13. Roi Editor","RoiEditorDemo", new RoiEditorViewModel()),
 
             };
             DemoItems = _defaultItems;

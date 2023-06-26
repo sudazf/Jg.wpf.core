@@ -17,6 +17,7 @@ namespace Jg.wpf.controls.Customer.AutoTrimmedText
         private void AssociateToolTip()
         {
             var toolTip = new ToolTip();
+            toolTip.Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
 
             var content = new TextBlock();
             content.SetBinding(TextProperty, new Binding("Text")

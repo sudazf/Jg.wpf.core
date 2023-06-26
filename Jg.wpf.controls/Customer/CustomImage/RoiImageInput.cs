@@ -299,7 +299,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-
+            this.Focus();
             _lastPoint = e.GetPosition(this);
             var jPoint = new JPoint((int)_lastPoint.X, (int)_lastPoint.Y);
 
@@ -326,6 +326,49 @@ namespace Jg.wpf.controls.Customer.CustomImage
         {
             base.OnMouseLeftButtonUp(e);
             _operate = OperateType.None;
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (_hitRoi == null)
+            {
+                return;
+            }
+
+            switch (e.Key)
+            {
+                case Key.Up:
+                    if (_hitRoi.Y > 0)
+                    {
+                        _hitRoi.Y--;
+                    }
+                    e.Handled = true;
+                    break;
+                case Key.Down:
+                    if (_hitRoi.Y + _hitRoi.Height < ActualHeight)
+                    {
+                        _hitRoi.Y++;
+                    }
+                    e.Handled = true;
+                    break;
+                case Key.Left:
+                    if (_hitRoi.X > 0)
+                    {
+                        _hitRoi.X--;
+                    }
+                    e.Handled = true;
+                    break;
+                case Key.Right:
+                    if (_hitRoi.X + _hitRoi.Width < ActualWidth)
+                    {
+                        _hitRoi.X++;
+                    }
+                    e.Handled = true;
+                    break;
+            }
+
         }
 
         private bool HitPointTest(Point target, Point point)
@@ -482,6 +525,5 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
             return point;
         }
-
     }
 }

@@ -16,7 +16,7 @@
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-        <Grid Background="Orange">
+        <Grid>
             <customImage:RoiImage
                 x:Name="Image"
                 RoiSet="{Binding Rois}"

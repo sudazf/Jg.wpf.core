@@ -58,55 +58,68 @@ namespace Jg.wpf.controls.Customer.CustomImage
             {
                 roi.OnRoiChanged += image.OnRoiChanged;
 
-                if (roi.Show)
+                if (image.ActualHeight * image.ActualWidth != 0)
                 {
-                    var roiVisual = new RoiDrawingVisual();
-                    image.AddLogicalChild(roiVisual);
-                    image.AddVisualChild(roiVisual);
-                    image._drawers[roi] = roiVisual;
-                    roiVisual.DrawRoi(roi);
+                    if (roi.Show)
+                    {
+                        var roiVisual = new RoiDrawingVisual();
+                        image.AddLogicalChild(roiVisual);
+                        image.AddVisualChild(roiVisual);
+                        image._drawers[roi] = roiVisual;
+
+                        roiVisual.DrawRoi(roi);
+                    }
                 }
             }
         }
 
         private void OnRoiChanged(object sender, Roi roi)
         {
-            if (roi.Show)
+            //当控件本身宽或高为 0 时，不处理
+            if (ActualHeight * ActualWidth != 0)
             {
-                //should show
-                if (_drawers.ContainsKey(roi))
+                if (roi.Show)
                 {
-                    _drawers[roi].DrawRoi(roi);
-
-                    if (roi == _hitRoi)
+                    //should show
+                    if (_drawers.ContainsKey(roi))
                     {
-                        _editorDrawingVisual.DrawEditor(roi);
+                        _drawers[roi].DrawRoi(roi);
+
+                        if (roi == _hitRoi)
+                        {
+                            _editorDrawingVisual.DrawEditor(roi);
+                        }
+                    }
+                    else
+                    {
+                        var roiVisual = new RoiDrawingVisual();
+
+                        AddLogicalChild(roiVisual);
+                        AddVisualChild(roiVisual);
+
+                        _drawers[roi] = roiVisual;
+
+                        //当控件本身宽或高为 0 时，不绘制
+                        if (ActualHeight * ActualWidth != 0)
+                        {
+                            roiVisual.DrawRoi(roi);
+                        }
                     }
                 }
                 else
                 {
-                    var roiVisual = new RoiDrawingVisual();
-
-                    AddLogicalChild(roiVisual);
-                    AddVisualChild(roiVisual);
-
-                    _drawers[roi] = roiVisual;
-                    roiVisual.DrawRoi(roi);
-                }
-            }
-            else
-            {
-                //don't show
-                if (_drawers.ContainsKey(roi))
-                {
-                    RemoveLogicalChild(_drawers[roi]);
-                    RemoveVisualChild(_drawers[roi]);
-
-                    if (roi == _hitRoi)
+                    //don't show
+                    if (_drawers.ContainsKey(roi))
                     {
-                        _editorDrawingVisual.ClearEditor(roi);
+                        RemoveLogicalChild(_drawers[roi]);
+                        RemoveVisualChild(_drawers[roi]);
+                        _drawers.Remove(roi);
+
+                        if (roi == _hitRoi)
+                        {
+                            _editorDrawingVisual.ClearEditor(roi);
+                        }
                     }
-                    _drawers.Remove(roi);
                 }
             }
         }

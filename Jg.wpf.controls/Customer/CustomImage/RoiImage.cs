@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Jg.wpf.controls.Customer.CustomImage
@@ -23,6 +24,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         public RoiImage()
         {
             this.Focusable = true;
+            SizeChanged += OnSizeChanged;
 
             _editorDrawingVisual = new RoiEditorDrawingVisual();
 

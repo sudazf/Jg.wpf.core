@@ -26,8 +26,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var bottomRight = new Point(roi.X + roi.Width, roi.Y + roi.Height);
 
                     var d = pen.Thickness / 2;
-                    var guidelines2 = new GuidelineSet(new[] { d }, new[] { d });
-                    dc.PushGuidelineSet(guidelines2);
+                    var guidelines = new GuidelineSet(new[] { d }, new[] { d });
+                    dc.PushGuidelineSet(guidelines);
 
                     dc.DrawRectangle(Brushes.Transparent, pen,
                         new Rect(topLeft, bottomRight));

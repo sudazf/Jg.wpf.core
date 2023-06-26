@@ -30,12 +30,27 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button
-                Width="120"
-                Height="32"
-                Margin="4"
-                Command="{Binding ShowRoisCommand}"
-                Content="Demo" />
+
+            <StackPanel Orientation="Horizontal">
+                <Button
+                    Width="120"
+                    Height="32"
+                    Margin="4"
+                    Click="Button_Click"
+                    Content="Show" />
+                <Button
+                    Width="120"
+                    Height="32"
+                    Margin="4"
+                    Click="Button_Click_1"
+                    Content="Hide" />
+                <Button
+                    Width="120"
+                    Height="32"
+                    Margin="4"
+                    Command="{Binding ShowRoisCommand}"
+                    Content="Demo" />
+            </StackPanel>
 
             <ItemsControl
                 Grid.Row="2"

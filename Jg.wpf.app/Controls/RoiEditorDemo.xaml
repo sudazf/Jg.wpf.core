@@ -36,14 +36,14 @@
                     Width="120"
                     Height="32"
                     Margin="4"
-                    Click="Button_Click"
-                    Content="Show" />
+                    Click="BtnShowImage"
+                    Content="ShowImage" />
                 <Button
                     Width="120"
                     Height="32"
                     Margin="4"
-                    Click="Button_Click_1"
-                    Content="Hide" />
+                    Click="BtnHideImage"
+                    Content="HideImage" />
                 <Button
                     Width="120"
                     Height="32"

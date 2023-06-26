@@ -1,6 +1,5 @@
 ﻿using Jg.wpf.core.Extensions.Types;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
@@ -373,6 +372,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
 
 
+
         private bool HitPointTest(Point target, Point point)
         {
             double offset = 8;
@@ -395,7 +395,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
         {
             return _hitRoi.Hit(new JPoint((int)point.X, (int)point.Y));
         }
-
         private Roi HitRoiTest(JPoint point)
         {
             Roi belong = null;
@@ -530,14 +529,14 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (RoiSet == null)
+            {
+                return;
+            }
+
             //当控件本身宽或高为 0 时，不绘制
             if (this.ActualHeight * this.ActualWidth == 0)
             {
-                if (RoiSet == null)
-                {
-                    return;
-                }
-
                 foreach (var roi in RoiSet)
                 {
                     if (roi.Show)

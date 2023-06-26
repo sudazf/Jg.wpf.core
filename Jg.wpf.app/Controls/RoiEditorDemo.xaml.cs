@@ -14,7 +14,17 @@ namespace Jg.wpf.app.Controls
         public RoiEditorDemo()
         {
             InitializeComponent();
-            //ProvideImage();
+            ProvideImage();
+        }
+
+        private void BtnShowImage(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ProvideImage();
+        }
+
+        private void BtnHideImage(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Image.Source = null;
         }
 
         private void ProvideImage()
@@ -29,16 +39,6 @@ namespace Jg.wpf.app.Controls
                 bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
             image.UnlockBits(bitmapData);
             Image.Source = bitmapSource;
-        }
-
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            ProvideImage();
-        }
-
-        private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Image.Source = null;
         }
     }
 }

@@ -23,9 +23,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
         public RoiImage()
         {
             this.Focusable = true;
-            SizeChanged += OnSizeChanged;
 
+            SizeChanged += OnSizeChanged;
+            RequestBringIntoView += OnRequestBringIntoView;
             _editorDrawingVisual = new RoiEditorDrawingVisual();
+            Loaded += OnCustomLoaded;
 
             this.AddLogicalChild(_editorDrawingVisual);
             this.AddVisualChild(_editorDrawingVisual);

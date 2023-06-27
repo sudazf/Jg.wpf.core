@@ -67,5 +67,23 @@ namespace Jg.wpf.app.Controls
             }
           
         }
+
+        private void BtnShowBigImage(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var imageFile = "BigPic.png";
+
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Images\\{imageFile}");
+            var image = (Bitmap)System.Drawing.Image.FromFile(filePath);
+            var bitmapData = image.LockBits(
+                new Rectangle(0, 0, image.Width, image.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly, image.PixelFormat);
+            var bitmapSource = BitmapSource.Create(
+                bitmapData.Width, bitmapData.Height, 96, 96, PixelFormats.Pbgra32, null,
+                bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
+            image.UnlockBits(bitmapData);
+
+            Image.Source = bitmapSource;
+        }
+
     }
 }

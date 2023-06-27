@@ -20,8 +20,7 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <customImage:RoiImage
                     x:Name="Image"
-                    RoiSet="{Binding Rois}"
-                    Stretch="None" />
+                    RoiSet="{Binding Rois}" />
             </ScrollViewer>
         </Grid>
 
@@ -39,6 +38,12 @@
                     Margin="4"
                     Click="BtnShowImage"
                     Content="ChangeImage" />
+                <Button
+                    Width="120"
+                    Height="32"
+                    Margin="4"
+                    Click="BtnShowBigImage"
+                    Content="Big Picture" />
                 <Button
                     Width="120"
                     Height="32"

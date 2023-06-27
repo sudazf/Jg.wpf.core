@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
+using System.ComponentModel;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
@@ -295,6 +296,9 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 _hitRoi.Update(x, y, width, height);
                 _editorDrawingVisual.DrawEditor(_hitRoi);
             }
+
+            //prevent ScrollViewer scrolling.
+            e.Handled = true;
         }
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
@@ -572,6 +576,28 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         }
                     }
                 }
+            }
+        }
+
+        private void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            //阻止 ScrollViewer 自动滚动，否则选择不到最大 ROI
+            e.Handled = true;
+        }
+
+        private void OnCustomLoaded(object sender, RoutedEventArgs e)
+        {
+            //保证可以ROI可以选择最大像素
+            if (Margin.Left < 1 || Margin.Top < 1 ||
+                Margin.Right < 1 || Margin.Bottom < 1)
+            {
+                Margin = new Thickness(4);
+            }
+
+            //目前 只支持 Stretch = None 的情形
+            if (Stretch != System.Windows.Media.Stretch.None)
+            {
+                Stretch = System.Windows.Media.Stretch.None;
             }
         }
     }

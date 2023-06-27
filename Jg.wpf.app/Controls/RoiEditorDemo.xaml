@@ -37,7 +37,7 @@
                     Height="32"
                     Margin="4"
                     Click="BtnShowImage"
-                    Content="ShowImage" />
+                    Content="ChangeImage" />
                 <Button
                     Width="120"
                     Height="32"
@@ -49,7 +49,7 @@
                     Height="32"
                     Margin="4"
                     Command="{Binding ShowRoisCommand}"
-                    Content="Demo" />
+                    Content="ROI Demo" />
             </StackPanel>
 
             <ItemsControl

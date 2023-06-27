@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid>
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Focusable="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <customImage:RoiImage
                     x:Name="Image"
                     RoiSet="{Binding Rois}" />

@@ -17,12 +17,13 @@
         </Grid.ColumnDefinitions>
 
         <Grid>
-            <customImage:RoiImage
-                x:Name="Image"
-                RoiSet="{Binding Rois}"
-                Stretch="None" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <customImage:RoiImage
+                    x:Name="Image"
+                    RoiSet="{Binding Rois}"
+                    Stretch="None" />
+            </ScrollViewer>
         </Grid>
-
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -149,9 +150,10 @@
                                                         Margin="4"
                                                         Fill="{Binding .}"
                                                         Stroke="Black" />
-                                                    <TextBlock Margin="4" 
-                                                               VerticalAlignment="Center"
-                                                               Text="{Binding .}" />
+                                                    <TextBlock
+                                                        Margin="4"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding .}" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>

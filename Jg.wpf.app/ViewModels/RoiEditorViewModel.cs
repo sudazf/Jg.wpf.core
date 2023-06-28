@@ -10,6 +10,7 @@ namespace Jg.wpf.app.ViewModels
     {
         private List<Roi> _rois;
         private double _zoom;
+        private double _angle;
 
         public List<Roi> Rois
         {
@@ -33,19 +34,44 @@ namespace Jg.wpf.app.ViewModels
             }
         }
 
+        public double Angle
+        {
+            get => _angle;
+            set
+            {
+                if (value.Equals(_angle)) return;
+                _angle = value;
+                RaisePropertyChanged(nameof(Angle));
+            }
+        }
+
         public JCommand ShowRoisCommand { get; }
         public JCommand IncreaseZoomCommand { get; }
         public JCommand DecreaseZoomCommand { get; }
+        public JCommand IncreaseAngleCommand { get; }
+        public JCommand DecreaseAngleCommand { get; }
 
         public RoiEditorViewModel()
         {
             _zoom = 1;
             ShowRoisCommand = new JCommand("ShowRoisCommand", OnShowRois);
-            IncreaseZoomCommand = new JCommand("IncreaseZoomCommand", OnIncrease);
-            DecreaseZoomCommand = new JCommand("DecreaseZoomCommand", OnDecrease);
+            IncreaseZoomCommand = new JCommand("IncreaseZoomCommand", OnIncreaseZoom);
+            DecreaseZoomCommand = new JCommand("DecreaseZoomCommand", OnDecreaseZoom);
+            IncreaseAngleCommand = new JCommand("IncreaseAngleCommand", OnIncreaseAngle);
+            DecreaseAngleCommand = new JCommand("DecreaseAngleCommand", OnDecreaseAngle);
         }
 
-        private void OnIncrease(object obj)
+        private void OnIncreaseAngle(object obj)
+        {
+            Angle += 5;
+        }
+
+        private void OnDecreaseAngle(object obj)
+        {
+            Angle -= 5;
+        }
+
+        private void OnIncreaseZoom(object obj)
         {
             var unformatZoom = _zoom + 0.1;
             if (unformatZoom > 5)
@@ -55,12 +81,12 @@ namespace Jg.wpf.app.ViewModels
             Zoom = Math.Round(unformatZoom, 1);
         }
 
-        private void OnDecrease(object obj)
+        private void OnDecreaseZoom(object obj)
         {
             var unformatZoom = _zoom - 0.1;
             if (unformatZoom < 0.1)
             {
-                return;
+                //return;
             }
             Zoom = Math.Round(unformatZoom, 1);
         }

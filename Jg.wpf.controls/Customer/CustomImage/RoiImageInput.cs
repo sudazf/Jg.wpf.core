@@ -3,7 +3,6 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
-using System.ComponentModel;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
@@ -321,7 +320,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
             {
                 if (_hitRoi != null)
                 {
-                    _editorDrawingVisual.ClearEditor(_hitRoi, Scale);
+                    _editorDrawingVisual.ClearEditor();
                 }
                 _hitRoi = null;
             }
@@ -374,7 +373,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
             }
 
         }
-
 
 
         private bool HitPointTest(Point target, Point point)
@@ -553,7 +551,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                             if (roi == _hitRoi)
                             {
-                                _editorDrawingVisual.ClearEditor(roi, Scale);
+                                _editorDrawingVisual.ClearEditor();
                             }
                         }
                     }

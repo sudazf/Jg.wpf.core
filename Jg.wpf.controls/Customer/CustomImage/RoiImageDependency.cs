@@ -10,31 +10,33 @@ namespace Jg.wpf.controls.Customer.CustomImage
     {
         private readonly Dictionary<Roi, RoiDrawingVisual> _drawers = new Dictionary<Roi, RoiDrawingVisual>();
 
-
         public static readonly DependencyProperty RoiSetProperty =
             DependencyProperty.Register("RoiSet", typeof(List<Roi>), typeof(RoiImage),
                 new FrameworkPropertyMetadata(new List<Roi>(),
                     OnRoisPropertyChanged));
+        public static readonly DependencyProperty ScaleProperty =
+            DependencyProperty.Register("Scale", typeof(double), typeof(RoiImage),
+                new PropertyMetadata(1d, OnScalePropertyChanged));
 
         public List<Roi> RoiSet
         {
             get => (List<Roi>)GetValue(RoiSetProperty);
             set => SetValue(RoiSetProperty, value);
         }
-
         public double Scale
         {
             get => (double)GetValue(ScaleProperty);
             set => SetValue(ScaleProperty, value);
         }
 
-        public static readonly DependencyProperty ScaleProperty =
-            DependencyProperty.Register("Scale", typeof(double), typeof(RoiImage),
-                new PropertyMetadata(1d, OnScalePropertyChanged));
-
         private static void OnScalePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var image = (RoiImage)d;
+
+            if ((double)e.NewValue == 0)
+            {
+                return;
+            }
 
             if (image.RoiSet == null)
             {
@@ -60,7 +62,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 image._editorDrawingVisual.DrawEditor(image._hitRoi, image.Scale);
             }
         }
-
         private static void OnRoisPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var image = (RoiImage)d;
@@ -82,7 +83,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                 if (image._hitRoi != null)
                 {
-                    image._editorDrawingVisual.ClearEditor(image._hitRoi, image.Scale);
+                    image._editorDrawingVisual.ClearEditor();
                     image._hitRoi = null;
                 }
             }
@@ -112,7 +113,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 }
             }
         }
-
         private void OnRoiChanged(object sender, Roi roi)
         {
             //当控件本身宽或高为 0 时，不处理
@@ -157,7 +157,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                         if (roi == _hitRoi)
                         {
-                            _editorDrawingVisual.ClearEditor(roi, Scale);
+                            _editorDrawingVisual.ClearEditor();
                         }
                     }
                 }

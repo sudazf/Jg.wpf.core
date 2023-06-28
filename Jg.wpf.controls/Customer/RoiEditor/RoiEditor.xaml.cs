@@ -43,6 +43,17 @@ namespace Jg.wpf.controls.Customer.RoiEditor
             DependencyProperty.Register("Scale", typeof(double), typeof(RoiEditor), 
                 new PropertyMetadata(1d));
 
+        public double Angle
+        {
+            get => (double)GetValue(AngleProperty);
+            set => SetValue(AngleProperty, value);
+        }
+
+        public static readonly DependencyProperty AngleProperty =
+            DependencyProperty.Register("Angle", typeof(double), typeof(RoiEditor), 
+                new PropertyMetadata(0d));
+
+
         public RoiEditor()
         {
             InitializeComponent();

@@ -13,10 +13,11 @@
         Focusable="False"
         HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto">
-        <Grid DataContext="{Binding ElementName=MainEditor}">
+        <Grid DataContext="{Binding ElementName=MainEditor}" RenderTransformOrigin="0.5,0.5">
             <Grid.LayoutTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                    <RotateTransform Angle="{Binding Angle}" />
                 </TransformGroup>
             </Grid.LayoutTransform>
             <customImage:RoiImage

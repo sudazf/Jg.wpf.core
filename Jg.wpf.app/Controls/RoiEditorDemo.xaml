@@ -24,9 +24,10 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <roiEditor:RoiEditor
-                x:Name="Image"
+                x:Name="Editor"
                 RoiSet="{Binding Rois}"
-                Scale="{Binding Zoom}" />
+                Scale="{Binding Zoom}"
+                Angle="{Binding Angle}" />
             <Border Grid.Row="1">
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <RepeatButton
@@ -58,6 +59,36 @@
                         VerticalAlignment="Center"
                         FontWeight="Bold"
                         Text="{Binding Zoom, StringFormat=Zoom: {0}}" />
+
+                    <RepeatButton
+                        Width="60"
+                        Height="32"
+                        Margin="4"
+                        Command="{Binding DecreaseAngleCommand}">
+                        <RepeatButton.Content>
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Kind="FileRotateLeftOutline" />
+                        </RepeatButton.Content>
+                    </RepeatButton>
+                    <RepeatButton
+                        Width="60"
+                        Height="32"
+                        Margin="4"
+                        Command="{Binding IncreaseAngleCommand}">
+                        <RepeatButton.Content>
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Kind="FileRotateRightOutline" />
+                        </RepeatButton.Content>
+                    </RepeatButton>
+                    <TextBlock
+                        Margin="16,4"
+                        VerticalAlignment="Center"
+                        FontWeight="Bold"
+                        Text="{Binding Angle, StringFormat=Angle: {0}}" />
                 </StackPanel>
             </Border>
         </Grid>

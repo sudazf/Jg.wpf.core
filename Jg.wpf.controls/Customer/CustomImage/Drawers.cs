@@ -115,7 +115,9 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 var leftCenter = new Point(topLeft.X, (topLeft.Y + bottomRight.Y) / 2);
                 var rightCenter = new Point(bottomRight.X, (topLeft.Y + bottomRight.Y) / 2);
 
-                double radius = 12;
+                double radius = 12 / scale;
+                radius = Math.Round(radius, 1);
+
                 var d = _editorPen.Thickness / 2;
                 var guidelines = new GuidelineSet(new[] {
                         d,
@@ -153,40 +155,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomRight.X - radius / 2, bottomRight.Y - radius / 2, radius, radius));
             }
         }
-        public void ClearEditor(Roi hitRoi, double scale)
+        public void ClearEditor()
         {
             using (DrawingContext dc = this.RenderOpen())
             {
-                var thickness = 1 / scale;
-                thickness = Math.Round(thickness, 1);
-
-                if (thickness < 1)
-                {
-                    thickness = 1;
-                }
-                if (thickness > 10)
-                {
-                    thickness = 10;
-                }
-                _clearPen.Thickness = thickness;
-
-                var topLeft = new Point(hitRoi.X, hitRoi.Y);
-                var bottomRight = new Point(hitRoi.X + hitRoi.Width, hitRoi.Y + hitRoi.Height);
-                var topRight = new Point(bottomRight.X, topLeft.Y);
-                var bottomLeft = new Point(topLeft.X, bottomRight.Y);
-                var topCenter = new Point((topLeft.X + bottomRight.X) / 2, topLeft.Y);
-                var bottomCenter = new Point((topLeft.X + bottomRight.X) / 2, bottomRight.Y);
-                var leftCenter = new Point(topLeft.X, (topLeft.Y + bottomRight.Y) / 2);
-                var rightCenter = new Point(bottomRight.X, (topLeft.Y + bottomRight.Y) / 2);
-
-                dc.DrawEllipse(Brushes.Transparent, _clearPen, topLeft, 5, 5);
-                dc.DrawEllipse(Brushes.Transparent, _clearPen, bottomRight, 5, 5);
-                dc.DrawEllipse(Brushes.Transparent, _clearPen, topRight, 5, 5);
-                dc.DrawEllipse(Brushes.Transparent, _clearPen, bottomLeft, 5, 5);
-                dc.DrawEllipse(Brushes.Transparent, _clearPen, topCenter, 5, 5);
-                dc.DrawEllipse(Brushes.Transparent, _clearPen, bottomCenter, 5, 5);
-                dc.DrawEllipse(Brushes.Transparent, _clearPen, leftCenter, 5, 5);
-                dc.DrawEllipse(Brushes.Transparent, _clearPen, rightCenter, 5, 5);
+                dc.DrawRectangle(Brushes.Transparent, _clearPen, 
+                    new Rect(0,0,1,1));
             }
         }
     }

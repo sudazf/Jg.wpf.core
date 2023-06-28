@@ -128,7 +128,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = _hitRoi.Height - offSetY;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
                 case OperateType.TopCenter:
                     point = CoerceTopCenter(point, this);
@@ -142,7 +142,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
                 case OperateType.TopRightDrag:
                     point = CoerceTopRight(point, this);
@@ -157,7 +157,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
                 case OperateType.LeftCenter:
                     point = CoerceLeftCenter(point, this);
@@ -170,7 +170,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
                 case OperateType.CenterDrag:
                     double xOffset = (point.X - _lastPoint.X);//右方向为正
@@ -195,7 +195,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
                 case OperateType.RightCenter:
                     point = CoerceRightCenter(point, this);
@@ -208,7 +208,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
                 case OperateType.BottomLeftDrag:
                     point = CoerceBottomLeft(point, this);
@@ -222,7 +222,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
                 case OperateType.BottomCenter:
                     point = CoerceBottomCenter(point, this);
@@ -235,7 +235,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
                 case OperateType.BottomRightDrag:
                     point = CoerceBottomRight(point, this);
@@ -248,7 +248,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     height = _hitRoi.Height + offSetY;
 
                     _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
                     break;
 
                 default:
@@ -294,7 +294,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 var height = (int)bottomRight.Y - (int)topLeft.Y;
 
                 _hitRoi.Update(x, y, width, height);
-                _editorDrawingVisual.DrawEditor(_hitRoi);
+                _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
             }
 
             //prevent ScrollViewer scrolling.
@@ -314,14 +314,14 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                 if (_hitRoi.Show)
                 {
-                    _editorDrawingVisual.DrawEditor(hitRoi);
+                    _editorDrawingVisual.DrawEditor(hitRoi, Scale);
                 }
             }
             else
             {
                 if (_hitRoi != null)
                 {
-                    _editorDrawingVisual.ClearEditor(_hitRoi);
+                    _editorDrawingVisual.ClearEditor(_hitRoi, Scale);
                 }
                 _hitRoi = null;
             }
@@ -553,7 +553,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                             if (roi == _hitRoi)
                             {
-                                _editorDrawingVisual.ClearEditor(roi);
+                                _editorDrawingVisual.ClearEditor(roi, Scale);
                             }
                         }
                     }
@@ -572,7 +572,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                             AddVisualChild(roiVisual);
                             _drawers[roi] = roiVisual;
 
-                            roiVisual.DrawRoi(roi);
+                            roiVisual.DrawRoi(roi, Scale);
                         }
                     }
                 }

@@ -14,14 +14,28 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         }
 
-        public void DrawRoi(Roi roi)
+        public void DrawRoi(Roi roi, double scale)
         {
             using (DrawingContext dc = this.RenderOpen())
             {
                 try
                 {
+                    var thickness = 1 / scale;
+                    thickness = Math.Round(thickness, 1);
+                    if (thickness < 1)
+                    {
+                        thickness = 1;
+                    }
+                    if (thickness > 10)
+                    {
+                        thickness = 10;
+                    }
+
+                    var emSize = 14 / scale;
+                    emSize = Math.Round(emSize, 1);
+
                     var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
-                    var pen = new Pen(color, 1);
+                    var pen = new Pen(color, thickness);
                     var topLeft = new Point(roi.X, roi.Y);
                     var bottomRight = new Point(roi.X + roi.Width, roi.Y + roi.Height);
 
@@ -33,7 +47,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         new Rect(topLeft, bottomRight));
 
                     var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                        new Typeface("宋体"), 14, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+                        new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
                     if (!string.IsNullOrEmpty(roi.Title))
                     {
@@ -46,7 +60,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         var xyValues = $"X:{roi.X} Y:{roi.Y}, W:{roi.Width} H:{roi.Height}";
 
                         var xyText = new FormattedText(xyValues, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                            new Typeface("宋体"), 14, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+                            new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
                         var xyStartPoint = new Point(roi.X, roi.Y + roi.Height + 10);
 
@@ -75,10 +89,23 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         }
 
-        public void DrawEditor(Roi hitRoi)
+        public void DrawEditor(Roi hitRoi, double scale)
         {
             using (DrawingContext dc = this.RenderOpen())
             {
+                var thickness = 1 / scale;
+                thickness = Math.Round(thickness, 1);
+
+                if (thickness < 1)
+                {
+                    thickness = 1;
+                }
+                if (thickness > 10)
+                {
+                    thickness = 10;
+                }
+                _editorPen.Thickness = thickness;
+
                 var topLeft = new Point(hitRoi.X, hitRoi.Y);
                 var bottomRight = new Point(hitRoi.X + hitRoi.Width, hitRoi.Y + hitRoi.Height);
                 var topRight = new Point(bottomRight.X, topLeft.Y);
@@ -126,10 +153,23 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomRight.X - radius / 2, bottomRight.Y - radius / 2, radius, radius));
             }
         }
-        public void ClearEditor(Roi hitRoi)
+        public void ClearEditor(Roi hitRoi, double scale)
         {
             using (DrawingContext dc = this.RenderOpen())
             {
+                var thickness = 1 / scale;
+                thickness = Math.Round(thickness, 1);
+
+                if (thickness < 1)
+                {
+                    thickness = 1;
+                }
+                if (thickness > 10)
+                {
+                    thickness = 10;
+                }
+                _clearPen.Thickness = thickness;
+
                 var topLeft = new Point(hitRoi.X, hitRoi.Y);
                 var bottomRight = new Point(hitRoi.X + hitRoi.Width, hitRoi.Y + hitRoi.Height);
                 var topRight = new Point(bottomRight.X, topLeft.Y);

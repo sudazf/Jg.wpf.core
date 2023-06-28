@@ -4,7 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:customImage="clr-namespace:Jg.wpf.controls.Customer.CustomImage;assembly=Jg.wpf.controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:roiEditor="clr-namespace:Jg.wpf.controls.Customer.RoiEditor;assembly=Jg.wpf.controls"
     xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
     d:DataContext="{d:DesignInstance viewModels:RoiEditorViewModel}"
     d:DesignHeight="450"
@@ -17,11 +19,47 @@
         </Grid.ColumnDefinitions>
 
         <Grid>
-            <ScrollViewer Focusable="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <customImage:RoiImage
-                    x:Name="Image"
-                    RoiSet="{Binding Rois}" />
-            </ScrollViewer>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <roiEditor:RoiEditor
+                x:Name="Image"
+                RoiSet="{Binding Rois}"
+                Scale="{Binding Zoom}" />
+            <Border Grid.Row="1">
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <RepeatButton
+                        Width="60"
+                        Height="32"
+                        Margin="4"
+                        Command="{Binding IncreaseZoomCommand}">
+                        <RepeatButton.Content>
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Kind="MagnifyPlus" />
+                        </RepeatButton.Content>
+                    </RepeatButton>
+                    <RepeatButton
+                        Width="60"
+                        Height="32"
+                        Margin="4"
+                        Command="{Binding DecreaseZoomCommand}">
+                        <RepeatButton.Content>
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Kind="MagnifyMinus" />
+                        </RepeatButton.Content>
+                    </RepeatButton>
+                    <TextBlock
+                        Margin="16,4"
+                        VerticalAlignment="Center"
+                        FontWeight="Bold"
+                        Text="{Binding Zoom, StringFormat=Zoom: {0}}" />
+                </StackPanel>
+            </Border>
         </Grid>
 
         <Grid Grid.Column="1">

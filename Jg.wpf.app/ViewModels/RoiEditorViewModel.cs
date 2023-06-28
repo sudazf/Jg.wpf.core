@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Jg.wpf.core.Command;
 using Jg.wpf.core.Notify;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
@@ -8,6 +9,7 @@ namespace Jg.wpf.app.ViewModels
     public class RoiEditorViewModel : ViewModelBase
     {
         private List<Roi> _rois;
+        private double _zoom;
 
         public List<Roi> Rois
         {
@@ -20,12 +22,47 @@ namespace Jg.wpf.app.ViewModels
             }
         }
 
+        public double Zoom
+        {
+            get => _zoom;
+            set
+            {
+                if (value.Equals(_zoom)) return;
+                _zoom = value;
+                RaisePropertyChanged(nameof(Zoom));
+            }
+        }
+
         public JCommand ShowRoisCommand { get; }
+        public JCommand IncreaseZoomCommand { get; }
+        public JCommand DecreaseZoomCommand { get; }
 
         public RoiEditorViewModel()
         {
+            _zoom = 1;
             ShowRoisCommand = new JCommand("ShowRoisCommand", OnShowRois);
+            IncreaseZoomCommand = new JCommand("IncreaseZoomCommand", OnIncrease);
+            DecreaseZoomCommand = new JCommand("DecreaseZoomCommand", OnDecrease);
+        }
 
+        private void OnIncrease(object obj)
+        {
+            var unformatZoom = _zoom + 0.1;
+            if (unformatZoom > 5)
+            {
+                return;
+            }
+            Zoom = Math.Round(unformatZoom, 1);
+        }
+
+        private void OnDecrease(object obj)
+        {
+            var unformatZoom = _zoom - 0.1;
+            if (unformatZoom < 0.1)
+            {
+                return;
+            }
+            Zoom = Math.Round(unformatZoom, 1);
         }
 
         private void OnShowRois(object obj)

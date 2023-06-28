@@ -9,21 +9,20 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid DataContext="{Binding ElementName=MainEditor}">
-        <Grid.LayoutTransform>
-            <TransformGroup>
-                <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
-            </TransformGroup>
-        </Grid.LayoutTransform>
-
-        <ScrollViewer
-            Focusable="False"
-            HorizontalScrollBarVisibility="Auto"
-            VerticalScrollBarVisibility="Auto">
+    <ScrollViewer
+        Focusable="False"
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto">
+        <Grid DataContext="{Binding ElementName=MainEditor}">
+            <Grid.LayoutTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                </TransformGroup>
+            </Grid.LayoutTransform>
             <customImage:RoiImage
                 RoiSet="{Binding RoiSet}"
                 Scale="{Binding Scale}"
                 Source="{Binding Source}" />
-        </ScrollViewer>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using Jg.wpf.controls.Behaviors;
+using Jg.wpf.core.Extensions.Types.Animations;
 
 
 namespace Jg.wpf.controls.Customer.LayoutPanel
@@ -1322,36 +1323,5 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
 
     }
 
-    public enum DragOrientation
-    {
-        Horizontal,
-        Vertical,
-        All
-    }
 
-    public interface IRoutedEventArgs
-    {
-        object Source { get; }
-
-        object OriginalSource { get; }
-
-        object GetSourceDataContext();
-
-        object GetOriginalSourceDataContext();
-    }
-
-    public interface IItemDroppedEventArgs : IRoutedEventArgs
-    {
-        /// <summary>
-        /// Index of dragged item
-        /// </summary>
-        int PreviousIndex { get; }
-
-        /// <summary>
-        /// new index when dragging item dropped
-        /// </summary>
-        int CurrentIndex { get; }
-
-        object DataContext { get; set; }
-    }
 }

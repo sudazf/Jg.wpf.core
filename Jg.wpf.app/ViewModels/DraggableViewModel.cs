@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using Jg.wpf.controls.Customer.LayoutPanel;
 using Jg.wpf.core.Command;
+using Jg.wpf.core.Extensions.Types.Animations;
 using Jg.wpf.core.Notify;
 
 namespace Jg.wpf.app.ViewModels

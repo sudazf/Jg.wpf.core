@@ -18,7 +18,7 @@ namespace Jg.wpf.core.Service
         /// <param name="dispatcher">当前程序 Dispatcher</param>
         public static void Register(Dispatcher dispatcher)
         {
-            var etc = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "etc");
+            var etc = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\etc");
             var language = Path.Combine(etc, "Language");
 
             if (!Directory.Exists(etc))

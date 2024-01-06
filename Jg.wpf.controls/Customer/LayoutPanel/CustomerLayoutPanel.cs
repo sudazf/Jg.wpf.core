@@ -1239,8 +1239,6 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
         private readonly ToggleButton _btn;
         private readonly Canvas _canvas;
 
-        public EventHandler OnDragModeStart;
-
         public CustomPanelAdorner(UIElement adornedElement, ItemControlDragBehavior listBoxDragBehavior) : base(adornedElement)
         {
             _visualCollection = new VisualCollection(this);
@@ -1256,17 +1254,9 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             };
             _btn.SetBinding(ToggleButton.IsCheckedProperty, binding);
 
-            _btn.Click += OnButtonClick;
-
             _canvas = new Canvas();
             _canvas.Children.Add(_btn);
             _visualCollection.Add(_canvas);
-        }
-
-
-        private void OnButtonClick(object sender, RoutedEventArgs e)
-        {
-            OnDragModeStart?.Invoke(null, EventArgs.Empty);
         }
 
         protected override int VisualChildrenCount => _visualCollection.Count;

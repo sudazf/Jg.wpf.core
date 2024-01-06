@@ -15,7 +15,6 @@ namespace Jg.wpf.controls.Behaviors
 
         private FrameworkElement _dragItem;
         private int _currentTouchId = -1;
-        private bool _attachedObjectLoaded;
         private CustomPanelAdorner _customPanelAdorner;
         private bool _mouseInCustomerLayoutPanel;
         private bool _mouseDragActived;
@@ -54,6 +53,14 @@ namespace Jg.wpf.controls.Behaviors
 
             }
         }
+        protected override void OnDetaching()
+        {
+            if (AssociatedObject != null)
+            {
+                AssociatedObject.Loaded -= OnAssociatedObjectLoaded;
+                AssociatedObject.Unloaded -= OnAssociatedObjectUnLoaded;
+            }
+        }
 
         private void OnAssociatedObjectLoaded(object sender, RoutedEventArgs e)
         {
@@ -75,7 +82,6 @@ namespace Jg.wpf.controls.Behaviors
                 if (panel != null && panel.ShowModeButton)
                 {
                     _customPanelAdorner = new CustomPanelAdorner(AssociatedObject,this);
-                    _customPanelAdorner.OnDragModeStart += OnDragModeChanged;
                     if (adorerLayer != null)
                     {
                         var adorers = adorerLayer.GetAdorners(AssociatedObject);
@@ -94,39 +100,31 @@ namespace Jg.wpf.controls.Behaviors
             }
             AssociatedObject?.UpdateLayout();
         }
-
-        private void OnDragModeChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void Panel_MouseLeave(object sender, MouseEventArgs e)
-        {
-            _mouseInCustomerLayoutPanel = false;
-        }
-
-        private void Panel_MouseEnter(object sender, MouseEventArgs e)
-        {
-            _mouseInCustomerLayoutPanel = true;
-        }
-
         private void OnAssociatedObjectUnLoaded(object sender, RoutedEventArgs e)
         {
-            if (AssociatedObject != null && _attachedObjectLoaded)
+            if (AssociatedObject != null)
             {
                 AssociatedObject.PreviewMouseLeftButtonDown -= OnPreviewMouseLeftButtonDown;
                 AssociatedObject.PreviewMouseLeftButtonUp -= OnPreviewMouseLeftButtonUp;
                 AssociatedObject.MouseLeave -= OnMouseLeave;
                 AssociatedObject.PreviewMouseMove -= OnItemsControlPreviewMouseMove;
-                _attachedObjectLoaded = false;
-            }
-        }
 
-        protected override void OnDetaching()
-        {
-            if (AssociatedObject != null)
-            {
-                AssociatedObject.Loaded -= OnAssociatedObjectLoaded;
-                AssociatedObject.Unloaded -= OnAssociatedObjectUnLoaded;
+                var panel = FindChild<CustomerLayoutPanel>(AssociatedObject);
+                var adorerLayer = AdornerLayer.GetAdornerLayer(AssociatedObject);
+
+                if (panel != null && panel.ShowModeButton)
+                {
+                    if (adorerLayer != null)
+                    {
+                        var adorers = adorerLayer.GetAdorners(AssociatedObject);
+                        if (adorers?.Length > 0)
+                        {
+                            adorerLayer.Remove(adorers[0]);
+                        }
+                    }
+                    panel.MouseEnter -= Panel_MouseEnter;
+                    panel.MouseLeave -= Panel_MouseLeave;
+                }
             }
         }
 
@@ -138,7 +136,6 @@ namespace Jg.wpf.controls.Behaviors
         {
             OnPreviewMouseLeftButtonUp(sender, e);
         }
-
         private void OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var device = e.StylusDevice;
@@ -184,7 +181,6 @@ namespace Jg.wpf.controls.Behaviors
                 e.Handled = true;
             }
         }
-
         private void OnPreviewMouseLeftButtonUp(object sender, MouseEventArgs e)
         {
             var device = e.StylusDevice;
@@ -227,7 +223,6 @@ namespace Jg.wpf.controls.Behaviors
                 e.Handled = true;
             }
         }
-
         private void OnItemsControlPreviewMouseMove(object sender, MouseEventArgs e)
         {
             var device = e.StylusDevice;
@@ -250,6 +245,14 @@ namespace Jg.wpf.controls.Behaviors
             }
         }
 
+        private void Panel_MouseLeave(object sender, MouseEventArgs e)
+        {
+            _mouseInCustomerLayoutPanel = false;
+        }
+        private void Panel_MouseEnter(object sender, MouseEventArgs e)
+        {
+            _mouseInCustomerLayoutPanel = true;
+        }
 
         private static T FindChild<T>(DependencyObject parent) where T : DependencyObject
         {
@@ -282,6 +285,7 @@ namespace Jg.wpf.controls.Behaviors
 
             return foundChild;
         }
+
         #endregion
     }
 }

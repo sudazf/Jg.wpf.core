@@ -109,6 +109,12 @@ namespace Jg.wpf.controls.Behaviors
                 AssociatedObject.MouseLeave -= OnMouseLeave;
                 AssociatedObject.PreviewMouseMove -= OnItemsControlPreviewMouseMove;
 
+                if (_customPanelAdorner != null)
+                {
+                    _customPanelAdorner.Clear();
+                    _customPanelAdorner = null;
+                }
+
                 var panel = FindChild<CustomerLayoutPanel>(AssociatedObject);
                 var adorerLayer = AdornerLayer.GetAdornerLayer(AssociatedObject);
 

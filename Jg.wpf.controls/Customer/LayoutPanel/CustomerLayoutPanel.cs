@@ -1259,6 +1259,13 @@ namespace Jg.wpf.controls.Customer.LayoutPanel
             _visualCollection.Add(_canvas);
         }
 
+        public void Clear()
+        {
+            BindingOperations.ClearAllBindings(_btn);
+            _canvas.Children.Remove(_btn);
+            _visualCollection.Remove(_canvas);
+        }
+
         protected override int VisualChildrenCount => _visualCollection.Count;
 
         protected override Visual GetVisualChild(int index)

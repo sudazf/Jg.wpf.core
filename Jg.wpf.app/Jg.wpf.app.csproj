@@ -55,5 +55,10 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
   </ItemGroup>
-  <PropertyGroup />
+  <PropertyGroup>
+    <BaseOutputPath>..\Shipped\Bin</BaseOutputPath>
+  </PropertyGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y /E &quot;$(SolutionDir)..\Shipped\etc\*.*&quot; &quot;$(TargetDir)..\etc\*.* &quot;" />
+  </Target>
 </Project>

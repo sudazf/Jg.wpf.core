@@ -67,6 +67,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("11. File/Folder Dialog","FileFolderDemo",new FileFolderViewModel()),
                 new DemoItem("12. Fast DataGrid","FastDataGridDemo", new FastDataGridViewModel()),
                 new DemoItem("13. Roi Editor","RoiEditorDemo", new RoiEditorViewModel()),
+                new DemoItem("14. Localization","LocalizationDemo", new LocalizationViewModel()),
 
             };
             DemoItems = _defaultItems;

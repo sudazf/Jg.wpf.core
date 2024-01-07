@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="Jg.wpf.app.Controls.LocalizationDemo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:Jg.wpf.controls.Converter;assembly=Jg.wpf.controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Jg.wpf.app.Models"
+    xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:LocalizationViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <Button
+            Width="200"
+            Height="32"
+            Content="{converter:Localization Name=ShowDemoInWindow}"
+            Click="Button_Click"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        </Button>
+    </Grid>
+</UserControl>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net7.0-windows;net472</TargetFrameworks>
-    <Version>2.4.1</Version>
+    <TargetFrameworks>net8.0-windows;net7.0-windows;net472</TargetFrameworks>
+    <Version>2.4.2</Version>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
@@ -10,6 +10,7 @@
     <PackageProjectUrl>https://github.com/sudazf/Jg.wpf.core</PackageProjectUrl>
     <Description>A light MVVM UI framework of WPF.</Description>
     <Authors>Jg</Authors>
+    <NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>
@@ -19,4 +20,5 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
+
 </Project>

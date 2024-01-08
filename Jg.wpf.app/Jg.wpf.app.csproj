@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net7.0-windows;net472</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net7.0-windows;net472</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <Version>2.4.1</Version>
+    <Version>2.4.2</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -37,10 +37,6 @@
     <Resource Include="Roasted Chicken.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Image\duke.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -54,11 +50,12 @@
     <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <PropertyGroup>
     <BaseOutputPath>..\Shipped\Bin</BaseOutputPath>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y /E &quot;$(SolutionDir)..\Shipped\etc\*.*&quot; &quot;$(TargetDir)..\etc\*.* &quot;" />
+    <Exec Command="xcopy /Y /I /E &quot;$(SolutionDir)..\Shipped\etc\*.*&quot; &quot;$(TargetDir)..\etc\*.* &quot;" />
   </Target>
 </Project>

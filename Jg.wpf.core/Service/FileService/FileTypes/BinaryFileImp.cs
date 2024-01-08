@@ -13,10 +13,8 @@ namespace Jg.wpf.core.Service.FileService.FileTypes
             {
                 using (var fStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
                 {
-                    BinaryFormatter binFormat = new BinaryFormatter();
-#pragma warning disable SYSLIB0011
+                    var binFormat = new BinaryFormatter();
                     binFormat.Serialize(fStream, file);
-#pragma warning restore SYSLIB0011
                 }
             }
             catch (Exception exception)

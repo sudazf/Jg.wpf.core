@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System;
+using System.Runtime.Versioning;
 
 namespace Jg.wpf.app.Controls
 {

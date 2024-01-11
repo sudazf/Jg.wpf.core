@@ -1,0 +1,58 @@
+﻿<UserControl
+    x:Class="Jg.wpf.app.Controls.SeparatedControlIndicatorDemo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="600"
+    Height="200"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <Border
+            Panel.ZIndex="98"
+            Background="Gray"
+            Opacity="0.8" />
+        <Border
+            Width="360"
+            Height="160"
+            Panel.ZIndex="99"
+            Background="#1E1E1E">
+            <GroupBox Padding="0" Header="Info:">
+                <GroupBox.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Height="32" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="4"
+                                VerticalAlignment="Center"
+                                Foreground="#DEDEDE"
+                                Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </GroupBox.HeaderTemplate>
+                <Grid>
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="#DEDEDE"
+                            Text="My work is starting..."
+                            TextAlignment="Center" />
+                        <ProgressBar
+                            Width="18"
+                            Height="18"
+                            Margin="8,4,4,4"
+                            IsIndeterminate="True"
+                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                            Value="0" />
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </Border>
+    </Grid>
+</UserControl>

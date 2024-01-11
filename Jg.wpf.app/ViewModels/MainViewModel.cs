@@ -68,6 +68,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("12. Fast DataGrid","FastDataGridDemo", new FastDataGridViewModel()),
                 new DemoItem("13. Roi Editor","RoiEditorDemo", new RoiEditorViewModel()),
                 new DemoItem("14. Localization","LocalizationDemo", new LocalizationViewModel()),
+                new DemoItem("15. SeparatedControl","SeparatedControlDemo", null),
 
             };
             DemoItems = _defaultItems;

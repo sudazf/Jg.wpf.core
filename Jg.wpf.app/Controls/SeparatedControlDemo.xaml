@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Jg.wpf.app.Controls.SeparatedControlDemo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Jg.wpf.app.Controls"
+             xmlns:threadControls="clr-namespace:Jg.wpf.controls.Customer.ThreadControls;assembly=Jg.wpf.controls"
+             mc:Ignorable="d" 
+             x:Name="DemoControlName"
+             Loaded="OnControlLoaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Button
+            Width="200"
+            Height="32"
+            Content="Start"
+            Click="Button_Click"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        </Button>
+
+        <threadControls:ThreadControl
+            x:Name="Indicator"
+            Panel.ZIndex="999"
+            Width="{Binding ActualWidth, ElementName=DemoControlName}"
+            Height="{Binding ActualHeight, ElementName=DemoControlName}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <threadControls:ThreadControl.ThreadSeparatedStyle>
+                <Style TargetType="{x:Type local:SeparatedControlIndicatorDemo}" />
+            </threadControls:ThreadControl.ThreadSeparatedStyle>
+        </threadControls:ThreadControl>
+    </Grid>
+</UserControl>

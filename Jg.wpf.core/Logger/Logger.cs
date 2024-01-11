@@ -67,21 +67,21 @@ namespace Jg.wpf.core.Log
             DateTime currentTime = DateTime.Now;
             string newFileName = $"{currentTime:yyyyMMdd_HHmmss}.log";
 
-            var logDirectory = ResourceManager.GetValue("LogSettings", "Directory", @"d:\SolarLogs");
+            var logDirectory = ResourceManager.GetValue("LogSettings", "Directory", @"d:\JgLogs");
 
             if (!Directory.Exists(logDirectory))
             {
                 var desireDisk = Path.GetPathRoot(logDirectory);
                 if (string.IsNullOrEmpty(desireDisk))
                 {
-                    logDirectory = @"C:\SolarLogs";
+                    logDirectory = @"C:\JgLogs";
                 }
                 else
                 {
                     var disks = (IList)Directory.GetLogicalDrives();
                     if (!disks.Contains(desireDisk.ToUpper()))
                     {
-                        logDirectory = @"C:\SolarLogs";
+                        logDirectory = @"C:\JgLogs";
                     }
                 }
 

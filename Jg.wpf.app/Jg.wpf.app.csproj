@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-windows;net7.0-windows;net472</TargetFrameworks>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <Version>2.4.2</Version>
+    <Version>2.4.3</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -56,6 +56,6 @@
     <BaseOutputPath>..\Shipped\Bin</BaseOutputPath>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y /I /E &quot;$(SolutionDir)..\Shipped\etc\*.*&quot; &quot;$(TargetDir)..\etc\*.* &quot;" />
+    <Exec Command="call postbuild.bat" />
   </Target>
 </Project>

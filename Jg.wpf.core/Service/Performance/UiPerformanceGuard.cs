@@ -28,11 +28,6 @@ namespace Jg.wpf.core.Service.Performance
             _threadDispatcher = threadDispatcher;
             _loadingIndicator = indicator;
 
-            _threadDispatcher.Invoke(() =>
-            {
-                _loadingIndicator.Visibility = Visibility.Collapsed;
-            });
-
             _dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, _threadDispatcher);
             _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(_performanceThreshold);
             _dispatcherTimer.Tick += DispatcherTimerTick;
@@ -52,20 +47,10 @@ namespace Jg.wpf.core.Service.Performance
             {
                 _dispatcherTimer.Stop();
 
-                if (_loadingIndicator.Visibility == Visibility.Visible)
+                _threadDispatcher.Invoke(() =>
                 {
-                    var timeElapsed = DateTime.Now - _startTime;
-
-                    if (timeElapsed.TotalMilliseconds < 1000)
-                    {
-                        Thread.Sleep(1000 - (int)timeElapsed.TotalMilliseconds);
-                    }
-
-                    _threadDispatcher.Invoke(() =>
-                    {
-                        _loadingIndicator.Visibility = Visibility.Collapsed;
-                    });
-                }
+                    _loadingIndicator.Visibility = Visibility.Collapsed;
+                });
             }
         }
 

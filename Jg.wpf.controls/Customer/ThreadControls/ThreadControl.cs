@@ -21,6 +21,8 @@ namespace Jg.wpf.controls.Customer.ThreadControls
         private Func<object, FrameworkElement> _createContentFromStyle;
         private UIElement _child;
 
+        public event EventHandler OnContentLoadCompleted;
+
         public FrameworkElement UiContent;
         public Dispatcher ThreadDispatcher;
 
@@ -201,6 +203,11 @@ namespace Jg.wpf.controls.Customer.ThreadControls
 
                 _resentEvent.Set();
                 visualTarget.RootVisual = UiContent;
+
+                //workaround
+                UiContent.Visibility = Visibility.Collapsed;
+
+                OnContentLoadCompleted?.Invoke(this, EventArgs.Empty);
 
                 Dispatcher.Run();
 

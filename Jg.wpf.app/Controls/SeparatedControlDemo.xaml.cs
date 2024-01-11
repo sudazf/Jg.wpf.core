@@ -29,7 +29,7 @@ namespace Jg.wpf.app.Controls
         {
             InitializeComponent();
 
-            _uiPerformanceGuard = new UiPerformanceGuard(50);
+            _uiPerformanceGuard = new UiPerformanceGuard(3000);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -38,8 +38,8 @@ namespace Jg.wpf.app.Controls
 
             Task.Run(() => 
             {
-                Thread.Sleep(3000);
-
+                Thread.Sleep(5000);
+                //...
                 _uiPerformanceGuard.Stop();
             });
         }

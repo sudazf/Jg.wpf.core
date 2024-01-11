@@ -1,7 +1,5 @@
-﻿using System.Threading;
-using System.Windows.Threading;
+﻿using System.Windows.Threading;
 using System.Windows;
-using System;
 
 namespace Jg.wpf.core.Service.Performance
 {
@@ -11,9 +9,7 @@ namespace Jg.wpf.core.Service.Performance
 
         private Dispatcher _threadDispatcher;
         private FrameworkElement _loadingIndicator;
-        private DispatcherTimer _dispatcherTimer;
         private TimePerformance _timePerformance;
-        private DateTime _startTime;
 
         public UiPerformanceGuard(int threshold = 100)
         {
@@ -27,39 +23,29 @@ namespace Jg.wpf.core.Service.Performance
         {
             _threadDispatcher = threadDispatcher;
             _loadingIndicator = indicator;
-
-            _dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, _threadDispatcher);
-            _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(_performanceThreshold);
-            _dispatcherTimer.Tick += DispatcherTimerTick;
         }
 
         public void Start(string workingName)
         {
             _timePerformance = new TimePerformance(workingName, _performanceThreshold);
-            _dispatcherTimer?.Start();
+
+            _threadDispatcher.Invoke(() =>
+            {
+                _loadingIndicator.Visibility = Visibility.Visible;
+            });
         }
 
         public void Stop()
         {
             _timePerformance.Dispose();
 
-            if (_dispatcherTimer != null && _loadingIndicator != null && _threadDispatcher != null)
+            if ( _loadingIndicator != null && _threadDispatcher != null)
             {
-                _dispatcherTimer.Stop();
-
                 _threadDispatcher.Invoke(() =>
                 {
                     _loadingIndicator.Visibility = Visibility.Collapsed;
                 });
             }
         }
-
-        private void DispatcherTimerTick(object sender, EventArgs e)
-        {
-            _startTime = DateTime.Now;
-            _loadingIndicator.Visibility = Visibility.Visible;
-            _dispatcherTimer.Stop();
-        }
     }
-
 }

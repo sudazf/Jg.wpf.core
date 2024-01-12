@@ -9,288 +9,48 @@
     xmlns:models="clr-namespace:Jg.wpf.app.Models"
     xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
     Title="LocalizationWindowDemo"
-    WindowStartupLocation="CenterOwner"
-    d:DataContext="{d:DesignInstance viewModels:LocalizationViewModel}"
     Width="800"
     Height="450"
+    d:DataContext="{d:DesignInstance viewModels:LocalizationViewModel}"
+    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
-    <Window.Resources>
-        <Style x:Key="ToggleButton_Left" TargetType="ToggleButton">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="3" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border
-                            x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="1,1,1,1"
-                            SnapsToDevicePixels="true">
-                            <ContentPresenter
-                                x:Name="contentPresenter"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Focusable="False"
-                                RecognizesAccessKey="True"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="AliceBlue" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="AliceBlue" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="Background" Value="LightGray" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ToggleButton_Right" TargetType="ToggleButton">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="3" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border
-                            x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="1,1,1,1"
-                            SnapsToDevicePixels="true">
-                            <ContentPresenter
-                                x:Name="contentPresenter"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Focusable="False"
-                                RecognizesAccessKey="True"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Theme.Primary.Color}" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Theme.Primary.Color}" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="Background" Value="LightGray" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="Localization.ComboBoxItem" TargetType="ComboBoxItem">
-            <Setter Property="Padding" Value="3" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBoxItem">
-                        <Grid Margin="0,0.5,0,1" Background="{TemplateBinding Background}">
-                            <Border
-                                x:Name="ItemBackground"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                IsHitTestVisible="False"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <ContentPresenter
-                                x:Name="contentPresenter"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ItemBackground" Property="Background" Value="{DynamicResource Theme.Primary.Color}" />
-                                <Setter Property="Foreground" Value="White" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="Localization.ComboBox" TargetType="{x:Type ComboBox}">
-            
-            <!--<Setter Property="Tag" Value="{converter:Localization Name=ThisIsTag}" />-->
-            
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="RoyalBlue" />
-            <Setter Property="ItemContainerStyle" Value="{StaticResource Localization.ComboBoxItem}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ComboBox}">
-                        <Grid x:Name="PART_Root">
-                            <Border
-                                x:Name="BgBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5*" />
-                                    <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
-                                <!--  下拉按钮  -->
-                                <ToggleButton
-                                    Grid.Column="0"
-                                    Background="Transparent"
-                                    BorderThickness="1,1,0,1"
-                                    IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                    IsTabStop="False"
-                                    Style="{StaticResource ToggleButton_Left}" />
-                                <ToggleButton
-                                    x:Name="PART_DropDownToggle"
-                                    Grid.Column="1"
-                                    Content="▼"
-                                    FontFamily="Arial"
-                                    IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                    IsTabStop="False"
-                                    Style="{StaticResource ToggleButton_Right}" />
-
-                                <!--  主内容区域  -->
-                                <Grid
-                                    x:Name="ContentSite"
-                                    Grid.Column="0"
-                                    Margin="10,0,0,0">
-                                    <ContentPresenter
-                                        x:Name="PART_SelectedItem"
-                                        Margin="2,0,2,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        Content="{TemplateBinding SelectionBoxItem}"
-                                        ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
-                                        ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                        IsHitTestVisible="False"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                        <ContentPresenter.ContentTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <TextBlock
-                                                        Grid.Column="0"
-                                                        HorizontalAlignment="Stretch"
-                                                        d:DataContext="{d:DesignInstance models:LocalizationDemoItem}"
-                                                        Text="{Binding TypeName}"
-                                                        TextTrimming="CharacterEllipsis">
-                                                        <TextBlock.ToolTip>
-                                                            <ToolTip Visibility="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget, Converter={converter:TrimmedTextBlockVisibilityConverter}}">
-                                                                <ToolTip.Content>
-                                                                    <TextBlock Text="{Binding TypeName}" />
-                                                                </ToolTip.Content>
-                                                            </ToolTip>
-                                                        </TextBlock.ToolTip>
-                                                    </TextBlock>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ContentPresenter.ContentTemplate>
-                                    </ContentPresenter>
-                                </Grid>
-                            </Grid>
-                            <!--  弹出下拉控件  -->
-                            <Popup
-                                x:Name="PART_Popup"
-                                AllowsTransparency="True"
-                                Focusable="False"
-                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                                Placement="Bottom"
-                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="25" />
-                                        <RowDefinition Height="auto" />
-                                    </Grid.RowDefinitions>
-                                    <Border
-                                        x:Name="PopupBorder"
-                                        Grid.Row="0"
-                                        Grid.RowSpan="2"
-                                        Height="Auto"
-                                        HorizontalAlignment="Stretch"
-                                        Background="AliceBlue"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}" />
-                                    <Border
-                                        Grid.Row="0"
-                                        Margin="1"
-                                        BorderBrush="Gray"
-                                        BorderThickness="0,0,0,1">
-                                        <Grid>
-                                            <TextBlock
-                                                Grid.Column="0"
-                                                Margin="3,0,0,0"
-                                                VerticalAlignment="Center"
-                                                FontWeight="Bold"
-                                                Foreground="Black"
-                                                Text="{converter:Localization Name=ThisIsTag}" />
-                                        </Grid>
-                                    </Border>
-                                    <Grid
-                                        Grid.Row="1"
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                                        MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
-                                        <ScrollViewer
-                                            x:Name="DropDownScrollViewer"
-                                            Margin="1"
-                                            BorderThickness="0">
-                                            <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                        </ScrollViewer>
-                                    </Grid>
-                                </Grid>
-                            </Popup>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true" />
-                            <Trigger Property="IsDropDownOpen" Value="true">
-                                <Setter TargetName="PART_DropDownToggle" Property="Content" Value="▲" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
     <Grid>
-        <ComboBox
-            Width="200"
-            Height="32"
+        <StackPanel
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            ItemsSource="{Binding DemoSource}"
-            Style="{StaticResource Localization.ComboBox}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock
-                            Grid.Column="0"
-                            Margin="1"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            FontSize="15"
-                            Text="{Binding TypeName}"
-                            TextTrimming="CharacterEllipsis">
-                            <TextBlock.ToolTip>
-                                <ToolTip Visibility="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget, Converter={converter:TrimmedTextBlockVisibilityConverter}}">
-                                    <ToolTip.Content>
-                                        <TextBlock Text="{Binding TypeName}" />
-                                    </ToolTip.Content>
-                                </ToolTip>
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-
+            Orientation="Horizontal">
+            <TextBlock
+                Margin="4"
+                VerticalAlignment="Center"
+                Text="{converter:Localization Name=ShowDemoInWindow}" />
+            <ComboBox
+                Width="200"
+                Margin="8 4 4 4"
+                VerticalAlignment="Center"
+                ItemsSource="{Binding DemoSource}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                FontSize="15"
+                                Text="{Binding TypeName}"
+                                TextTrimming="CharacterEllipsis">
+                                <TextBlock.ToolTip>
+                                    <ToolTip Visibility="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget, Converter={converter:TrimmedTextBlockVisibilityConverter}}">
+                                        <ToolTip.Content>
+                                            <TextBlock Text="{Binding TypeName}" />
+                                        </ToolTip.Content>
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
     </Grid>
 </Window>

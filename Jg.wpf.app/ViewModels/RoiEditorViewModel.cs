@@ -93,12 +93,45 @@ namespace Jg.wpf.app.ViewModels
 
         private void OnShowRois(object obj)
         {
+            var roi1 = new Roi(25, 48, 227, 185, "Yellow", title: "1,");
+            var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "2,");
+            var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "3,");
+
+            roi1.OnRoiChanged += OnRoi1Changed;
+            roi2.OnRoiChanged += OnRoi2Changed;
+            roi3.OnRoiChanged += OnRoi3Changed;
+
             Rois = new List<Roi>
             {
-                new Roi(25, 48, 227,185, "Yellow", title:"1,"),
-                new Roi(270, 46, 240,182, "LightGreen",title:"2,"),
-                new Roi(30, 415, 486,140, "DeepPink", title:"3,")
+                roi1, roi2, roi3
             };
+        }
+
+        private void OnRoi1Changed(object sender, Roi e)
+        {
+            Console.WriteLine($@"Roi1, x: {e.X}, y: {e.Y}");
+            if (!e.Show)
+            {
+                Console.WriteLine(@"Roi1 hide/deleted");
+            }
+        }
+
+        private void OnRoi2Changed(object sender, Roi e)
+        {
+            Console.WriteLine($@"Roi2, x: {e.X}, y: {e.Y}");
+            if (!e.Show)
+            {
+                Console.WriteLine(@"Roi2 hide/deleted");
+            }
+        }
+
+        private void OnRoi3Changed(object sender, Roi e)
+        {
+            Console.WriteLine($@"Roi3, x: {e.X}, y: {e.Y}");
+            if (!e.Show)
+            {
+                Console.WriteLine(@"Roi3 hide/deleted");
+            }
         }
     }
 }

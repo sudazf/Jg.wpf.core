@@ -16,6 +16,8 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         private string _color;
 
         public event EventHandler<Roi> OnRoiChanged;
+        
+        public RoiRestrictedTypes RestrictedType { get; set; } = RoiRestrictedTypes.None;
 
         public int X
         {
@@ -150,10 +152,23 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         }
         public void Update(int x, int y, int width, int height)
         {
-            _x = x;
-            _y = y;
-            _width = width;
-            _height = height;
+            switch (RestrictedType)
+            {
+                case RoiRestrictedTypes.None:
+                    _x = x;
+                    _y = y;
+                    _width = width;
+                    _height = height;
+                    break;
+                case RoiRestrictedTypes.X:
+                    _y = y;
+                    _height = height;
+                    break;
+                case RoiRestrictedTypes.Y:
+                    _x = x;
+                    _width = width;
+                    break;
+            }
 
             RaisePropertyChanged(nameof(X));
             RaisePropertyChanged(nameof(Y));

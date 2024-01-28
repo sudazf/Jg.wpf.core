@@ -585,12 +585,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         private void OnCustomLoaded(object sender, RoutedEventArgs e)
         {
-            //保证可以ROI可以选择最大像素
-            if (Margin.Left < 1 || Margin.Top < 1 ||
-                Margin.Right < 1 || Margin.Bottom < 1)
-            {
-                Margin = new Thickness(4);
-            }
+            ////保证可以ROI可以选择最大像素
+            //if (Margin.Left < 1 || Margin.Top < 1 ||
+            //    Margin.Right < 1 || Margin.Bottom < 1)
+            //{
+            //    Margin = new Thickness(4);
+            //}
 
             //目前 只支持 Stretch = None 的情形
             if (Stretch != System.Windows.Media.Stretch.None)

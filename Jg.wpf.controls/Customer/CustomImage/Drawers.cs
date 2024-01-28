@@ -46,11 +46,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     dc.DrawRectangle(Brushes.Transparent, pen,
                         new Rect(topLeft, bottomRight));
 
-                    var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                        new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
-
                     if (!string.IsNullOrEmpty(roi.Title))
                     {
+                        var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                            new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+                       
                         var titlePoint = new Point(roi.X, roi.Y + roi.Height + 10);
                         dc.DrawText(titleText, titlePoint);
                     }
@@ -66,6 +66,9 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                         if (!string.IsNullOrEmpty(roi.Title))
                         {
+                            var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                                new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
                             xyStartPoint.X = xyStartPoint.X + titleText.Width + 4;
                         }
 

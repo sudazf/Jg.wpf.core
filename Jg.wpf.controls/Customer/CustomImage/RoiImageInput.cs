@@ -370,8 +370,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     e.Handled = true;
                     break;
+                case Key.Delete:
+                    _hitRoi.Show = false;
+                    this.Cursor = Cursors.Arrow;
+                    e.Handled = true;
+                    break;
             }
-
         }
 
 

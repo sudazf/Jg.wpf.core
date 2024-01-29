@@ -1,5 +1,6 @@
 ﻿using Jg.wpf.core.Extensions.Types;
 using System;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Input;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
@@ -280,11 +281,29 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 var topLeft = new Point(_hitRoi.X + offset, _hitRoi.Y + offset);
                 var bottomRight = new Point(_hitRoi.X + _hitRoi.Width - offset, _hitRoi.Y +_hitRoi.Height - offset);
 
-                if (topLeft.X <= 0 || topLeft.Y <= 0 ||
-                    bottomRight.X >= ActualWidth || bottomRight.Y >= ActualHeight)
+                switch (_hitRoi.RestrictedType)
                 {
-                    return;
+                    case RoiRestrictedTypes.None:
+                        if (topLeft.X <= 0 || topLeft.Y <= 0 ||
+                            bottomRight.X >= ActualWidth || bottomRight.Y >= ActualHeight)
+                        {
+                            return;
+                        }
+                        break;
+                    case RoiRestrictedTypes.X:
+                        if (topLeft.Y <= 0 || bottomRight.Y >= ActualHeight)
+                        {
+                            return;
+                        }
+                        break;
+                    case RoiRestrictedTypes.Y:
+                        if (topLeft.X <= 0 || bottomRight.X >= ActualWidth)
+                        {
+                            return;
+                        }
+                        break;
                 }
+
 
                 var x = (int)topLeft.X;
                 var y = (int)topLeft.Y;
@@ -343,6 +362,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
             switch (e.Key)
             {
                 case Key.Up:
+                    if (_hitRoi.RestrictedType == RoiRestrictedTypes.Y)
+                    {
+                        return;
+                    }
                     if (_hitRoi.Y > 0)
                     {
                         _hitRoi.Y--;
@@ -350,6 +373,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     e.Handled = true;
                     break;
                 case Key.Down:
+                    if (_hitRoi.RestrictedType == RoiRestrictedTypes.Y)
+                    {
+                        return;
+                    }
                     if (_hitRoi.Y + _hitRoi.Height < ActualHeight)
                     {
                         _hitRoi.Y++;
@@ -357,6 +384,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     e.Handled = true;
                     break;
                 case Key.Left:
+                    if (_hitRoi.RestrictedType == RoiRestrictedTypes.X)
+                    {
+                        return;
+                    }
                     if (_hitRoi.X > 0)
                     {
                         _hitRoi.X--;
@@ -364,6 +395,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     e.Handled = true;
                     break;
                 case Key.Right:
+                    if (_hitRoi.RestrictedType == RoiRestrictedTypes.X)
+                    {
+                        return;
+                    }
                     if (_hitRoi.X + _hitRoi.Width < ActualWidth)
                     {
                         _hitRoi.X++;

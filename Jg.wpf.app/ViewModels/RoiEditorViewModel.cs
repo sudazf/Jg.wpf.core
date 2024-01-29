@@ -54,6 +54,8 @@ namespace Jg.wpf.app.ViewModels
         public RoiEditorViewModel()
         {
             _zoom = 1;
+            _rois = new List<Roi>();
+
             ShowRoisCommand = new JCommand("ShowRoisCommand", OnShowRois);
             IncreaseZoomCommand = new JCommand("IncreaseZoomCommand", OnIncreaseZoom);
             DecreaseZoomCommand = new JCommand("DecreaseZoomCommand", OnDecreaseZoom);
@@ -93,9 +95,16 @@ namespace Jg.wpf.app.ViewModels
 
         private void OnShowRois(object obj)
         {
+            foreach (var roi in Rois)
+            {
+                roi.OnRoiChanged -= OnRoi1Changed;
+                roi.OnRoiChanged -= OnRoi2Changed;
+                roi.OnRoiChanged -= OnRoi3Changed;
+            }
+
             var roi1 = new Roi(25, 48, 227, 185, "Yellow", title: "1,");
-            var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "2,");
-            var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "3,");
+            var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "2,") { RestrictedType = RoiRestrictedTypes.X };
+            var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "3,") { RestrictedType = RoiRestrictedTypes.Y };
 
             roi1.OnRoiChanged += OnRoi1Changed;
             roi2.OnRoiChanged += OnRoi2Changed;

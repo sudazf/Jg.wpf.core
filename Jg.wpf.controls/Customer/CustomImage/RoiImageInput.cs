@@ -265,6 +265,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 return;
             }
 
+            if (_hitRoi.Width <=0 || _hitRoi.Height <=0)
+            {
+                return;
+            }
+
             base.OnMouseWheel(e);
             Point point = e.GetPosition(this);
             point.X = (int)point.X;

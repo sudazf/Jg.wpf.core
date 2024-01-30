@@ -14,8 +14,9 @@ namespace Jg.wpf.app.ViewModels
         private MyObservableCollection<Roi> _rois;
         private double _zoom;
         private double _angle;
-        private bool _allowOverLaid;
-        private bool _canUseRoiCreator;
+        private bool _allowOverLaid = true;
+        private bool _canUseRoiCreator = true;
+        private int _maxRoi = 10;
 
         public bool AllowOverLaid
         {
@@ -47,6 +48,17 @@ namespace Jg.wpf.app.ViewModels
                 if (Equals(value, _rois)) return;
                 _rois = value;
                 RaisePropertyChanged(nameof(Rois));
+            }
+        }
+
+        public int MaxRoi
+        {
+            get => _maxRoi;
+            set
+            {
+                if (value == _maxRoi) return;
+                _maxRoi = value;
+                RaisePropertyChanged(nameof(MaxRoi));
             }
         }
 

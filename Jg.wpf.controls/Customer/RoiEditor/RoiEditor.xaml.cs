@@ -76,6 +76,17 @@ namespace Jg.wpf.controls.Customer.RoiEditor
                 typeof(RoiEditor), new PropertyMetadata(true));
 
 
+        public int MaxRoi
+        {
+            get => (int)GetValue(MaxRoiProperty);
+            set => SetValue(MaxRoiProperty, value);
+        }
+
+        public static readonly DependencyProperty MaxRoiProperty =
+            DependencyProperty.Register("MaxRoi", typeof(int), 
+                typeof(RoiEditor), new PropertyMetadata(9999));
+
+
         public RoiEditor()
         {
             InitializeComponent();

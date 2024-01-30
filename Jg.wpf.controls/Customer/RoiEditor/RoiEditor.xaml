@@ -23,6 +23,7 @@
             <customImage:RoiImage
                 AllowOverLaid="{Binding AllowOverLaid}"
                 CanUseRoiCreator="{Binding CanUseRoiCreator}"
+                MaxRoi="{Binding MaxRoi}"
                 RoiSet="{Binding RoiSet}"
                 Scale="{Binding Scale}"
                 Source="{Binding Source}" />

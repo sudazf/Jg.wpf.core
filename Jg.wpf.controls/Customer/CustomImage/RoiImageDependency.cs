@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
 using Jg.wpf.core.Extensions.Collections;
@@ -64,6 +62,15 @@ namespace Jg.wpf.controls.Customer.CustomImage
             DependencyProperty.Register("DefaultRoiColor", typeof(string), 
                 typeof(RoiImage), new PropertyMetadata("Red"));
 
+        public int MaxRoi
+        {
+            get => (int)GetValue(MaxRoiProperty);
+            set => SetValue(MaxRoiProperty, value);
+        }
+
+        public static readonly DependencyProperty MaxRoiProperty =
+            DependencyProperty.Register("MaxRoi", typeof(int), 
+                typeof(RoiImage), new PropertyMetadata(9999));
 
 
         private static void OnScalePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -313,7 +313,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
             _lastPoint = point;
         }
-
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
             if (_hitRoi == null || !_hitRoi.Show)
@@ -448,6 +447,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         }
                     }
                     if (overlaid && !AllowOverLaid)
+                    {
+                        return;
+                    }
+
+                    if (RoiSet.Count >= MaxRoi)
                     {
                         return;
                     }

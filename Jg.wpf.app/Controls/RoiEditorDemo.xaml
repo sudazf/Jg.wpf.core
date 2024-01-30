@@ -29,6 +29,7 @@
                 CanUseRoiCreator="{Binding CanUseRoiCreator}"
                 Angle="{Binding Angle}"
                 RoiSet="{Binding Rois}"
+                MaxRoi="{Binding MaxRoi}"
                 Scale="{Binding Zoom}" />
             <Border Grid.Row="1">
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
@@ -148,6 +149,15 @@
                     VerticalAlignment="Center"
                     Content="允许创建Roi（鼠标左键）"
                     IsChecked="{Binding CanUseRoiCreator}" />
+                <TextBlock
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Text="最大数:" />
+                <TextBox
+                    Width="100"
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Text="{Binding MaxRoi}" />
             </StackPanel>
             <ScrollViewer Grid.Row="3">
                 <ItemsControl

@@ -1,15 +1,19 @@
 ﻿using Jg.wpf.core.Extensions.Types;
 using System;
-using System.Configuration;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
+using Point = System.Windows.Point;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
     public partial class RoiImage
     {
         private OperateType _operate = OperateType.None;
+        private bool _isInCreating;
+        private Point _startPoint;
+        private Point _endPoint;
         private Point _lastPoint;
         private Roi _hitRoi;
 
@@ -20,6 +24,26 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            Point point = e.GetPosition(this);
+            point.X = (int)point.X;
+            point.Y = (int)point.Y;
+
+            if (_isInCreating && CanUseRoiCreator)
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    _endPoint = new Point(point.X, point.Y);
+
+                    var creatorWidth = _endPoint.X - _startPoint.X;
+                    var creatorHeight = _endPoint.Y - _startPoint.Y;
+
+                    if (creatorWidth > 0 && creatorHeight > 0)
+                    {
+                        _creatorDrawingVisual.DrawCreator((int)_startPoint.X, (int)_startPoint.Y, (int)creatorWidth, (int)creatorHeight, "Red", 1);
+                    }
+                }
+            }
+
             if (_hitRoi == null)
             {
                 return;
@@ -29,10 +53,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
             {
                 return;
             }
-
-            Point point = e.GetPosition(this);
-            point.X = (int)point.X;
-            point.Y = (int)point.Y;
 
             var topLeft = new Point(_hitRoi.X, _hitRoi.Y);
             var bottomRight = new Point(_hitRoi.X + _hitRoi.Width, _hitRoi.Y + _hitRoi.Height);
@@ -112,6 +132,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
             }
 
             int x, y, width, height, offSetX, offSetY;
+            bool overlaid = false;
             switch (_operate)
             {
                 case OperateType.None:
@@ -127,8 +148,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = _hitRoi.Width - offSetX;
                     height = _hitRoi.Height - offSetY;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
                 case OperateType.TopCenter:
                     point = CoerceTopCenter(point, this);
@@ -141,8 +166,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
                 case OperateType.TopRightDrag:
                     point = CoerceTopRight(point, this);
@@ -156,8 +185,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
                 case OperateType.LeftCenter:
                     point = CoerceLeftCenter(point, this);
@@ -169,8 +202,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
                 case OperateType.CenterDrag:
                     double xOffset = (point.X - _lastPoint.X);//右方向为正
@@ -194,8 +231,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
                 case OperateType.RightCenter:
                     point = CoerceRightCenter(point, this);
@@ -207,8 +248,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
                 case OperateType.BottomLeftDrag:
                     point = CoerceBottomLeft(point, this);
@@ -221,8 +266,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
                 case OperateType.BottomCenter:
                     point = CoerceBottomCenter(point, this);
@@ -234,8 +283,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = (int)bottomRight.X - (int)topLeft.X;
                     height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
                 case OperateType.BottomRightDrag:
                     point = CoerceBottomRight(point, this);
@@ -247,10 +300,13 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     width = _hitRoi.Width + offSetX;
                     height = _hitRoi.Height + offSetY;
 
-                    _hitRoi.Update(x, y, width, height);
-                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                    if (!overlaid)
+                    {
+                        _hitRoi.Update(x, y, width, height);
+                        _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                    }
                     break;
-
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -316,8 +372,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 var width = (int)bottomRight.X - (int)topLeft.X;
                 var height = (int)bottomRight.Y - (int)topLeft.Y;
 
-                _hitRoi.Update(x, y, width, height);
-                _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                var overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
+                if (!overlaid)
+                {
+                    _hitRoi.Update(x, y, width, height);
+                    _editorDrawingVisual.DrawEditor(_hitRoi, Scale);
+                }
             }
 
             //prevent ScrollViewer scrolling.
@@ -327,6 +387,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
         {
             base.OnMouseLeftButtonDown(e);
             this.Focus();
+            _creatorDrawingVisual.Reset();
+
+            _startPoint = e.GetPosition(this);
+            _endPoint = e.GetPosition(this);
             _lastPoint = e.GetPosition(this);
             var jPoint = new JPoint((int)_lastPoint.X, (int)_lastPoint.Y);
 
@@ -337,6 +401,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                 if (_hitRoi.Show)
                 {
+                    _isInCreating = false;
+
                     _editorDrawingVisual.DrawEditor(hitRoi, Scale);
                 }
             }
@@ -347,12 +413,48 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _editorDrawingVisual.ClearEditor();
                 }
                 _hitRoi = null;
+                _isInCreating = true;
             }
         }
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
             _operate = OperateType.None;
+
+            if (CanUseRoiCreator && _isInCreating)
+            {
+                if (_creatorDrawingVisual.Width * _creatorDrawingVisual.Height > 0)
+                {
+                    _creatorDrawingVisual.Clear();
+
+                    int x, y , width, height;
+                    x = _creatorDrawingVisual.X;
+                    y = _creatorDrawingVisual.Y;
+                    width = _creatorDrawingVisual.Width;
+                    height = _creatorDrawingVisual.Height;
+
+                    var newRoi = new Roi(x, y, width, height, DefaultRoiColor);
+                    var newRect = new Rectangle(x, y, width, height);
+                    bool overlaid = false;
+
+                    //overlaid check
+                    foreach (var roi in RoiSet)
+                    {
+                        var existRectangle = new Rectangle(roi.X, roi.Y, roi.Width, roi.Height);
+                        overlaid = !Rectangle.Intersect(newRect, existRectangle).IsEmpty;
+                        if (overlaid)
+                        {
+                            break;
+                        }
+                    }
+                    if (overlaid && !AllowOverLaid)
+                    {
+                        return;
+                    }
+
+                    RoiSet.Add(newRoi);
+                }
+            }
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -364,60 +466,85 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 return;
             }
 
+            bool overlaid = false;
             switch (e.Key)
             {
                 case Key.Up:
                     if (_hitRoi.RestrictedType == RoiRestrictedTypes.Y)
                     {
+                        e.Handled = true;
                         return;
                     }
                     if (_hitRoi.Y > 0)
                     {
-                        _hitRoi.Y--;
+                        var newY = _hitRoi.Y - 1;
+                        overlaid = OverLaidCheck(_hitRoi.X, newY, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
+                        if (!overlaid)
+                        {
+                            _hitRoi.Y = newY;
+                        }
                     }
                     e.Handled = true;
                     break;
                 case Key.Down:
                     if (_hitRoi.RestrictedType == RoiRestrictedTypes.Y)
                     {
+                        e.Handled = true;
                         return;
                     }
                     if (_hitRoi.Y + _hitRoi.Height < ActualHeight)
                     {
-                        _hitRoi.Y++;
+                        var newY = _hitRoi.Y + 1;
+                        overlaid = OverLaidCheck(_hitRoi.X, newY, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
+                        if (!overlaid)
+                        {
+                            _hitRoi.Y = newY;
+                        }
                     }
                     e.Handled = true;
                     break;
                 case Key.Left:
                     if (_hitRoi.RestrictedType == RoiRestrictedTypes.X)
                     {
+                        e.Handled = true;
                         return;
                     }
                     if (_hitRoi.X > 0)
                     {
-                        _hitRoi.X--;
+                        var newX = _hitRoi.X - 1;
+                        overlaid = OverLaidCheck(newX, _hitRoi.Y, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
+                        if (!overlaid)
+                        {
+                            _hitRoi.X = newX;
+                        }
                     }
                     e.Handled = true;
                     break;
                 case Key.Right:
                     if (_hitRoi.RestrictedType == RoiRestrictedTypes.X)
                     {
+                        e.Handled = true;
                         return;
                     }
                     if (_hitRoi.X + _hitRoi.Width < ActualWidth)
                     {
-                        _hitRoi.X++;
+                        var newX = _hitRoi.X + 1;
+                        overlaid = OverLaidCheck(newX, _hitRoi.Y, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
+                        if (!overlaid)
+                        {
+                            _hitRoi.X = newX;
+                        }
                     }
                     e.Handled = true;
                     break;
                 case Key.Delete:
                     _hitRoi.Show = false;
+                    RoiSet.Remove(_hitRoi);
                     this.Cursor = Cursors.Arrow;
                     e.Handled = true;
                     break;
             }
         }
-
 
         private bool HitPointTest(Point target, Point point)
         {
@@ -642,5 +769,38 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 Stretch = System.Windows.Media.Stretch.None;
             }
         }
+
+        private bool OverLaidCheck(int x, int y, int width, int height, bool allowOverlaid)
+        {
+            if (allowOverlaid && AllowOverLaid)
+            {
+                return false;
+            }
+
+            bool overlaidResult = false;
+
+            var newRect = new Rectangle(x, y, width, height);
+
+            //overlaid check
+            int overlaidTimes = 0;
+            foreach (var roi in RoiSet)
+            {
+                var existRectangle = new Rectangle(roi.X, roi.Y, roi.Width, roi.Height);
+                var overlaid = !Rectangle.Intersect(newRect, existRectangle).IsEmpty;
+                if (overlaid)
+                {
+                    overlaidTimes++;
+                }
+            }
+
+            if (overlaidTimes > 1)
+            {
+                //overlaidTimes == 1, ignore self
+                overlaidResult = true;
+            }
+
+            return overlaidResult;
+        }
+ 
     }
 }

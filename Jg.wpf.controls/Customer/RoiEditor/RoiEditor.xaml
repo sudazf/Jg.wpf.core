@@ -21,6 +21,8 @@
                 </TransformGroup>
             </Grid.LayoutTransform>
             <customImage:RoiImage
+                AllowOverLaid="{Binding AllowOverLaid}"
+                CanUseRoiCreator="{Binding CanUseRoiCreator}"
                 RoiSet="{Binding RoiSet}"
                 Scale="{Binding Scale}"
                 Source="{Binding Source}" />

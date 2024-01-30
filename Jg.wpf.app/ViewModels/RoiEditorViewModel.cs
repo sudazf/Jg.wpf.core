@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Jg.wpf.core.Command;
+using Jg.wpf.core.Extensions.Collections;
 using Jg.wpf.core.Notify;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
 
@@ -8,11 +11,35 @@ namespace Jg.wpf.app.ViewModels
 {
     public class RoiEditorViewModel : ViewModelBase
     {
-        private List<Roi> _rois;
+        private MyObservableCollection<Roi> _rois;
         private double _zoom;
         private double _angle;
+        private bool _allowOverLaid;
+        private bool _canUseRoiCreator;
 
-        public List<Roi> Rois
+        public bool AllowOverLaid
+        {
+            get => _allowOverLaid;
+            set
+            {
+                if (value == _allowOverLaid) return;
+                _allowOverLaid = value;
+                RaisePropertyChanged(nameof(AllowOverLaid));
+            }
+        }
+
+        public bool CanUseRoiCreator
+        {
+            get => _canUseRoiCreator;
+            set
+            {
+                if (value == _canUseRoiCreator) return;
+                _canUseRoiCreator = value;
+                RaisePropertyChanged(nameof(CanUseRoiCreator));
+            }
+        }
+
+        public MyObservableCollection<Roi> Rois
         {
             get => _rois;
             set
@@ -46,6 +73,7 @@ namespace Jg.wpf.app.ViewModels
         }
 
         public JCommand ShowRoisCommand { get; }
+        public JCommand ClearRoisCommand { get; }
         public JCommand IncreaseZoomCommand { get; }
         public JCommand DecreaseZoomCommand { get; }
         public JCommand IncreaseAngleCommand { get; }
@@ -54,13 +82,36 @@ namespace Jg.wpf.app.ViewModels
         public RoiEditorViewModel()
         {
             _zoom = 1;
-            _rois = new List<Roi>();
+            _rois = new MyObservableCollection<Roi>();
+            _rois.ClearInvokeAction = ClearInvokeAction;
 
             ShowRoisCommand = new JCommand("ShowRoisCommand", OnShowRois);
             IncreaseZoomCommand = new JCommand("IncreaseZoomCommand", OnIncreaseZoom);
             DecreaseZoomCommand = new JCommand("DecreaseZoomCommand", OnDecreaseZoom);
             IncreaseAngleCommand = new JCommand("IncreaseAngleCommand", OnIncreaseAngle);
             DecreaseAngleCommand = new JCommand("DecreaseAngleCommand", OnDecreaseAngle);
+            ClearRoisCommand = new JCommand("ClearRoisCommand", OnClearAllRoi);
+        }
+
+        private void ClearInvokeAction(MyObservableCollection<Roi> rois)
+        {
+            
+        }
+
+        public void AddRoi(Roi newRoi)
+        {
+            Rois.Add(newRoi);
+        }
+
+        public void RemoveRoi(Roi oldRoi)
+        {
+            var exist = Rois.FirstOrDefault(r => r.X == oldRoi.X && r.Y == oldRoi.Y &&
+                                                 r.Width == oldRoi.Width && r.Height == oldRoi.Height);
+
+            if (exist != null)
+            {
+                Rois.Remove(exist);
+            }
         }
 
         private void OnIncreaseAngle(object obj)
@@ -95,52 +146,20 @@ namespace Jg.wpf.app.ViewModels
 
         private void OnShowRois(object obj)
         {
-            foreach (var roi in Rois)
-            {
-                roi.OnRoiChanged -= OnRoi1Changed;
-                roi.OnRoiChanged -= OnRoi2Changed;
-                roi.OnRoiChanged -= OnRoi3Changed;
-            }
-
             var roi1 = new Roi(25, 48, 227, 185, "Yellow", title: "1,");
             var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "2,") { RestrictedType = RoiRestrictedTypes.X };
             var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "3,") { RestrictedType = RoiRestrictedTypes.Y };
 
-            roi1.OnRoiChanged += OnRoi1Changed;
-            roi2.OnRoiChanged += OnRoi2Changed;
-            roi3.OnRoiChanged += OnRoi3Changed;
+            Rois.Clear();
 
-            Rois = new List<Roi>
-            {
-                roi1, roi2, roi3
-            };
+            Rois.Add(roi1);
+            Rois.Add(roi2);
+            Rois.Add(roi3);
         }
 
-        private void OnRoi1Changed(object sender, Roi e)
+        private void OnClearAllRoi(object obj)
         {
-            Console.WriteLine($@"Roi1, x: {e.X}, y: {e.Y}");
-            if (!e.Show)
-            {
-                Console.WriteLine(@"Roi1 hide/deleted");
-            }
-        }
-
-        private void OnRoi2Changed(object sender, Roi e)
-        {
-            Console.WriteLine($@"Roi2, x: {e.X}, y: {e.Y}");
-            if (!e.Show)
-            {
-                Console.WriteLine(@"Roi2 hide/deleted");
-            }
-        }
-
-        private void OnRoi3Changed(object sender, Roi e)
-        {
-            Console.WriteLine($@"Roi3, x: {e.X}, y: {e.Y}");
-            if (!e.Show)
-            {
-                Console.WriteLine(@"Roi3 hide/deleted");
-            }
+            Rois.ClearEx();
         }
     }
 }

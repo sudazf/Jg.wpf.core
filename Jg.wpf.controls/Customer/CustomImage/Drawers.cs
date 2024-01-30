@@ -167,4 +167,77 @@ namespace Jg.wpf.controls.Customer.CustomImage
             }
         }
     }
+
+    public class RoiCreatorDrawingVisual : DrawingVisual
+    {
+        private readonly BrushConverter _brushConverter = new BrushConverter();
+        private readonly Pen _clearPen = new Pen(Brushes.Transparent, 1);
+
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+
+
+        public RoiCreatorDrawingVisual()
+        {
+
+        }
+
+        public void DrawCreator(int x, int y, int width, int height, string stringColor, float thickness)
+        {
+            X = x;
+            Y = y;
+            Width = width; 
+            Height = height;
+
+            using (DrawingContext dc = this.RenderOpen())
+            {
+                try
+                {
+                    if (thickness < 1)
+                    {
+                        thickness = 1;
+                    }
+                    if (thickness > 10)
+                    {
+                        thickness = 10;
+                    }
+
+                    var color = (SolidColorBrush)_brushConverter.ConvertFromString(stringColor);
+                    var pen = new Pen(color, thickness);
+                    var topLeft = new Point(x, y);
+                    var bottomRight = new Point(x + width, y + height);
+
+                    var d = pen.Thickness / 2;
+                    var guidelines = new GuidelineSet(new[] { d }, new[] { d });
+                    dc.PushGuidelineSet(guidelines);
+
+                    dc.DrawRectangle(Brushes.Transparent, pen,
+                        new Rect(topLeft, bottomRight));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            using (DrawingContext dc = this.RenderOpen())
+            {
+                dc.DrawRectangle(Brushes.Transparent, _clearPen,
+                    new Rect(0, 0, 1, 1));
+            }
+        }
+
+        public void Reset()
+        {
+            X=0; 
+            Y=0;
+            Width = 0;
+            Height = 0;
+        }
+    }
 }

@@ -74,7 +74,6 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(nameof(Show));
             }
         }
-
         public string Color
         {
             get => _color;
@@ -86,7 +85,6 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(nameof(Color));
             }
         }
-
         public string Title
         {
             get => _title;
@@ -110,10 +108,11 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             }
         }
         public List<string> Colors { get; private set; }
+        public bool CanOverLaid { get; set; }
 
         public Roi(int x, int y, int width, int height, 
             string color, bool show = true, string title = null, bool showRoiValue = true,
-            List<string> colors = null)
+            List<string> colors = null, bool canOverLaid = true)
         {
             _x = x;
             _y = y;
@@ -144,6 +143,8 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             {
                 ProvideDefaultColors();
             }
+
+            CanOverLaid = canOverLaid;
         }
 
         public bool Hit(JPoint point)
@@ -185,7 +186,6 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             return ((x >= _x - 5) && (x - _width <= _x + 5) &&
                     (y >= _y - 5) && (y - _height <= _y + 5));
         }
-
         private void ProvideDefaultColors()
         {
             Colors = new List<string>

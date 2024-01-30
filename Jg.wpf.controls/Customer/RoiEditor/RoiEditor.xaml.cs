@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Jg.wpf.core.Extensions.Collections;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
 
 namespace Jg.wpf.controls.Customer.RoiEditor
@@ -12,14 +13,13 @@ namespace Jg.wpf.controls.Customer.RoiEditor
     /// </summary>
     public partial class RoiEditor : UserControl
     {
-
         public static readonly DependencyProperty RoiSetProperty =
-            DependencyProperty.Register("RoiSet", typeof(List<Roi>), typeof(RoiEditor),
-                new FrameworkPropertyMetadata(new List<Roi>(), FrameworkPropertyMetadataOptions.Inherits));
+            DependencyProperty.Register("RoiSet", typeof(MyObservableCollection<Roi>), typeof(RoiEditor),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
 
-        public List<Roi> RoiSet
+        public MyObservableCollection<Roi> RoiSet
         {
-            get => (List<Roi>)GetValue(RoiSetProperty);
+            get => (MyObservableCollection<Roi>)GetValue(RoiSetProperty);
             set => SetValue(RoiSetProperty, value);
         }
 
@@ -54,10 +54,31 @@ namespace Jg.wpf.controls.Customer.RoiEditor
                 new PropertyMetadata(0d));
 
 
+        public bool AllowOverLaid
+        {
+            get => (bool)GetValue(AllowOverLaidProperty);
+            set => SetValue(AllowOverLaidProperty, value);
+        }
+
+        public static readonly DependencyProperty AllowOverLaidProperty =
+            DependencyProperty.Register("AllowOverLaid", typeof(bool), 
+                typeof(RoiEditor), new PropertyMetadata(true));
+
+
+        public bool CanUseRoiCreator
+        {
+            get => (bool)GetValue(CanUseRoiCreatorProperty);
+            set => SetValue(CanUseRoiCreatorProperty, value);
+        }
+
+        public static readonly DependencyProperty CanUseRoiCreatorProperty =
+            DependencyProperty.Register("CanUseRoiCreator", typeof(bool), 
+                typeof(RoiEditor), new PropertyMetadata(true));
+
+
         public RoiEditor()
         {
             InitializeComponent();
         }
-
     }
 }

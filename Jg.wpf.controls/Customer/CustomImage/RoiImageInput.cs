@@ -17,10 +17,17 @@ namespace Jg.wpf.controls.Customer.CustomImage
         private Point _lastPoint;
         private Roi _hitRoi;
 
+        public event EventHandler OnOverMaxRoi;
+
         protected override void OnMouseLeave(MouseEventArgs e)
         {
             base.OnMouseLeave(e);
             _operate = OperateType.None;
+
+            if (_isInCreating && CanUseRoiCreator)
+            {
+                _creatorDrawingVisual.Clear();
+            }
         }
         protected override void OnMouseMove(MouseEventArgs e)
         {
@@ -453,6 +460,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                     if (RoiSet.Count >= MaxRoi)
                     {
+                        OnOverMaxRoi?.Invoke(this, EventArgs.Empty);
                         return;
                     }
 

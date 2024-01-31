@@ -31,10 +31,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     emSize = Math.Round(emSize, 1);
 
                     var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
-                    var leftPen = new Pen(color, leftThickness * _pixelPerDpi);
-                    var topPen = new Pen(color, topThickness * _pixelPerDpi);
-                    var rightPen = new Pen(color, rightThickness * _pixelPerDpi);
-                    var bottomPen = new Pen(color, bottomThickness * _pixelPerDpi);
+                    var leftPen = new Pen(color, leftThickness);
+                    var topPen = new Pen(color, topThickness);
+                    var rightPen = new Pen(color, rightThickness);
+                    var bottomPen = new Pen(color, bottomThickness);
 
                     var leftD = leftPen.Thickness / 2;
                     var topD = topPen.Thickness / 2 ;
@@ -46,22 +46,47 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var topRight = new Point(roi.X + roi.Width, roi.Y);
                     var bottomRight = new Point(roi.X + roi.Width, roi.Y + roi.Height);
 
-                    var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y + leftD);
-                    var leftLineEndPoint = new Point(topLeft.X, topLeft.Y - leftD);
+                    var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y + bottomD);
+                    var leftLineEndPoint = new Point(topLeft.X, topLeft.Y - topD );
 
                     var topLineStartPoint = new Point(topLeft.X, topLeft.Y);
                     var topLineEndPoint = new Point(topRight.X , topRight.Y);
 
-                    var rightLineStartPoint = new Point(topRight.X, topRight.Y - rightD );
-                    var rightLineEndPoint = new Point(bottomRight.X, bottomRight.Y + rightD );
+                    var rightLineStartPoint = new Point(topRight.X, topRight.Y - topD);
+                    var rightLineEndPoint = new Point(bottomRight.X, bottomRight.Y + bottomD);
 
                     var bottomLineStartPoint = new Point(bottomRight.X, bottomRight.Y);
                     var bottomLineEndPoint = new Point(bottomLeft.X, bottomLeft.Y);
 
-                    var leftGuidelines = new GuidelineSet(new[] { leftLineStartPoint.X - leftD, leftLineStartPoint.X, leftLineStartPoint.X + leftD, leftLineEndPoint.X - leftD, leftLineEndPoint.X, leftLineEndPoint.X + leftD }, new[] { leftLineStartPoint.Y, leftLineEndPoint.Y });
-                    var topGuidelines = new GuidelineSet(new[] { topLineStartPoint.X, topLineEndPoint.X }, new[] { topLineStartPoint.Y - topD, topLineStartPoint.Y + topD, topLineEndPoint.Y - topD, topLineEndPoint.Y + topD });
-                    var rightGuidelines = new GuidelineSet(new[] { rightLineStartPoint.X - rightD, rightLineStartPoint.X + rightD, rightLineEndPoint.X - rightD, rightLineEndPoint.X + rightD }, new[] { rightLineStartPoint.Y, rightLineEndPoint.Y});
-                    var bottomGuidelines = new GuidelineSet(new[] { bottomLineStartPoint.X, bottomLineEndPoint.X}, new[] { bottomLineStartPoint.Y - bottomD , bottomLineStartPoint.Y + bottomD, bottomLineEndPoint.Y - bottomD, bottomLineEndPoint.Y + bottomD });
+                    var leftGuidelines = new GuidelineSet(new[]
+                    {
+                        leftLineStartPoint.X
+                    }, new[]
+                    {
+                        leftLineStartPoint.Y, leftLineEndPoint.Y,
+                    });
+
+                    var topGuidelines = new GuidelineSet(new[]
+                    {
+                        topLineStartPoint.X, topLineEndPoint.X
+                    }, new[]
+                    {
+                        topLineStartPoint.Y
+                    });
+                    var rightGuidelines = new GuidelineSet(new[]
+                    {
+                        rightLineStartPoint.X
+                    }, new[]
+                    {
+                        rightLineStartPoint.Y, rightLineEndPoint.Y
+                    });
+                    var bottomGuidelines = new GuidelineSet(new[]
+                    {
+                        bottomLineStartPoint.X, bottomLineEndPoint.X
+                    }, new[]
+                    {
+                        bottomLineStartPoint.Y
+                    });
 
                     dc.PushGuidelineSet(leftGuidelines);
                     dc.DrawLine(leftPen, leftLineStartPoint, leftLineEndPoint);

@@ -23,8 +23,10 @@
             <customImage:RoiImage
                 AllowOverLaid="{Binding AllowOverLaid}"
                 CanUseRoiCreator="{Binding CanUseRoiCreator}"
-                UseGlobalRoiThickness="False"
-                GlobalRoiThickness="8"
+                UseGlobalRoiThickness="True"
+                GlobalRoiThickness="1"
+                RenderOptions.EdgeMode="Aliased"
+                SnapsToDevicePixels="True"
                 CanEditRoi="True"
                 MaxRoi="{Binding MaxRoi}"
                 RoiSet="{Binding RoiSet}"

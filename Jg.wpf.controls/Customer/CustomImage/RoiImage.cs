@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Reflection;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Jg.wpf.controls.Customer.CustomImage
@@ -7,6 +9,9 @@ namespace Jg.wpf.controls.Customer.CustomImage
     {
         private readonly RoiEditorDrawingVisual _editorDrawingVisual;
         private readonly RoiCreatorDrawingVisual _creatorDrawingVisual;
+        private readonly float _pixelsPerDpi;
+
+        public bool UseGlobalRoiThickness { get; set; }
 
         public RoiImage()
         {
@@ -23,6 +28,14 @@ namespace Jg.wpf.controls.Customer.CustomImage
             this.AddVisualChild(_editorDrawingVisual);
 
             AttachCreator();
+
+            var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+            var dpiYProperty = typeof(SystemParameters).GetProperty("Dpi", BindingFlags.NonPublic | BindingFlags.Static);
+
+            var dpiX = (int)dpiXProperty.GetValue(null, null);
+            var dpiY = (int)dpiYProperty.GetValue(null, null);
+
+            _pixelsPerDpi = (float)dpiX / 96;
         }
 
         protected override int VisualChildrenCount

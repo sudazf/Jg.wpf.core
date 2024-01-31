@@ -8,43 +8,72 @@ namespace Jg.wpf.controls.Customer.CustomImage
 {
     public class RoiDrawingVisual : DrawingVisual
     {
+        private readonly float _pixelPerDpi;
         private readonly BrushConverter _brushConverter = new BrushConverter();
-        public RoiDrawingVisual()
-        {
 
+        public RoiDrawingVisual(float pixelPerDpi)
+        {
+            _pixelPerDpi = pixelPerDpi;
         }
 
-        public void DrawRoi(Roi roi, double scale)
+        public void DrawRoi(Roi roi, double scale, Thickness thickness)
         {
             using (DrawingContext dc = this.RenderOpen())
             {
                 try
                 {
-                    var thickness = 1 / scale;
-                    thickness = Math.Round(thickness, 1);
-                    if (thickness < 1)
-                    {
-                        thickness = 1;
-                    }
-                    if (thickness > 10)
-                    {
-                        thickness = 10;
-                    }
+                    var leftThickness = thickness.Left;
+                    var topThickness = thickness.Top;
+                    var rightThickness = thickness.Right;
+                    var bottomThickness = thickness.Bottom;
 
                     var emSize = 14 / scale;
                     emSize = Math.Round(emSize, 1);
 
                     var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
-                    var pen = new Pen(color, thickness);
+                    var leftPen = new Pen(color, leftThickness * _pixelPerDpi);
+                    var topPen = new Pen(color, topThickness * _pixelPerDpi);
+                    var rightPen = new Pen(color, rightThickness * _pixelPerDpi);
+                    var bottomPen = new Pen(color, bottomThickness * _pixelPerDpi);
+
+                    var leftD = leftPen.Thickness / 2;
+                    var topD = topPen.Thickness / 2 ;
+                    var rightD = rightPen.Thickness / 2;
+                    var bottomD = bottomPen.Thickness / 2 ;
+
+                    var bottomLeft = new Point(roi.X, roi.Y + roi.Height);
                     var topLeft = new Point(roi.X, roi.Y);
+                    var topRight = new Point(roi.X + roi.Width, roi.Y);
                     var bottomRight = new Point(roi.X + roi.Width, roi.Y + roi.Height);
 
-                    var d = pen.Thickness / 2;
-                    var guidelines = new GuidelineSet(new[] { d }, new[] { d });
-                    dc.PushGuidelineSet(guidelines);
+                    var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y + leftD);
+                    var leftLineEndPoint = new Point(topLeft.X, topLeft.Y - leftD);
 
-                    dc.DrawRectangle(Brushes.Transparent, pen,
-                        new Rect(topLeft, bottomRight));
+                    var topLineStartPoint = new Point(topLeft.X, topLeft.Y);
+                    var topLineEndPoint = new Point(topRight.X , topRight.Y);
+
+                    var rightLineStartPoint = new Point(topRight.X, topRight.Y - rightD );
+                    var rightLineEndPoint = new Point(bottomRight.X, bottomRight.Y + rightD );
+
+                    var bottomLineStartPoint = new Point(bottomRight.X, bottomRight.Y);
+                    var bottomLineEndPoint = new Point(bottomLeft.X, bottomLeft.Y);
+
+                    var leftGuidelines = new GuidelineSet(new[] { leftLineStartPoint.X - leftD, leftLineStartPoint.X, leftLineStartPoint.X + leftD, leftLineEndPoint.X - leftD, leftLineEndPoint.X, leftLineEndPoint.X + leftD }, new[] { leftLineStartPoint.Y, leftLineEndPoint.Y });
+                    var topGuidelines = new GuidelineSet(new[] { topLineStartPoint.X, topLineEndPoint.X }, new[] { topLineStartPoint.Y - topD, topLineStartPoint.Y + topD, topLineEndPoint.Y - topD, topLineEndPoint.Y + topD });
+                    var rightGuidelines = new GuidelineSet(new[] { rightLineStartPoint.X - rightD, rightLineStartPoint.X + rightD, rightLineEndPoint.X - rightD, rightLineEndPoint.X + rightD }, new[] { rightLineStartPoint.Y, rightLineEndPoint.Y});
+                    var bottomGuidelines = new GuidelineSet(new[] { bottomLineStartPoint.X, bottomLineEndPoint.X}, new[] { bottomLineStartPoint.Y - bottomD , bottomLineStartPoint.Y + bottomD, bottomLineEndPoint.Y - bottomD, bottomLineEndPoint.Y + bottomD });
+
+                    dc.PushGuidelineSet(leftGuidelines);
+                    dc.DrawLine(leftPen, leftLineStartPoint, leftLineEndPoint);
+
+                    dc.PushGuidelineSet(topGuidelines);
+                    dc.DrawLine(topPen, topLineStartPoint, topLineEndPoint);
+
+                    dc.PushGuidelineSet(rightGuidelines);
+                    dc.DrawLine(rightPen, rightLineStartPoint, rightLineEndPoint);
+
+                    dc.PushGuidelineSet(bottomGuidelines);
+                    dc.DrawLine(bottomPen, bottomLineStartPoint, bottomLineEndPoint);
 
                     if (!string.IsNullOrEmpty(roi.Title))
                     {

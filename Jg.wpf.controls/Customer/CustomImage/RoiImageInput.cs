@@ -31,6 +31,15 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            if (!CanEditRoi)
+            {
+                if (Cursor != Cursors.Arrow)
+                {
+                    this.Cursor = Cursors.Arrow;
+                }
+                return;
+            }
+
             Point point = e.GetPosition(this);
             point.X = (int)point.X;
             point.Y = (int)point.Y;
@@ -322,6 +331,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
+            if (!CanEditRoi)
+            {
+                return;
+            }
+
             if (_hitRoi == null || !_hitRoi.Show)
             {
                 return;
@@ -393,6 +407,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
         {
             base.OnMouseLeftButtonDown(e);
             this.Focus();
+
+            if (!CanEditRoi)
+            {
+                return;
+            }
+
             _creatorDrawingVisual.Reset();
 
             _startPoint = e.GetPosition(this);
@@ -425,6 +445,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
+
+            if (!CanEditRoi)
+            {
+                return;
+            }
+
             _operate = OperateType.None;
 
             if (CanUseRoiCreator && _isInCreating)
@@ -468,10 +494,15 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 }
             }
         }
-
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
+
+            if (!CanEditRoi)
+            {
+                e.Handled = false;
+                return;
+            }
 
             if (_hitRoi == null)
             {
@@ -550,7 +581,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     e.Handled = true;
                     break;
                 case Key.Delete:
-                    _hitRoi.Show = false;
                     RoiSet.Remove(_hitRoi);
                     this.Cursor = Cursors.Arrow;
                     e.Handled = true;
@@ -748,12 +778,21 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     {
                         if (!_drawers.ContainsKey(roi))
                         {
-                            var roiVisual = new RoiDrawingVisual();
+                            var roiVisual = new RoiDrawingVisual(_pixelsPerDpi);
                             AddLogicalChild(roiVisual);
                             AddVisualChild(roiVisual);
                             _drawers[roi] = roiVisual;
 
-                            roiVisual.DrawRoi(roi, Scale);
+                            Thickness thickness;
+                            if (UseGlobalRoiThickness)
+                            {
+                                thickness = new Thickness(GlobalRoiThickness.Left, GlobalRoiThickness.Top, GlobalRoiThickness.Right, GlobalRoiThickness.Bottom);
+                            }
+                            else
+                            {
+                                thickness = new Thickness(roi.Thickness.Left, roi.Thickness.Top, roi.Thickness.Right, roi.Thickness.Bottom);
+                            }
+                            roiVisual.DrawRoi(roi, Scale, thickness);
                         }
                     }
                 }

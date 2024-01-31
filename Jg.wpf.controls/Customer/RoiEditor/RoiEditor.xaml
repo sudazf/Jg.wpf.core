@@ -23,6 +23,9 @@
             <customImage:RoiImage
                 AllowOverLaid="{Binding AllowOverLaid}"
                 CanUseRoiCreator="{Binding CanUseRoiCreator}"
+                UseGlobalRoiThickness="False"
+                GlobalRoiThickness="8"
+                CanEditRoi="True"
                 MaxRoi="{Binding MaxRoi}"
                 RoiSet="{Binding RoiSet}"
                 Scale="{Binding Scale}"

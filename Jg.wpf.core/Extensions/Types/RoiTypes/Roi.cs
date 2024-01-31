@@ -14,6 +14,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         private string _title;
         private bool _showRoiValue;
         private string _color;
+        private RoiThickness _thickness;
 
         public event EventHandler<Roi> OnRoiChanged;
         
@@ -107,6 +108,18 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(() => ShowRoiValue);
             }
         }
+        public RoiThickness Thickness
+        {
+            get => _thickness;
+            set
+            {
+                if (Equals(value, _thickness)) return;
+                _thickness = value;
+                OnRoiChanged?.Invoke(this, this);
+                RaisePropertyChanged(nameof(Thickness));
+            }
+        }
+
         public List<string> Colors { get; private set; }
         public bool CanOverLaid { get; set; }
 
@@ -145,6 +158,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             }
 
             CanOverLaid = canOverLaid;
+            Thickness = new RoiThickness(2);
         }
 
         public bool Hit(JPoint point)

@@ -62,6 +62,7 @@ namespace Jg.wpf.app.ViewModels
             }
         }
 
+
         public double Zoom
         {
             get => _zoom;

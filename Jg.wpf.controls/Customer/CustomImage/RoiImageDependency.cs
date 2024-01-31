@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
 using Jg.wpf.core.Extensions.Collections;
@@ -72,7 +73,43 @@ namespace Jg.wpf.controls.Customer.CustomImage
             DependencyProperty.Register("MaxRoi", typeof(int), 
                 typeof(RoiImage), new PropertyMetadata(9999));
 
+        public Thickness GlobalRoiThickness
+        {
+            get => (Thickness)GetValue(GlobalRoiThicknessProperty);
+            set => SetValue(GlobalRoiThicknessProperty, value);
+        }
 
+        public static readonly DependencyProperty GlobalRoiThicknessProperty =
+            DependencyProperty.Register("GlobalRoiThickness", typeof(Thickness), 
+                typeof(RoiImage), new PropertyMetadata(new Thickness(2)));
+
+        public bool CanEditRoi
+        {
+            get => (bool)GetValue(CanEditRoiProperty);
+            set => SetValue(CanEditRoiProperty, value);
+        }
+
+        public static readonly DependencyProperty CanEditRoiProperty =
+            DependencyProperty.Register("CanEditRoi", typeof(bool), 
+                typeof(RoiImage), new PropertyMetadata(true, OnCanEditRoiChanged));
+
+        private static void OnCanEditRoiChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is RoiImage image)
+            {
+                if (e.NewValue is bool canEdit)
+                {
+                    if (!canEdit)
+                    {
+                        if (image._hitRoi != null)
+                        {
+                            image._editorDrawingVisual.ClearEditor();
+                            image._hitRoi = null;
+                        }
+                    }
+                }
+            }
+        }
         private static void OnScalePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var image = (RoiImage)d;
@@ -95,7 +132,16 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     {
                         if (image._drawers.ContainsKey(roi))
                         {
-                            image._drawers[roi].DrawRoi(roi, image.Scale);
+                            Thickness thickness;
+                            if (image.UseGlobalRoiThickness)
+                            {
+                                thickness = new Thickness(image.GlobalRoiThickness.Left, image.GlobalRoiThickness.Top, image.GlobalRoiThickness.Right, image.GlobalRoiThickness.Bottom);
+                            }
+                            else
+                            {
+                                thickness = new Thickness(roi.Thickness.Left, roi.Thickness.Top, roi.Thickness.Right, roi.Thickness.Bottom);
+                            }
+                            image._drawers[roi].DrawRoi(roi, image.Scale, thickness);
                         }
                     }
                 }
@@ -151,16 +197,25 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                 if (image.ActualHeight * image.ActualWidth != 0 && roi.Show)
                 {
-                    var roiVisual = new RoiDrawingVisual();
+                    var roiVisual = new RoiDrawingVisual(image._pixelsPerDpi);
                     image.AddLogicalChild(roiVisual);
                     image.AddVisualChild(roiVisual);
                     image._drawers[roi] = roiVisual;
 
-                    roiVisual.DrawRoi(roi, image.Scale);
+                    Thickness thickness;
+                    if (image.UseGlobalRoiThickness)
+                    {
+                        thickness = new Thickness(image.GlobalRoiThickness.Left, image.GlobalRoiThickness.Top, image.GlobalRoiThickness.Right, image.GlobalRoiThickness.Bottom);
+                    }
+                    else
+                    {
+                        thickness = new Thickness(roi.Thickness.Left, roi.Thickness.Top, roi.Thickness.Right, roi.Thickness.Bottom);
+                    }
+                    roiVisual.DrawRoi(roi, image.Scale, thickness);
                 }
             }
         }
-
+        
         private void ReleaseEventsBeforeClear(MyObservableCollection<Roi> rois)
         {
             foreach (var roi in rois)
@@ -168,7 +223,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 roi.OnRoiChanged -= OnRoiChanged;
             }
         }
-
         private void OnRoiCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             Roi roi;
@@ -183,12 +237,21 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         {
                             roi.OnRoiChanged += OnRoiChanged;
 
-                            var roiVisual = new RoiDrawingVisual();
+                            var roiVisual = new RoiDrawingVisual(_pixelsPerDpi);
                             AddLogicalChild(roiVisual);
                             AddVisualChild(roiVisual);
                             _drawers[roi] = roiVisual;
 
-                            roiVisual.DrawRoi(roi, Scale);
+                            Thickness thickness;
+                            if (UseGlobalRoiThickness)
+                            {
+                                thickness = new Thickness(GlobalRoiThickness.Left, GlobalRoiThickness.Top, GlobalRoiThickness.Right, GlobalRoiThickness.Bottom);
+                            }
+                            else
+                            {
+                                thickness = new Thickness(roi.Thickness.Left, roi.Thickness.Top, roi.Thickness.Right, roi.Thickness.Bottom);
+                            }
+                            roiVisual.DrawRoi(roi, Scale, thickness);
                         }
                     }
                     break;
@@ -208,6 +271,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                             if (roi == _hitRoi)
                             {
                                 _editorDrawingVisual.ClearEditor();
+                                _hitRoi = null;
                             }
                         }
                     }
@@ -229,7 +293,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     break;
             }
         }
-
         private void OnRoiChanged(object sender, Roi roi)
         {
             //当控件本身宽或高为 0 时，不处理
@@ -240,7 +303,16 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     //should show
                     if (_drawers.ContainsKey(roi))
                     {
-                        _drawers[roi].DrawRoi(roi, Scale);
+                        Thickness thickness;
+                        if (UseGlobalRoiThickness)
+                        {
+                            thickness = new Thickness(GlobalRoiThickness.Left, GlobalRoiThickness.Top, GlobalRoiThickness.Right, GlobalRoiThickness.Bottom);
+                        }
+                        else
+                        {
+                            thickness = new Thickness(roi.Thickness.Left, roi.Thickness.Top, roi.Thickness.Right, roi.Thickness.Bottom);
+                        }
+                        _drawers[roi].DrawRoi(roi, Scale, thickness);
 
                         if (roi == _hitRoi)
                         {
@@ -249,7 +321,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     else
                     {
-                        var roiVisual = new RoiDrawingVisual();
+                        var roiVisual = new RoiDrawingVisual(_pixelsPerDpi);
 
                         AddLogicalChild(roiVisual);
                         AddVisualChild(roiVisual);
@@ -259,7 +331,16 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         //当控件本身宽或高为 0 时，不绘制
                         if (ActualHeight * ActualWidth != 0)
                         {
-                            roiVisual.DrawRoi(roi, Scale);
+                            Thickness thickness;
+                            if (UseGlobalRoiThickness)
+                            {
+                                thickness = new Thickness(GlobalRoiThickness.Left, GlobalRoiThickness.Top, GlobalRoiThickness.Right, GlobalRoiThickness.Bottom);
+                            }
+                            else
+                            {
+                                thickness = new Thickness(roi.Thickness.Left, roi.Thickness.Top, roi.Thickness.Right, roi.Thickness.Bottom);
+                            }
+                            roiVisual.DrawRoi(roi, Scale, thickness);
                         }
                     }
                 }

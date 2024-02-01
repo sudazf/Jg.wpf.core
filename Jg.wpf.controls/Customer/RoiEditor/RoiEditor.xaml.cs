@@ -97,6 +97,16 @@ namespace Jg.wpf.controls.Customer.RoiEditor
             DependencyProperty.Register("GlobalRoiThickness", typeof(Thickness),
                 typeof(RoiEditor), new PropertyMetadata(new Thickness(2)));
 
+        public bool UseGlobalRoiThickness
+        {
+            get => (bool)GetValue(UseGlobalRoiThicknessProperty);
+            set => SetValue(UseGlobalRoiThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty UseGlobalRoiThicknessProperty =
+            DependencyProperty.Register("UseGlobalRoiThickness", typeof(bool),
+                typeof(RoiEditor), new PropertyMetadata(false));
+
 
         public RoiEditor()
         {

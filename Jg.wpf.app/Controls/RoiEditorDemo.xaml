@@ -2,13 +2,13 @@
     x:Class="Jg.wpf.app.Controls.RoiEditorDemo"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:Jg.wpf.controls.Converter;assembly=Jg.wpf.controls"
     xmlns:customImage="clr-namespace:Jg.wpf.controls.Customer.CustomImage;assembly=Jg.wpf.controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:roiEditor="clr-namespace:Jg.wpf.controls.Customer.RoiEditor;assembly=Jg.wpf.controls"
     xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
-    xmlns:converter="clr-namespace:Jg.wpf.controls.Converter;assembly=Jg.wpf.controls"
     d:DataContext="{d:DesignInstance viewModels:RoiEditorViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -27,10 +27,12 @@
             <roiEditor:RoiEditor
                 x:Name="Editor"
                 AllowOverLaid="{Binding AllowOverLaid}"
-                CanUseRoiCreator="{Binding CanUseRoiCreator}"
                 Angle="{Binding Angle}"
-                RoiSet="{Binding Rois}"
+                CanUseRoiCreator="{Binding CanUseRoiCreator}"
+                UseGlobalRoiThickness="{Binding UseGlobalRoiThickness}"
+                GlobalRoiThickness="{Binding GlobalThickness, Converter={converter:RoiThicknessToWindowThicknessConverter}}"
                 MaxRoi="{Binding MaxRoi}"
+                RoiSet="{Binding Rois}"
                 Scale="{Binding Zoom}" />
             <Border Grid.Row="1">
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
@@ -102,6 +104,7 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -136,7 +139,7 @@
                     Width="120"
                     Height="32"
                     Margin="4"
-                    Command="{Binding  ClearRoisCommand}"
+                    Command="{Binding ClearRoisCommand}"
                     Content="Clear Roi" />
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
@@ -155,12 +158,66 @@
                     VerticalAlignment="Center"
                     Text="最大数:" />
                 <TextBox
-                    Width="100"
+                    Width="60"
                     Margin="4"
                     VerticalAlignment="Center"
                     Text="{Binding MaxRoi}" />
             </StackPanel>
-            <ScrollViewer Grid.Row="3">
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <CheckBox
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Content="使用全局Thickness"
+                    IsChecked="{Binding UseGlobalRoiThickness}" />
+                <TextBlock
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Text="左: " />
+                <TextBox
+                    Width="20"
+                    Margin="4"
+                    Padding="0"
+                    VerticalAlignment="Center"
+                    Text="{Binding GlobalThickness.Left}" />
+                <TextBlock
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Text="上: " />
+                <TextBox
+                    Width="20"
+                    Margin="4"
+                    Padding="0"
+                    VerticalAlignment="Center"
+                    Text="{Binding GlobalThickness.Top}" />
+                <TextBlock
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Text="右: " />
+                <TextBox
+                    Width="20"
+                    Margin="4"
+                    Padding="0"
+                    VerticalAlignment="Center"
+                    Text="{Binding GlobalThickness.Right}" />
+                <TextBlock
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Text="下: " />
+                <TextBox
+                    Width="20"
+                    Margin="4"
+                    Padding="0"
+                    VerticalAlignment="Center"
+                    Text="{Binding GlobalThickness.Bottom}" />
+                <Button
+                    Width="50"
+                    Height="28"
+                    Margin="16,0,0,0"
+                    Padding="0"
+                    Command="{Binding RaiseThicknessCommand}"
+                    Content="生效" />
+            </StackPanel>
+            <ScrollViewer Grid.Row="4">
                 <ItemsControl
                     Margin="4"
                     BorderBrush="Gray"
@@ -174,6 +231,7 @@
                                 SnapsToDevicePixels="True">
                                 <Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition />
                                         <RowDefinition />
                                         <RowDefinition />
                                         <RowDefinition />
@@ -270,6 +328,48 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="Thickness" />
+                                        <TextBlock
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="左: " />
+                                        <TextBox
+                                            Width="20"
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Thickness.Left}" />
+                                        <TextBlock
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="上: " />
+                                        <TextBox
+                                            Width="20"
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Thickness.Top}" />
+                                        <TextBlock
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="右: " />
+                                        <TextBox
+                                            Width="20"
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Thickness.Right}" />
+                                        <TextBlock
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="下: " />
+                                        <TextBox
+                                            Width="20"
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Thickness.Bottom}" />
                                     </StackPanel>
                                 </Grid>
                             </Border>

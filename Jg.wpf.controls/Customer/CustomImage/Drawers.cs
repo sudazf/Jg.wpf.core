@@ -30,30 +30,33 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var emSize = 14 / scale;
                     emSize = Math.Round(emSize, 1);
 
-                    var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
+                    //var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
+                    var color = new SolidColorBrush(Color.FromRgb(255, 20, 147));
                     var leftPen = new Pen(color, leftThickness);
                     var topPen = new Pen(color, topThickness);
                     var rightPen = new Pen(color, rightThickness);
                     var bottomPen = new Pen(color, bottomThickness);
+                    var toleranceRectPen = new Pen(color, 1);
 
                     var leftD = leftPen.Thickness / 2;
                     var topD = topPen.Thickness / 2 ;
                     var rightD = rightPen.Thickness / 2;
                     var bottomD = bottomPen.Thickness / 2 ;
+                    var toleranceRectD = toleranceRectPen.Thickness / 2;
 
                     var bottomLeft = new Point(roi.X, roi.Y + roi.Height);
                     var topLeft = new Point(roi.X, roi.Y);
                     var topRight = new Point(roi.X + roi.Width, roi.Y);
                     var bottomRight = new Point(roi.X + roi.Width, roi.Y + roi.Height);
 
-                    var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y + bottomD);
-                    var leftLineEndPoint = new Point(topLeft.X, topLeft.Y - topD );
+                    var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y);
+                    var leftLineEndPoint = new Point(topLeft.X, topLeft.Y);
 
                     var topLineStartPoint = new Point(topLeft.X, topLeft.Y);
                     var topLineEndPoint = new Point(topRight.X , topRight.Y);
 
-                    var rightLineStartPoint = new Point(topRight.X, topRight.Y - topD);
-                    var rightLineEndPoint = new Point(bottomRight.X, bottomRight.Y + bottomD);
+                    var rightLineStartPoint = new Point(topRight.X, topRight.Y);
+                    var rightLineEndPoint = new Point(bottomRight.X, bottomRight.Y);
 
                     var bottomLineStartPoint = new Point(bottomRight.X, bottomRight.Y);
                     var bottomLineEndPoint = new Point(bottomLeft.X, bottomLeft.Y);
@@ -88,6 +91,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         bottomLineStartPoint.Y
                     });
 
+
                     dc.PushGuidelineSet(leftGuidelines);
                     dc.DrawLine(leftPen, leftLineStartPoint, leftLineEndPoint);
 
@@ -99,6 +103,64 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                     dc.PushGuidelineSet(bottomGuidelines);
                     dc.DrawLine(bottomPen, bottomLineStartPoint, bottomLineEndPoint);
+
+                    //tolerance rectangle.
+                    var leftToleranceRectGuidelines = new GuidelineSet(new[]
+                    {
+                        leftLineStartPoint.X
+                    }, new[]
+                    {
+                        bottomLineEndPoint.Y,
+                    });
+
+                    //left
+                    dc.PushGuidelineSet(leftToleranceRectGuidelines);
+                    //todo 如果坐标都已经写成按画笔半径得出的具体坐标，其实就不需要设置 GuidelineSet 了
+                    dc.DrawRectangle(color, toleranceRectPen,
+                        new Rect(new Point(leftLineStartPoint.X - leftD + toleranceRectD, bottomLineEndPoint.Y - toleranceRectD),
+                            new Size(leftD, bottomD)));
+
+                    var topToleranceRectGuidelines = new GuidelineSet(new[]
+                    {
+                        leftLineStartPoint.X
+                    }, new[]
+                    {
+                        topLineStartPoint.Y
+                    });
+
+                    //top
+                    dc.PushGuidelineSet(topToleranceRectGuidelines);
+                    dc.DrawRectangle(color, toleranceRectPen,
+                        new Rect(new Point(leftLineStartPoint.X - leftD + toleranceRectD, topLineStartPoint.Y - topD + toleranceRectD),
+                            new Size(leftD, topD)));
+
+                    var rightToleranceRectGuidelines = new GuidelineSet(new[]
+                    {
+                        topLineEndPoint.X
+                    }, new[]
+                    {
+                        topLineEndPoint.Y
+                    });
+
+                    //right
+                    dc.PushGuidelineSet(rightToleranceRectGuidelines);
+                    dc.DrawRectangle(color, toleranceRectPen,
+                        new Rect(new Point(topLineEndPoint.X - toleranceRectD, topLineEndPoint.Y - topD + toleranceRectD),
+                            new Size(rightD, topD)));
+
+                    var bottomToleranceRectGuidelines = new GuidelineSet(new[]
+                    {
+                        bottomLineStartPoint.X
+                    }, new[]
+                    {
+                        bottomLineStartPoint.Y,
+                    });
+
+                    //bottom
+                    dc.PushGuidelineSet(bottomToleranceRectGuidelines);
+                    dc.DrawRectangle(color, toleranceRectPen,
+                        new Rect(new Point(bottomLineStartPoint.X - toleranceRectD, bottomLineStartPoint.Y - toleranceRectD),
+                            new Size(rightD, bottomD)));
 
                     if (!string.IsNullOrEmpty(roi.Title))
                     {

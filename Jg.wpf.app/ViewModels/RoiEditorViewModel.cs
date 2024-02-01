@@ -17,6 +17,8 @@ namespace Jg.wpf.app.ViewModels
         private bool _allowOverLaid = true;
         private bool _canUseRoiCreator = true;
         private int _maxRoi = 10;
+        private bool _useGlobalRoiThickness;
+        private RoiThickness _globalThickness;
 
         public bool AllowOverLaid
         {
@@ -29,6 +31,17 @@ namespace Jg.wpf.app.ViewModels
             }
         }
 
+        public bool UseGlobalRoiThickness
+        {
+            get => _useGlobalRoiThickness;
+            set
+            {
+                if (value == _useGlobalRoiThickness) return;
+                _useGlobalRoiThickness = value;
+                RaisePropertyChanged(nameof(UseGlobalRoiThickness));
+            }
+        }
+
         public bool CanUseRoiCreator
         {
             get => _canUseRoiCreator;
@@ -37,6 +50,17 @@ namespace Jg.wpf.app.ViewModels
                 if (value == _canUseRoiCreator) return;
                 _canUseRoiCreator = value;
                 RaisePropertyChanged(nameof(CanUseRoiCreator));
+            }
+        }
+
+        public RoiThickness GlobalThickness
+        {
+            get => _globalThickness;
+            set
+            {
+                if (Equals(value, _globalThickness)) return;
+                _globalThickness = value;
+                RaisePropertyChanged(nameof(GlobalThickness));
             }
         }
 
@@ -91,12 +115,16 @@ namespace Jg.wpf.app.ViewModels
         public JCommand DecreaseZoomCommand { get; }
         public JCommand IncreaseAngleCommand { get; }
         public JCommand DecreaseAngleCommand { get; }
-
+        public JCommand RaiseThicknessCommand { get; }
+        
         public RoiEditorViewModel()
         {
             _zoom = 1;
             _rois = new MyObservableCollection<Roi>();
             _rois.ClearInvokeAction = ClearInvokeAction;
+
+            _globalThickness = new RoiThickness(8);
+            _useGlobalRoiThickness = true;
 
             ShowRoisCommand = new JCommand("ShowRoisCommand", OnShowRois);
             IncreaseZoomCommand = new JCommand("IncreaseZoomCommand", OnIncreaseZoom);
@@ -104,6 +132,7 @@ namespace Jg.wpf.app.ViewModels
             IncreaseAngleCommand = new JCommand("IncreaseAngleCommand", OnIncreaseAngle);
             DecreaseAngleCommand = new JCommand("DecreaseAngleCommand", OnDecreaseAngle);
             ClearRoisCommand = new JCommand("ClearRoisCommand", OnClearAllRoi);
+            RaiseThicknessCommand = new JCommand("RaiseThicknessCommand", OnRaiseThickness);
         }
 
         private void ClearInvokeAction(MyObservableCollection<Roi> rois)
@@ -174,5 +203,12 @@ namespace Jg.wpf.app.ViewModels
         {
             Rois.ClearEx();
         }
+
+        private void OnRaiseThickness(object obj)
+        {
+            GlobalThickness = new RoiThickness(GlobalThickness.Left, GlobalThickness.Top, 
+                GlobalThickness.Right, GlobalThickness.Bottom);
+        }
+
     }
 }

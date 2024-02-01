@@ -2,10 +2,10 @@
 {
     public class RoiThickness
     {
-        public float Left { get; }
-        public float Top { get; }
-        public float Right { get; }
-        public float Bottom { get; }
+        public float Left { get; set; }
+        public float Top { get; set; }
+        public float Right { get; set; }
+        public float Bottom { get; set; }
 
         public RoiThickness()
         {

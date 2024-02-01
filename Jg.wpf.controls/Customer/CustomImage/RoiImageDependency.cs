@@ -93,6 +93,17 @@ namespace Jg.wpf.controls.Customer.CustomImage
             DependencyProperty.Register("CanEditRoi", typeof(bool), 
                 typeof(RoiImage), new PropertyMetadata(true, OnCanEditRoiChanged));
 
+        public bool UseGlobalRoiThickness
+        {
+            get => (bool)GetValue(UseGlobalRoiThicknessProperty);
+            set => SetValue(UseGlobalRoiThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty UseGlobalRoiThicknessProperty =
+            DependencyProperty.Register("UseGlobalRoiThickness", typeof(bool), 
+                typeof(RoiImage), new PropertyMetadata(false));
+
+
         private static void OnCanEditRoiChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is RoiImage image)

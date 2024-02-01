@@ -11,7 +11,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
         private readonly RoiCreatorDrawingVisual _creatorDrawingVisual;
         private readonly float _pixelsPerDpi;
 
-        public bool UseGlobalRoiThickness { get; set; }
 
         public RoiImage()
         {

@@ -30,8 +30,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var emSize = 14 / scale;
                     emSize = Math.Round(emSize, 1);
 
-                    //var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
-                    var color = new SolidColorBrush(Color.FromRgb(255, 20, 147));
+                    var color = (SolidColorBrush)_brushConverter.ConvertFromString(roi.Color);
+
                     var leftPen = new Pen(color, leftThickness);
                     var topPen = new Pen(color, topThickness);
                     var rightPen = new Pen(color, rightThickness);

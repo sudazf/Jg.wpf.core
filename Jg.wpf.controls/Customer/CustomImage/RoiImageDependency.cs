@@ -81,7 +81,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         public static readonly DependencyProperty GlobalRoiThicknessProperty =
             DependencyProperty.Register("GlobalRoiThickness", typeof(Thickness), 
-                typeof(RoiImage), new PropertyMetadata(new Thickness(2)));
+                typeof(RoiImage), new PropertyMetadata(new Thickness(2), OnGlobalRoiThicknessChanged));
 
         public bool CanEditRoi
         {
@@ -101,8 +101,47 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         public static readonly DependencyProperty UseGlobalRoiThicknessProperty =
             DependencyProperty.Register("UseGlobalRoiThickness", typeof(bool), 
-                typeof(RoiImage), new PropertyMetadata(false));
+                typeof(RoiImage), new PropertyMetadata(false, OnUseGlobalRoiThicknessChanged));
 
+        private static void OnUseGlobalRoiThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is RoiImage image)
+            {
+                if (e.NewValue is bool useGlobalRoiThickness)   
+                {
+                    if (useGlobalRoiThickness)
+                    {
+                        foreach (var drawer in image._drawers)
+                        {
+                            drawer.Value.DrawRoi(drawer.Key, image.Scale, image.GlobalRoiThickness);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var drawer in image._drawers)
+                        {
+                            var roi = drawer.Key;
+                            var thickness = new Thickness(roi.Thickness.Left, roi.Thickness.Top, roi.Thickness.Right, roi.Thickness.Bottom);
+                            drawer.Value.DrawRoi(roi, image.Scale, thickness);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void OnGlobalRoiThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is RoiImage image)
+            {
+                if (image.UseGlobalRoiThickness && e.NewValue is Thickness thickness)
+                {
+                    foreach (var drawer in image._drawers)
+                    {
+                        drawer.Value.DrawRoi(drawer.Key, image.Scale, thickness);
+                    }
+                }
+            }
+        }
 
         private static void OnCanEditRoiChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

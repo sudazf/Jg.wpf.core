@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfLocaleItem xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<LocaleItem key="ShowDemoInWindow">在窗体中显示</LocaleItem>
-	<LocaleItem key="ThisIsTag">这是一个提示: </LocaleItem>
+	
+	<LocaleItem key="NoRestrict">无限制</LocaleItem>
+	<LocaleItem key="RestrictX">限制X</LocaleItem>
+	<LocaleItem key="RestrictY">限制Y</LocaleItem>
 	
 </ArrayOfLocaleItem>

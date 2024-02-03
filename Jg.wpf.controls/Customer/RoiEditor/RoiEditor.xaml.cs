@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Jg.wpf.core.Extensions.Collections;
@@ -14,7 +13,7 @@ namespace Jg.wpf.controls.Customer.RoiEditor
     public partial class RoiEditor : UserControl
     {
         public static readonly DependencyProperty RoiSetProperty =
-            DependencyProperty.Register("RoiSet", typeof(MyObservableCollection<Roi>), typeof(RoiEditor),
+            DependencyProperty.Register(nameof(RoiSet), typeof(MyObservableCollection<Roi>), typeof(RoiEditor),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
 
         public MyObservableCollection<Roi> RoiSet
@@ -30,7 +29,7 @@ namespace Jg.wpf.controls.Customer.RoiEditor
         }
 
         public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(ImageSource), typeof(RoiEditor), 
+            DependencyProperty.Register(nameof(Source), typeof(ImageSource), typeof(RoiEditor), 
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
 
         public double Scale
@@ -40,7 +39,7 @@ namespace Jg.wpf.controls.Customer.RoiEditor
         }
 
         public static readonly DependencyProperty ScaleProperty =
-            DependencyProperty.Register("Scale", typeof(double), typeof(RoiEditor), 
+            DependencyProperty.Register(nameof(Scale), typeof(double), typeof(RoiEditor), 
                 new PropertyMetadata(1d));
 
         public double Angle
@@ -50,7 +49,7 @@ namespace Jg.wpf.controls.Customer.RoiEditor
         }
 
         public static readonly DependencyProperty AngleProperty =
-            DependencyProperty.Register("Angle", typeof(double), typeof(RoiEditor), 
+            DependencyProperty.Register(nameof(Angle), typeof(double), typeof(RoiEditor), 
                 new PropertyMetadata(0d));
 
 
@@ -61,7 +60,7 @@ namespace Jg.wpf.controls.Customer.RoiEditor
         }
 
         public static readonly DependencyProperty AllowOverLaidProperty =
-            DependencyProperty.Register("AllowOverLaid", typeof(bool), 
+            DependencyProperty.Register(nameof(AllowOverLaid), typeof(bool), 
                 typeof(RoiEditor), new PropertyMetadata(true));
 
 
@@ -72,7 +71,7 @@ namespace Jg.wpf.controls.Customer.RoiEditor
         }
 
         public static readonly DependencyProperty CanUseRoiCreatorProperty =
-            DependencyProperty.Register("CanUseRoiCreator", typeof(bool), 
+            DependencyProperty.Register(nameof(CanUseRoiCreator), typeof(bool), 
                 typeof(RoiEditor), new PropertyMetadata(true));
 
 
@@ -83,7 +82,7 @@ namespace Jg.wpf.controls.Customer.RoiEditor
         }
 
         public static readonly DependencyProperty MaxRoiProperty =
-            DependencyProperty.Register("MaxRoi", typeof(int), 
+            DependencyProperty.Register(nameof(MaxRoi), typeof(int), 
                 typeof(RoiEditor), new PropertyMetadata(9999));
 
 
@@ -94,7 +93,7 @@ namespace Jg.wpf.controls.Customer.RoiEditor
         }
 
         public static readonly DependencyProperty GlobalRoiThicknessProperty =
-            DependencyProperty.Register("GlobalRoiThickness", typeof(Thickness),
+            DependencyProperty.Register(nameof(GlobalRoiThickness), typeof(Thickness),
                 typeof(RoiEditor), new PropertyMetadata(new Thickness(2)));
 
         public bool UseGlobalRoiThickness
@@ -104,9 +103,8 @@ namespace Jg.wpf.controls.Customer.RoiEditor
         }
 
         public static readonly DependencyProperty UseGlobalRoiThicknessProperty =
-            DependencyProperty.Register("UseGlobalRoiThickness", typeof(bool),
+            DependencyProperty.Register(nameof(UseGlobalRoiThickness), typeof(bool),
                 typeof(RoiEditor), new PropertyMetadata(false));
-
 
         public RoiEditor()
         {

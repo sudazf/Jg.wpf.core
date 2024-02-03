@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfLocaleItem xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<LocaleItem key="ShowDemoInWindow">Show Demo in Dialog</LocaleItem>
-	<LocaleItem key="ThisIsTag">This is tag: </LocaleItem>	
+	
+	<LocaleItem key="NoRestrict">NoRestrict</LocaleItem>
+	<LocaleItem key="RestrictX">RestrictX</LocaleItem>
+	<LocaleItem key="RestrictY">RestrictY</LocaleItem>
 	
 </ArrayOfLocaleItem>

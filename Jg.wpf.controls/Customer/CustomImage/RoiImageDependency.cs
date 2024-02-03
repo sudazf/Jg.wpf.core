@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
 using Jg.wpf.core.Extensions.Collections;
@@ -12,25 +11,27 @@ namespace Jg.wpf.controls.Customer.CustomImage
     {
         private readonly Dictionary<Roi, RoiDrawingVisual> _drawers = new Dictionary<Roi, RoiDrawingVisual>();
 
-        public static readonly DependencyProperty RoiSetProperty =
-            DependencyProperty.Register("RoiSet", typeof(MyObservableCollection<Roi>), typeof(RoiImage),
-                new FrameworkPropertyMetadata(null,
-                    OnRoiSetPropertyChanged));
-
-        public static readonly DependencyProperty ScaleProperty =
-            DependencyProperty.Register("Scale", typeof(double), typeof(RoiImage),
-                new PropertyMetadata(1d, OnScalePropertyChanged));
-
         public MyObservableCollection<Roi> RoiSet
         {
             get => (MyObservableCollection<Roi>)GetValue(RoiSetProperty);
             set => SetValue(RoiSetProperty, value);
         }
+
+        public static readonly DependencyProperty RoiSetProperty =
+            DependencyProperty.Register(nameof(RoiSet), typeof(MyObservableCollection<Roi>), typeof(RoiImage),
+                new FrameworkPropertyMetadata(null,
+                    OnRoiSetPropertyChanged));
+
         public double Scale
         {
             get => (double)GetValue(ScaleProperty);
             set => SetValue(ScaleProperty, value);
         }
+
+        public static readonly DependencyProperty ScaleProperty =
+            DependencyProperty.Register(nameof(Scale), typeof(double), typeof(RoiImage),
+                new PropertyMetadata(1d, OnScalePropertyChanged));
+
 
         public bool CanUseRoiCreator
         {
@@ -39,7 +40,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
 
         public static readonly DependencyProperty CanUseRoiCreatorProperty =
-            DependencyProperty.Register("CanUseRoiCreator", typeof(bool), 
+            DependencyProperty.Register(nameof(CanUseRoiCreator), typeof(bool), 
                 typeof(RoiImage), new PropertyMetadata(true));
 
         public bool AllowOverLaid
@@ -49,7 +50,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
 
         public static readonly DependencyProperty AllowOverLaidProperty =
-            DependencyProperty.Register("AllowOverLaid", typeof(bool), 
+            DependencyProperty.Register(nameof(AllowOverLaid), typeof(bool), 
                 typeof(RoiImage), new PropertyMetadata(true));
 
 
@@ -60,7 +61,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
 
         public static readonly DependencyProperty DefaultRoiColorProperty =
-            DependencyProperty.Register("DefaultRoiColor", typeof(string), 
+            DependencyProperty.Register(nameof(DefaultRoiColor), typeof(string), 
                 typeof(RoiImage), new PropertyMetadata("Red"));
 
         public int MaxRoi
@@ -70,7 +71,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
 
         public static readonly DependencyProperty MaxRoiProperty =
-            DependencyProperty.Register("MaxRoi", typeof(int), 
+            DependencyProperty.Register(nameof(MaxRoi), typeof(int), 
                 typeof(RoiImage), new PropertyMetadata(9999));
 
         public Thickness GlobalRoiThickness
@@ -80,7 +81,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
 
         public static readonly DependencyProperty GlobalRoiThicknessProperty =
-            DependencyProperty.Register("GlobalRoiThickness", typeof(Thickness), 
+            DependencyProperty.Register(nameof(GlobalRoiThickness), typeof(Thickness), 
                 typeof(RoiImage), new PropertyMetadata(new Thickness(2), OnGlobalRoiThicknessChanged));
 
         public bool CanEditRoi
@@ -90,7 +91,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
 
         public static readonly DependencyProperty CanEditRoiProperty =
-            DependencyProperty.Register("CanEditRoi", typeof(bool), 
+            DependencyProperty.Register(nameof(CanEditRoi), typeof(bool), 
                 typeof(RoiImage), new PropertyMetadata(true, OnCanEditRoiChanged));
 
         public bool UseGlobalRoiThickness
@@ -100,8 +101,9 @@ namespace Jg.wpf.controls.Customer.CustomImage
         }
 
         public static readonly DependencyProperty UseGlobalRoiThicknessProperty =
-            DependencyProperty.Register("UseGlobalRoiThickness", typeof(bool), 
+            DependencyProperty.Register(nameof(UseGlobalRoiThickness), typeof(bool), 
                 typeof(RoiImage), new PropertyMetadata(false, OnUseGlobalRoiThicknessChanged));
+
 
         private static void OnUseGlobalRoiThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -128,7 +130,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 }
             }
         }
-
         private static void OnGlobalRoiThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is RoiImage image)
@@ -142,7 +143,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 }
             }
         }
-
         private static void OnCanEditRoiChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is RoiImage image)
@@ -209,18 +209,21 @@ namespace Jg.wpf.controls.Customer.CustomImage
             //remove old RoiSet
             if (image.RoiSet != null)
             {
-                image.RoiSet.ClearInvokeAction = null;
-                image.RoiSet.CollectionChanged -= image.OnRoiCollectionChanged;
+                var oldRoiSet = image.RoiSet;
+                var oldRoiVisuals = image._drawers.Values;
 
-                foreach (var roi in image.RoiSet)
+                oldRoiSet.ClearInvokeAction -= image.ReleaseEventsBeforeClear;
+                oldRoiSet.CollectionChanged -= image.OnRoiCollectionChanged;
+
+                foreach (var oldRoi in oldRoiSet)
                 {
-                    roi.OnRoiChanged -= image.OnRoiChanged;
+                    oldRoi.OnRoiChanged -= image.OnRoiChanged;
                 }
 
-                foreach (var visual in image._drawers.Values)
+                foreach (var oldVisual in oldRoiVisuals)
                 {
-                    image.RemoveLogicalChild(visual);
-                    image.RemoveVisualChild(visual);
+                    image.RemoveLogicalChild(oldVisual);
+                    image.RemoveVisualChild(oldVisual);
                 }
                 image._drawers.Clear();
 
@@ -232,25 +235,25 @@ namespace Jg.wpf.controls.Customer.CustomImage
             }
 
             //Add new RoiSet
-            var rois = ((MyObservableCollection<Roi>)e.NewValue);
-            if (rois == null)
+            var newRoiSet = ((MyObservableCollection<Roi>)e.NewValue);
+            if (newRoiSet == null)
             {
                 return;
             }
 
-            rois.ClearInvokeAction = image.ReleaseEventsBeforeClear;
-            rois.CollectionChanged += image.OnRoiCollectionChanged;
+            newRoiSet.ClearInvokeAction += image.ReleaseEventsBeforeClear;
+            newRoiSet.CollectionChanged += image.OnRoiCollectionChanged;
 
-            foreach (var roi in rois)
+            foreach (var newRoi in newRoiSet)
             {
-                roi.OnRoiChanged += image.OnRoiChanged;
+                newRoi.OnRoiChanged += image.OnRoiChanged;
 
-                if (image.ActualHeight * image.ActualWidth != 0 && roi.Show)
+                if (image.ActualHeight * image.ActualWidth != 0 && newRoi.Show)
                 {
-                    var roiVisual = new RoiDrawingVisual(image._pixelsPerDpi);
+                    var roiVisual = new RoiDrawingVisual();
                     image.AddLogicalChild(roiVisual);
                     image.AddVisualChild(roiVisual);
-                    image._drawers[roi] = roiVisual;
+                    image._drawers[newRoi] = roiVisual;
 
                     Thickness thickness;
                     if (image.UseGlobalRoiThickness)
@@ -259,9 +262,9 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     else
                     {
-                        thickness = new Thickness(roi.Thickness.Left, roi.Thickness.Top, roi.Thickness.Right, roi.Thickness.Bottom);
+                        thickness = new Thickness(newRoi.Thickness.Left, newRoi.Thickness.Top, newRoi.Thickness.Right, newRoi.Thickness.Bottom);
                     }
-                    roiVisual.DrawRoi(roi, image.Scale, thickness);
+                    roiVisual.DrawRoi(newRoi, image.Scale, thickness);
                 }
             }
         }
@@ -271,6 +274,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
             foreach (var roi in rois)
             {
                 roi.OnRoiChanged -= OnRoiChanged;
+                roi.Dispose();
             }
         }
         private void OnRoiCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -287,7 +291,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         {
                             roi.OnRoiChanged += OnRoiChanged;
 
-                            var roiVisual = new RoiDrawingVisual(_pixelsPerDpi);
+                            var roiVisual = new RoiDrawingVisual();
                             AddLogicalChild(roiVisual);
                             AddVisualChild(roiVisual);
                             _drawers[roi] = roiVisual;
@@ -311,6 +315,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     {
                         roi = (Roi)e.OldItems[0];
                         roi.OnRoiChanged -= OnRoiChanged;
+                        roi.Dispose();
 
                         if (_drawers.ContainsKey(roi))
                         {
@@ -371,11 +376,9 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     else
                     {
-                        var roiVisual = new RoiDrawingVisual(_pixelsPerDpi);
-
+                        var roiVisual = new RoiDrawingVisual();
                         AddLogicalChild(roiVisual);
                         AddVisualChild(roiVisual);
-
                         _drawers[roi] = roiVisual;
 
                         //当控件本身宽或高为 0 时，不绘制
@@ -406,6 +409,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         if (roi == _hitRoi)
                         {
                             _editorDrawingVisual.ClearEditor();
+                            _hitRoi = null;
                         }
                     }
                 }

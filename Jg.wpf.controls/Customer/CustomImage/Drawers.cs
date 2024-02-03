@@ -8,12 +8,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
 {
     public class RoiDrawingVisual : DrawingVisual
     {
-        private readonly float _pixelPerDpi;
         private readonly BrushConverter _brushConverter = new BrushConverter();
 
-        public RoiDrawingVisual(float pixelPerDpi)
+        public RoiDrawingVisual()
         {
-            _pixelPerDpi = pixelPerDpi;
         }
 
         public void DrawRoi(Roi roi, double scale, Thickness thickness)

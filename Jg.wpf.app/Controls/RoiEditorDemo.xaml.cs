@@ -4,8 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System;
-using System.Runtime.Versioning;
-using Jg.wpf.app.ViewModels;
 
 namespace Jg.wpf.app.Controls
 {
@@ -44,16 +42,11 @@ namespace Jg.wpf.app.Controls
         }
 
 
-        private void BtnHideImage(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Editor.Source = null;
-        }
-
         private void ProvideImage()
         {
             _imageIndicator++;
 
-            if (_imageIndicator % 2 == 0)
+            if (_imageIndicator % 2 != 0)
             {
                 var imageFile = "RoiDemo.bmp";
 

@@ -12,6 +12,8 @@
     d:DataContext="{d:DesignInstance viewModels:RoiEditorViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    FontFamily="宋体"
+    FontSize="13"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -29,11 +31,11 @@
                 AllowOverLaid="{Binding AllowOverLaid}"
                 Angle="{Binding Angle}"
                 CanUseRoiCreator="{Binding CanUseRoiCreator}"
-                UseGlobalRoiThickness="{Binding UseGlobalRoiThickness}"
                 GlobalRoiThickness="{Binding GlobalThickness, Converter={converter:RoiThicknessToWindowThicknessConverter}}"
                 MaxRoi="{Binding MaxRoi}"
                 RoiSet="{Binding Rois}"
-                Scale="{Binding Zoom}" />
+                Scale="{Binding Zoom}"
+                UseGlobalRoiThickness="{Binding UseGlobalRoiThickness}" />
             <Border Grid.Row="1">
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <RepeatButton
@@ -108,39 +110,34 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal">
-                <Button
-                    Width="120"
-                    Height="32"
-                    Margin="4"
-                    Click="BtnShowImage"
-                    Content="ChangeImage" />
-                <Button
-                    Width="120"
-                    Height="32"
-                    Margin="4"
-                    Click="BtnShowBigImage"
-                    Content="Big Picture" />
-                <Button
-                    Width="120"
-                    Height="32"
-                    Margin="4"
-                    Click="BtnHideImage"
-                    Content="HideImage" />
-            </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Button
                     Width="120"
                     Height="32"
                     Margin="4"
+                    Click="BtnShowImage"
+                    Content="切换小图" />
+                <Button
+                    Width="120"
+                    Height="32"
+                    Margin="4"
+                    Click="BtnShowBigImage"
+                    Content="换成大图" />
+   
+            </StackPanel>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button
+                    Width="120"
+                    Height="32"
+                    Margin="4"
                     Command="{Binding ShowRoisCommand}"
-                    Content="Roi Demo" />
+                    Content="Roi 示例" />
                 <Button
                     Width="120"
                     Height="32"
                     Margin="4"
                     Command="{Binding ClearRoisCommand}"
-                    Content="Clear Roi" />
+                    Content="清空 Roi" />
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <CheckBox
@@ -151,12 +148,12 @@
                 <CheckBox
                     Margin="4"
                     VerticalAlignment="Center"
-                    Content="允许创建Roi（鼠标左键）"
+                    Content="允许创建Roi（鼠标左键）,"
                     IsChecked="{Binding CanUseRoiCreator}" />
                 <TextBlock
                     Margin="4"
                     VerticalAlignment="Center"
-                    Text="最大数:" />
+                    Text="最大 Roi 数:" />
                 <TextBox
                     Width="60"
                     Margin="4"
@@ -167,7 +164,7 @@
                 <CheckBox
                     Margin="4"
                     VerticalAlignment="Center"
-                    Content="使用全局Thickness"
+                    Content="使用全局Thickness,"
                     IsChecked="{Binding UseGlobalRoiThickness}" />
                 <TextBlock
                     Margin="4"
@@ -209,19 +206,13 @@
                     Padding="0"
                     VerticalAlignment="Center"
                     Text="{Binding GlobalThickness.Bottom}" />
-                <Button
-                    Width="50"
-                    Height="28"
-                    Margin="16,0,0,0"
-                    Padding="0"
-                    Command="{Binding RaiseThicknessCommand}"
-                    Content="生效" />
             </StackPanel>
             <ScrollViewer Grid.Row="4">
                 <ItemsControl
                     Margin="4"
                     BorderBrush="Gray"
                     BorderThickness="0,1,0,0"
+                    FontSize="12"
                     ItemsSource="{Binding Rois}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -251,7 +242,11 @@
                                         <TextBlock
                                             Margin="4"
                                             VerticalAlignment="Center"
-                                            Text=" X:" />
+                                            Text="坐标:" />
+                                        <TextBlock
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="X:" />
                                         <TextBox
                                             Width="50"
                                             Margin="4"
@@ -299,7 +294,7 @@
                                         <CheckBox
                                             Margin="4"
                                             VerticalAlignment="Center"
-                                            Content="允许重叠"
+                                            Content="允许重叠，"
                                             IsChecked="{Binding CanOverLaid}" />
                                         <TextBlock
                                             Margin="4"
@@ -330,6 +325,23 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="4"
+                                            VerticalAlignment="Center"
+                                            Text="X/Y方向移动限制:" />
+                                        <ComboBox
+                                            Width="60"
+                                            Margin="4"
+                                            VerticalContentAlignment="Center"
+                                            ItemsSource="{Binding RestrictedTypes}"
+                                            SelectedItem="{Binding RestrictedType}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=., Converter={converter:RoiRestrictedTypeToStringConverter}}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+
                                         <TextBlock
                                             Margin="4"
                                             VerticalAlignment="Center"

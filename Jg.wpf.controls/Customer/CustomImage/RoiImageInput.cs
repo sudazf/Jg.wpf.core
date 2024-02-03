@@ -778,7 +778,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     {
                         if (!_drawers.ContainsKey(roi))
                         {
-                            var roiVisual = new RoiDrawingVisual(_pixelsPerDpi);
+                            var roiVisual = new RoiDrawingVisual();
                             AddLogicalChild(roiVisual);
                             AddVisualChild(roiVisual);
                             _drawers[roi] = roiVisual;

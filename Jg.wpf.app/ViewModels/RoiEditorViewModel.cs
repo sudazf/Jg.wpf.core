@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Jg.wpf.core.Command;
 using Jg.wpf.core.Extensions.Collections;
@@ -30,7 +28,6 @@ namespace Jg.wpf.app.ViewModels
                 RaisePropertyChanged(nameof(AllowOverLaid));
             }
         }
-
         public bool UseGlobalRoiThickness
         {
             get => _useGlobalRoiThickness;
@@ -41,7 +38,6 @@ namespace Jg.wpf.app.ViewModels
                 RaisePropertyChanged(nameof(UseGlobalRoiThickness));
             }
         }
-
         public bool CanUseRoiCreator
         {
             get => _canUseRoiCreator;
@@ -52,7 +48,6 @@ namespace Jg.wpf.app.ViewModels
                 RaisePropertyChanged(nameof(CanUseRoiCreator));
             }
         }
-
         public RoiThickness GlobalThickness
         {
             get => _globalThickness;
@@ -63,7 +58,6 @@ namespace Jg.wpf.app.ViewModels
                 RaisePropertyChanged(nameof(GlobalThickness));
             }
         }
-
         public MyObservableCollection<Roi> Rois
         {
             get => _rois;
@@ -74,7 +68,6 @@ namespace Jg.wpf.app.ViewModels
                 RaisePropertyChanged(nameof(Rois));
             }
         }
-
         public int MaxRoi
         {
             get => _maxRoi;
@@ -85,8 +78,6 @@ namespace Jg.wpf.app.ViewModels
                 RaisePropertyChanged(nameof(MaxRoi));
             }
         }
-
-
         public double Zoom
         {
             get => _zoom;
@@ -97,7 +88,6 @@ namespace Jg.wpf.app.ViewModels
                 RaisePropertyChanged(nameof(Zoom));
             }
         }
-
         public double Angle
         {
             get => _angle;
@@ -115,15 +105,15 @@ namespace Jg.wpf.app.ViewModels
         public JCommand DecreaseZoomCommand { get; }
         public JCommand IncreaseAngleCommand { get; }
         public JCommand DecreaseAngleCommand { get; }
-        public JCommand RaiseThicknessCommand { get; }
         
         public RoiEditorViewModel()
         {
             _zoom = 1;
             _rois = new MyObservableCollection<Roi>();
-            _rois.ClearInvokeAction = ClearInvokeAction;
 
-            _globalThickness = new RoiThickness(8);
+            _globalThickness = new RoiThickness(4);
+            _globalThickness.OnSingleThicknessChanged += OnSingleThicknessChanged;
+
             _useGlobalRoiThickness = true;
 
             ShowRoisCommand = new JCommand("ShowRoisCommand", OnShowRois);
@@ -132,13 +122,8 @@ namespace Jg.wpf.app.ViewModels
             IncreaseAngleCommand = new JCommand("IncreaseAngleCommand", OnIncreaseAngle);
             DecreaseAngleCommand = new JCommand("DecreaseAngleCommand", OnDecreaseAngle);
             ClearRoisCommand = new JCommand("ClearRoisCommand", OnClearAllRoi);
-            RaiseThicknessCommand = new JCommand("RaiseThicknessCommand", OnRaiseThickness);
         }
 
-        private void ClearInvokeAction(MyObservableCollection<Roi> rois)
-        {
-            
-        }
 
         public void AddRoi(Roi newRoi)
         {
@@ -188,11 +173,11 @@ namespace Jg.wpf.app.ViewModels
 
         private void OnShowRois(object obj)
         {
-            var roi1 = new Roi(25, 48, 227, 185, "Yellow", title: "1,");
-            var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "2,") { RestrictedType = RoiRestrictedTypes.X };
-            var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "3,") { RestrictedType = RoiRestrictedTypes.Y };
+            Rois.ClearEx();
 
-            Rois.Clear();
+            var roi1 = new Roi(25, 48, 227, 185, "Yellow", title: "1,");
+            var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "2,", restrictedType: RoiRestrictedTypes.X);
+            var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "3,", restrictedType: RoiRestrictedTypes.Y);
 
             Rois.Add(roi1);
             Rois.Add(roi2);
@@ -204,11 +189,9 @@ namespace Jg.wpf.app.ViewModels
             Rois.ClearEx();
         }
 
-        private void OnRaiseThickness(object obj)
+        private void OnSingleThicknessChanged(object sender, RoiThickness e)
         {
-            GlobalThickness = new RoiThickness(GlobalThickness.Left, GlobalThickness.Top, 
-                GlobalThickness.Right, GlobalThickness.Bottom);
+            RaisePropertyChanged(nameof(GlobalThickness));
         }
-
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Jg.wpf.core.Notify;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Jg.wpf.core.Extensions.Types.RoiTypes
 {
-    public class Roi : ViewModelBase
+    public class Roi : ViewModelBase, IDisposable
     {
         private int _x;
         private int _y;
@@ -15,10 +16,10 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         private bool _showRoiValue;
         private string _color;
         private RoiThickness _thickness;
+        private bool _disposed;
+        private RoiRestrictedTypes _restrictedType = RoiRestrictedTypes.None;
 
         public event EventHandler<Roi> OnRoiChanged;
-        
-        public RoiRestrictedTypes RestrictedType { get; set; } = RoiRestrictedTypes.None;
 
         public int X
         {
@@ -119,13 +120,27 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 RaisePropertyChanged(nameof(Thickness));
             }
         }
+        public RoiRestrictedTypes RestrictedType
+        {
+            get => _restrictedType;
+            set
+            {
+                if (value == _restrictedType) return;
+                _restrictedType = value;
+                OnRoiChanged?.Invoke(this, this);
+                RaisePropertyChanged(nameof(RestrictedType));
+            }
+        }
 
         public List<string> Colors { get; private set; }
         public bool CanOverLaid { get; set; }
+        public IList<RoiRestrictedTypes> RestrictedTypes { get; set; }
+        
 
         public Roi(int x, int y, int width, int height, 
             string color, bool show = true, string title = null, bool showRoiValue = true,
-            List<string> colors = null, bool canOverLaid = true)
+            List<string> colors = null, bool canOverLaid = true, 
+            RoiRestrictedTypes restrictedType = RoiRestrictedTypes.None)
         {
             _x = x;
             _y = y;
@@ -158,8 +173,19 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
             }
 
             CanOverLaid = canOverLaid;
+            RestrictedTypes = new List<RoiRestrictedTypes>()
+            { 
+                 RoiRestrictedTypes.None,
+                 RoiRestrictedTypes.X,
+                 RoiRestrictedTypes.Y,
+            };
+
+            _restrictedType = RestrictedTypes.FirstOrDefault(r => r == restrictedType);
+
             Thickness = new RoiThickness(2);
+            Thickness.OnSingleThicknessChanged += OnSingleThicknessChanged;
         }
+
 
         public bool Hit(JPoint point)
         {
@@ -192,6 +218,15 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
 
             OnRoiChanged?.Invoke(this, this);
         }
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                Thickness.OnSingleThicknessChanged -= OnSingleThicknessChanged;
+
+                _disposed = true;
+            }
+        }
 
         private bool Contains(JPoint point)
         {
@@ -208,6 +243,10 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                 "Black", "Yellow", "Crimson", "DeepPink", 
                 "DarkOrange", "LightGreen"
             };
+        }
+        private void OnSingleThicknessChanged(object sender, RoiThickness e)
+        {
+            OnRoiChanged?.Invoke(this, this);
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Windows.Media;
 using System.Windows;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
-using System.Globalization;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
@@ -34,61 +33,48 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var topPen = new Pen(color, topThickness);
                     var rightPen = new Pen(color, rightThickness);
                     var bottomPen = new Pen(color, bottomThickness);
-                    var toleranceRectPen = new Pen(color, 1);
 
                     var leftD = leftPen.Thickness / 2;
-                    var topD = topPen.Thickness / 2 ;
+                    var topD = topPen.Thickness / 2;
                     var rightD = rightPen.Thickness / 2;
-                    var bottomD = bottomPen.Thickness / 2 ;
-                    var toleranceRectD = toleranceRectPen.Thickness / 2;
+                    var bottomD = bottomPen.Thickness / 2;
 
                     var bottomLeft = new Point(roi.X, roi.Y + roi.Height);
                     var topLeft = new Point(roi.X, roi.Y);
                     var topRight = new Point(roi.X + roi.Width, roi.Y);
                     var bottomRight = new Point(roi.X + roi.Width, roi.Y + roi.Height);
 
-                    var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y);
-                    var leftLineEndPoint = new Point(topLeft.X, topLeft.Y);
+                    var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y + bottomD);
+                    var leftLineEndPoint = new Point(topLeft.X, topLeft.Y - topD);
 
                     var topLineStartPoint = new Point(topLeft.X, topLeft.Y);
-                    var topLineEndPoint = new Point(topRight.X , topRight.Y);
+                    var topLineEndPoint = new Point(topRight.X, topRight.Y);
 
-                    var rightLineStartPoint = new Point(topRight.X, topRight.Y);
-                    var rightLineEndPoint = new Point(bottomRight.X, bottomRight.Y);
+                    var rightLineStartPoint = new Point(topRight.X, topRight.Y - topD);
+                    var rightLineEndPoint = new Point(bottomRight.X, bottomRight.Y + bottomD);
 
                     var bottomLineStartPoint = new Point(bottomRight.X, bottomRight.Y);
                     var bottomLineEndPoint = new Point(bottomLeft.X, bottomLeft.Y);
 
-                    var leftGuidelines = new GuidelineSet(new[]
-                    {
-                        leftLineStartPoint.X
-                    }, new[]
-                    {
-                        leftLineStartPoint.Y, leftLineEndPoint.Y,
-                    });
+                    var leftGuidelines = new GuidelineSet();
+                    leftGuidelines.GuidelinesX.Add(leftLineStartPoint.X - leftD);
+                    leftGuidelines.GuidelinesY.Add(leftLineStartPoint.Y);
+                    leftGuidelines.GuidelinesY.Add(leftLineEndPoint.Y);
 
-                    var topGuidelines = new GuidelineSet(new[]
-                    {
-                        topLineStartPoint.X, topLineEndPoint.X
-                    }, new[]
-                    {
-                        topLineStartPoint.Y
-                    });
-                    var rightGuidelines = new GuidelineSet(new[]
-                    {
-                        rightLineStartPoint.X
-                    }, new[]
-                    {
-                        rightLineStartPoint.Y, rightLineEndPoint.Y
-                    });
-                    var bottomGuidelines = new GuidelineSet(new[]
-                    {
-                        bottomLineStartPoint.X, bottomLineEndPoint.X
-                    }, new[]
-                    {
-                        bottomLineStartPoint.Y
-                    });
+                    var topGuidelines = new GuidelineSet();
+                    topGuidelines.GuidelinesX.Add(topLineStartPoint.X);
+                    topGuidelines.GuidelinesX.Add(topLineEndPoint.X);
+                    topGuidelines.GuidelinesY.Add(topLineStartPoint.Y - topD);
 
+                    var rightGuidelines = new GuidelineSet();
+                    rightGuidelines.GuidelinesX.Add(rightLineStartPoint.X + rightD);
+                    rightGuidelines.GuidelinesY.Add(rightLineStartPoint.Y);
+                    rightGuidelines.GuidelinesY.Add(rightLineEndPoint.Y);
+
+                    var bottomGuidelines = new GuidelineSet();
+                    bottomGuidelines.GuidelinesX.Add(bottomLineStartPoint.X);
+                    bottomGuidelines.GuidelinesX.Add(bottomLineEndPoint.X);
+                    bottomGuidelines.GuidelinesY.Add(bottomLineStartPoint.Y + bottomD);
 
                     dc.PushGuidelineSet(leftGuidelines);
                     dc.DrawLine(leftPen, leftLineStartPoint, leftLineEndPoint);
@@ -101,93 +87,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                     dc.PushGuidelineSet(bottomGuidelines);
                     dc.DrawLine(bottomPen, bottomLineStartPoint, bottomLineEndPoint);
-
-                    //tolerance rectangle.
-                    var leftToleranceRectGuidelines = new GuidelineSet(new[]
-                    {
-                        leftLineStartPoint.X
-                    }, new[]
-                    {
-                        bottomLineEndPoint.Y,
-                    });
-
-                    //left
-                    dc.PushGuidelineSet(leftToleranceRectGuidelines);
-                    //todo 如果坐标都已经写成按画笔半径得出的具体坐标，其实就不需要设置 GuidelineSet 了
-                    dc.DrawRectangle(color, toleranceRectPen,
-                        new Rect(new Point(leftLineStartPoint.X - leftD + toleranceRectD, bottomLineEndPoint.Y - toleranceRectD),
-                            new Size(leftD, bottomD)));
-
-                    var topToleranceRectGuidelines = new GuidelineSet(new[]
-                    {
-                        leftLineStartPoint.X
-                    }, new[]
-                    {
-                        topLineStartPoint.Y
-                    });
-
-                    //top
-                    dc.PushGuidelineSet(topToleranceRectGuidelines);
-                    dc.DrawRectangle(color, toleranceRectPen,
-                        new Rect(new Point(leftLineStartPoint.X - leftD + toleranceRectD, topLineStartPoint.Y - topD + toleranceRectD),
-                            new Size(leftD, topD)));
-
-                    var rightToleranceRectGuidelines = new GuidelineSet(new[]
-                    {
-                        topLineEndPoint.X
-                    }, new[]
-                    {
-                        topLineEndPoint.Y
-                    });
-
-                    //right
-                    dc.PushGuidelineSet(rightToleranceRectGuidelines);
-                    dc.DrawRectangle(color, toleranceRectPen,
-                        new Rect(new Point(topLineEndPoint.X - toleranceRectD, topLineEndPoint.Y - topD + toleranceRectD),
-                            new Size(rightD, topD)));
-
-                    var bottomToleranceRectGuidelines = new GuidelineSet(new[]
-                    {
-                        bottomLineStartPoint.X
-                    }, new[]
-                    {
-                        bottomLineStartPoint.Y,
-                    });
-
-                    //bottom
-                    dc.PushGuidelineSet(bottomToleranceRectGuidelines);
-                    dc.DrawRectangle(color, toleranceRectPen,
-                        new Rect(new Point(bottomLineStartPoint.X - toleranceRectD, bottomLineStartPoint.Y - toleranceRectD),
-                            new Size(rightD, bottomD)));
-
-                    if (!string.IsNullOrEmpty(roi.Title))
-                    {
-                        var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                            new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
-                       
-                        var titlePoint = new Point(roi.X, roi.Y + roi.Height + 10);
-                        dc.DrawText(titleText, titlePoint);
-                    }
-
-                    if (roi.ShowRoiValue)
-                    {
-                        var xyValues = $"X:{roi.X} Y:{roi.Y}, W:{roi.Width} H:{roi.Height}";
-
-                        var xyText = new FormattedText(xyValues, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                            new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
-
-                        var xyStartPoint = new Point(roi.X, roi.Y + roi.Height + 10);
-
-                        if (!string.IsNullOrEmpty(roi.Title))
-                        {
-                            var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
-                                new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
-
-                            xyStartPoint.X = xyStartPoint.X + titleText.Width + 4;
-                        }
-
-                        dc.DrawText(xyText, xyStartPoint);
-                    }
                 }
                 catch (Exception e)
                 {
@@ -199,8 +98,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
     public class RoiEditorDrawingVisual : DrawingVisual
     {
-        private readonly Pen _editorPen = new Pen(Brushes.Gray,1);
-        private readonly Pen _clearPen = new Pen(Brushes.Transparent,1);
+        private readonly Pen _editorPen = new Pen(Brushes.Gray, 1);
+        private readonly Pen _clearPen = new Pen(Brushes.Transparent, 1);
         public RoiEditorDrawingVisual()
         {
 
@@ -267,7 +166,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(topRight.X - radius / 2, topRight.Y - radius / 2, radius, radius));
                 dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(leftCenter.X - radius / 2, leftCenter.Y - radius / 2, radius, radius));
                 dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(rightCenter.X - radius / 2, rightCenter.Y - radius / 2, radius, radius));
-                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomLeft.X - radius / 2,bottomLeft.Y - radius / 2, radius, radius));
+                dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomLeft.X - radius / 2, bottomLeft.Y - radius / 2, radius, radius));
                 dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomCenter.X - radius / 2, bottomCenter.Y - radius / 2, radius, radius));
                 dc.DrawRectangle(Brushes.Transparent, _editorPen, new Rect(bottomRight.X - radius / 2, bottomRight.Y - radius / 2, radius, radius));
             }
@@ -276,8 +175,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
         {
             using (DrawingContext dc = this.RenderOpen())
             {
-                dc.DrawRectangle(Brushes.Transparent, _clearPen, 
-                    new Rect(0,0,1,1));
+                dc.DrawRectangle(Brushes.Transparent, _clearPen,
+                    new Rect(0, 0, 1, 1));
             }
         }
     }
@@ -302,7 +201,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
         {
             X = x;
             Y = y;
-            Width = width; 
+            Width = width;
             Height = height;
 
             using (DrawingContext dc = this.RenderOpen())
@@ -348,8 +247,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         public void Reset()
         {
-            X=0; 
-            Y=0;
+            X = 0;
+            Y = 0;
             Width = 0;
             Height = 0;
         }

@@ -27,10 +27,8 @@
                 CanUseRoiCreator="{Binding CanUseRoiCreator}"
                 GlobalRoiThickness="{Binding GlobalRoiThickness}"
                 MaxRoi="{Binding MaxRoi}"
-                RenderOptions.EdgeMode="Aliased"
                 RoiSet="{Binding RoiSet}"
                 Scale="{Binding Scale}"
-                SnapsToDevicePixels="True"
                 Source="{Binding Source}"
                 UseGlobalRoiThickness="{Binding UseGlobalRoiThickness}" />
         </Grid>

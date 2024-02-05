@@ -4,6 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System;
+using System.Windows;
+using Jg.wpf.app.ViewModels;
+using System.Reflection;
 
 namespace Jg.wpf.app.Controls
 {
@@ -79,6 +82,21 @@ namespace Jg.wpf.app.Controls
                 Editor.Source = bitmapSource;
             }
           
+        }
+
+        private void RoiEditorDemo_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is RoiEditorViewModel vm)
+            {
+                var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+                var dpiYProperty = typeof(SystemParameters).GetProperty("Dpi", BindingFlags.NonPublic | BindingFlags.Static);
+
+                var dpiX = (int)dpiXProperty.GetValue(null, null);
+                var dpiY = (int)dpiYProperty.GetValue(null, null);
+
+                var pixelsPerDpi = (float)dpiX / 96;
+                vm.SetDpiScale(pixelsPerDpi);
+            }
         }
     }
 }

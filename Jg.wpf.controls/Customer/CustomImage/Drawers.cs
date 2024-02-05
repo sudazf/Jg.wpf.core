@@ -47,17 +47,18 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y + bottomD);
                     var leftLineEndPoint = new Point(topLeft.X, topLeft.Y - topD);
 
-                    var topLineStartPoint = new Point(topLeft.X, topLeft.Y);
-                    var topLineEndPoint = new Point(topRight.X, topRight.Y);
+                    var topLineStartPoint = new Point(topLeft.X + leftD, topLeft.Y);
+                    var topLineEndPoint = new Point(topRight.X - rightD, topRight.Y);
 
                     var rightLineStartPoint = new Point(topRight.X, topRight.Y - topD);
                     var rightLineEndPoint = new Point(bottomRight.X, bottomRight.Y + bottomD);
 
-                    var bottomLineStartPoint = new Point(bottomRight.X, bottomRight.Y);
-                    var bottomLineEndPoint = new Point(bottomLeft.X, bottomLeft.Y);
+                    var bottomLineStartPoint = new Point(bottomRight.X - rightD, bottomRight.Y);
+                    var bottomLineEndPoint = new Point(bottomLeft.X + leftD, bottomLeft.Y);
 
                     var leftGuidelines = new GuidelineSet();
                     leftGuidelines.GuidelinesX.Add(leftLineStartPoint.X - leftD);
+                    leftGuidelines.GuidelinesX.Add(leftLineStartPoint.X + leftD);
                     leftGuidelines.GuidelinesY.Add(leftLineStartPoint.Y);
                     leftGuidelines.GuidelinesY.Add(leftLineEndPoint.Y);
 
@@ -65,8 +66,10 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     topGuidelines.GuidelinesX.Add(topLineStartPoint.X);
                     topGuidelines.GuidelinesX.Add(topLineEndPoint.X);
                     topGuidelines.GuidelinesY.Add(topLineStartPoint.Y - topD);
+                    topGuidelines.GuidelinesY.Add(topLineStartPoint.Y + topD);
 
                     var rightGuidelines = new GuidelineSet();
+                    rightGuidelines.GuidelinesX.Add(rightLineStartPoint.X - rightD);
                     rightGuidelines.GuidelinesX.Add(rightLineStartPoint.X + rightD);
                     rightGuidelines.GuidelinesY.Add(rightLineStartPoint.Y);
                     rightGuidelines.GuidelinesY.Add(rightLineEndPoint.Y);
@@ -74,19 +77,24 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var bottomGuidelines = new GuidelineSet();
                     bottomGuidelines.GuidelinesX.Add(bottomLineStartPoint.X);
                     bottomGuidelines.GuidelinesX.Add(bottomLineEndPoint.X);
+                    bottomGuidelines.GuidelinesY.Add(bottomLineStartPoint.Y - bottomD);
                     bottomGuidelines.GuidelinesY.Add(bottomLineStartPoint.Y + bottomD);
 
                     dc.PushGuidelineSet(leftGuidelines);
                     dc.DrawLine(leftPen, leftLineStartPoint, leftLineEndPoint);
+                    dc.Pop();
 
                     dc.PushGuidelineSet(topGuidelines);
                     dc.DrawLine(topPen, topLineStartPoint, topLineEndPoint);
+                    dc.Pop();
 
                     dc.PushGuidelineSet(rightGuidelines);
                     dc.DrawLine(rightPen, rightLineStartPoint, rightLineEndPoint);
+                    dc.Pop();
 
                     dc.PushGuidelineSet(bottomGuidelines);
                     dc.DrawLine(bottomPen, bottomLineStartPoint, bottomLineEndPoint);
+                    dc.Pop();
                 }
                 catch (Exception e)
                 {

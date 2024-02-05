@@ -41,8 +41,6 @@ namespace Jg.wpf.controls.Customer.CustomImage
             }
 
             Point point = e.GetPosition(this);
-            point.X = (int)point.X;
-            point.Y = (int)point.Y;
 
             if (_isInCreating && CanUseRoiCreator)
             {
@@ -147,7 +145,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     this.Cursor = Cursors.Arrow;
             }
 
-            int x, y, width, height, offSetX, offSetY;
+            double x, y, width, height, offSetX, offSetY;
             bool overlaid = false;
             switch (_operate)
             {
@@ -156,8 +154,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 case OperateType.TopLeftDrag:
                     topLeft = CoerceTopLeft(point, this);
 
-                    x = (int)topLeft.X;
-                    y = (int)topLeft.Y;
+                    x = topLeft.X;
+                    y = topLeft.Y;
                     offSetX = x - _hitRoi.X;
                     offSetY = y - _hitRoi.Y;
 
@@ -176,11 +174,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                     topLeft = new Point(topLeft.X, point.Y);
 
-                    x = (int)topLeft.X;
-                    y = (int)topLeft.Y;
+                    x = topLeft.X;
+                    y = topLeft.Y;
 
-                    width = (int)bottomRight.X - (int)topLeft.X;
-                    height = (int)bottomRight.Y - (int)topLeft.Y;
+                    width = bottomRight.X - topLeft.X;
+                    height = bottomRight.Y - topLeft.Y;
 
                     overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                     if (!overlaid)
@@ -195,11 +193,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     topLeft = new Point(topLeft.X, point.Y);
                     bottomRight = new Point(point.X, bottomRight.Y);
 
-                    x = (int)topLeft.X;
-                    y = (int)topLeft.Y;
+                    x = topLeft.X;
+                    y = topLeft.Y;
 
-                    width = (int)bottomRight.X - (int)topLeft.X;
-                    height = (int)bottomRight.Y - (int)topLeft.Y;
+                    width = bottomRight.X - topLeft.X;
+                    height =bottomRight.Y - topLeft.Y;
 
                     overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                     if (!overlaid)
@@ -212,11 +210,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     point = CoerceLeftCenter(point, this);
                     topLeft = new Point(point.X, topLeft.Y);
 
-                    x = (int)topLeft.X;
-                    y = (int)topLeft.Y;
+                    x = topLeft.X;
+                    y = topLeft.Y;
 
-                    width = (int)bottomRight.X - (int)topLeft.X;
-                    height = (int)bottomRight.Y - (int)topLeft.Y;
+                    width = bottomRight.X - topLeft.X;
+                    height = bottomRight.Y - topLeft.Y;
 
                     overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                     if (!overlaid)
@@ -241,11 +239,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     topLeft = CoerceTopLeft(new Point(topLeft.X + xOffset, topLeft.Y + yOffset), this);
                     bottomRight = CoerceBottomRight(new Point(bottomRight.X + xOffset, bottomRight.Y + yOffset), this);
 
-                    x = (int)topLeft.X;
-                    y = (int)topLeft.Y;
+                    x = topLeft.X;
+                    y = topLeft.Y;
 
-                    width = (int)bottomRight.X - (int)topLeft.X;
-                    height = (int)bottomRight.Y - (int)topLeft.Y;
+                    width = bottomRight.X - topLeft.X;
+                    height = bottomRight.Y - topLeft.Y;
 
                     overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                     if (!overlaid)
@@ -258,11 +256,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     point = CoerceRightCenter(point, this);
                     bottomRight = new Point(point.X, bottomRight.Y);
 
-                    x = (int)topLeft.X;
-                    y = (int)topLeft.Y;
+                    x = topLeft.X;
+                    y = topLeft.Y;
 
-                    width = (int)bottomRight.X - (int)topLeft.X;
-                    height = (int)bottomRight.Y - (int)topLeft.Y;
+                    width = bottomRight.X - topLeft.X;
+                    height = bottomRight.Y - topLeft.Y;
 
                     overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                     if (!overlaid)
@@ -276,11 +274,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     topLeft = new Point(point.X, topLeft.Y);
                     bottomRight = new Point(bottomRight.X, point.Y);
 
-                    x = (int)topLeft.X;
-                    y = (int)topLeft.Y;
+                    x = topLeft.X;
+                    y = topLeft.Y;
 
-                    width = (int)bottomRight.X - (int)topLeft.X;
-                    height = (int)bottomRight.Y - (int)topLeft.Y;
+                    width = bottomRight.X - topLeft.X;
+                    height = bottomRight.Y - topLeft.Y;
 
                     overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                     if (!overlaid)
@@ -293,11 +291,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     point = CoerceBottomCenter(point, this);
                     bottomRight = new Point(bottomRight.X, point.Y);
 
-                    x = (int)topLeft.X;
-                    y = (int)topLeft.Y;
+                    x = topLeft.X;
+                    y = topLeft.Y;
 
-                    width = (int)bottomRight.X - (int)topLeft.X;
-                    height = (int)bottomRight.Y - (int)topLeft.Y;
+                    width = bottomRight.X - topLeft.X;
+                    height = bottomRight.Y - topLeft.Y;
 
                     overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                     if (!overlaid)
@@ -310,8 +308,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     point = CoerceBottomRight(point, this);
                     x = _hitRoi.X;
                     y = _hitRoi.Y;
-                    offSetX = (int)point.X - (_hitRoi.X + _hitRoi.Width);
-                    offSetY = (int)point.Y - (_hitRoi.Y + _hitRoi.Height);
+                    offSetX = point.X - (_hitRoi.X + _hitRoi.Width);
+                    offSetY = point.Y - (_hitRoi.Y + _hitRoi.Height);
 
                     width = _hitRoi.Width + offSetX;
                     height = _hitRoi.Height + offSetY;
@@ -348,19 +346,21 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
             base.OnMouseWheel(e);
             Point point = e.GetPosition(this);
-            point.X = (int)point.X;
-            point.Y = (int)point.Y;
 
             if (HitCenterTest(point))
             {
                 double offset;
                 if (e.Delta > 0)
-                    offset = -1;
+                {
+                    offset = -1 / _pixelsPerDpi;
+                }
                 else
-                    offset = 1;
+                {
+                    offset = 1 / _pixelsPerDpi;
+                }
 
                 var topLeft = new Point(_hitRoi.X + offset, _hitRoi.Y + offset);
-                var bottomRight = new Point(_hitRoi.X + _hitRoi.Width - offset, _hitRoi.Y +_hitRoi.Height - offset);
+                var bottomRight = new Point(_hitRoi.X + _hitRoi.Width - offset, _hitRoi.Y + _hitRoi.Height - offset);
 
                 switch (_hitRoi.RestrictedType)
                 {
@@ -386,11 +386,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 }
 
 
-                var x = (int)topLeft.X;
-                var y = (int)topLeft.Y;
+                var x = topLeft.X;
+                var y = topLeft.Y;
 
-                var width = (int)bottomRight.X - (int)topLeft.X;
-                var height = (int)bottomRight.Y - (int)topLeft.Y;
+                var width = bottomRight.X - topLeft.X;
+                var height = bottomRight.Y - topLeft.Y;
 
                 var overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                 if (!overlaid)
@@ -472,7 +472,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     //overlaid check
                     foreach (var roi in RoiSet)
                     {
-                        var existRectangle = new Rectangle(roi.X, roi.Y, roi.Width, roi.Height);
+                        var existRectangle = new Rectangle((int)roi.X, (int)roi.Y, (int)roi.Width, (int)roi.Height);
                         overlaid = !Rectangle.Intersect(newRect, existRectangle).IsEmpty;
                         if (overlaid)
                         {
@@ -520,7 +520,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     if (_hitRoi.Y > 0)
                     {
-                        var newY = _hitRoi.Y - 1;
+                        var newY = _hitRoi.Y - 1 / _pixelsPerDpi;
                         overlaid = OverLaidCheck(_hitRoi.X, newY, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
                         if (!overlaid)
                         {
@@ -537,7 +537,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     if (_hitRoi.Y + _hitRoi.Height < ActualHeight)
                     {
-                        var newY = _hitRoi.Y + 1;
+                        var newY = _hitRoi.Y + 1 / _pixelsPerDpi;
                         overlaid = OverLaidCheck(_hitRoi.X, newY, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
                         if (!overlaid)
                         {
@@ -554,7 +554,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     if (_hitRoi.X > 0)
                     {
-                        var newX = _hitRoi.X - 1;
+                        var newX = _hitRoi.X - 1 / _pixelsPerDpi;
                         overlaid = OverLaidCheck(newX, _hitRoi.Y, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
                         if (!overlaid)
                         {
@@ -571,7 +571,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     if (_hitRoi.X + _hitRoi.Width < ActualWidth)
                     {
-                        var newX = _hitRoi.X + 1;
+                        var newX = _hitRoi.X + 1 / _pixelsPerDpi;
                         overlaid = OverLaidCheck(newX, _hitRoi.Y, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
                         if (!overlaid)
                         {
@@ -821,7 +821,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
             }
         }
 
-        private bool OverLaidCheck(int x, int y, int width, int height, bool allowOverlaid)
+        private bool OverLaidCheck(double x, double y, double width, double height, bool allowOverlaid)
         {
             if (allowOverlaid && AllowOverLaid)
             {
@@ -830,13 +830,13 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
             bool overlaidResult = false;
 
-            var newRect = new Rectangle(x, y, width, height);
+            var newRect = new Rectangle((int)x, (int)y, (int)width, (int)height);
 
             //overlaid check
             int overlaidTimes = 0;
             foreach (var roi in RoiSet)
             {
-                var existRectangle = new Rectangle(roi.X, roi.Y, roi.Width, roi.Height);
+                var existRectangle = new Rectangle((int)roi.X, (int)roi.Y, (int)roi.Width, (int)roi.Height);
                 var overlaid = !Rectangle.Intersect(newRect, existRectangle).IsEmpty;
                 if (overlaid)
                 {

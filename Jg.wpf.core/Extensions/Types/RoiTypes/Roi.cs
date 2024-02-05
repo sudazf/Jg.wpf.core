@@ -7,59 +7,59 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
 {
     public class Roi : ViewModelBase, IDisposable
     {
-        private int _x;
-        private int _y;
-        private int _width;
-        private int _height;
+        private double _x;
+        private double _y;
+        private double _width;
+        private double _height;
         private bool _show;
         private string _title;
         private bool _showRoiValue;
         private string _color;
         private RoiThickness _thickness;
         private bool _disposed;
-        private RoiRestrictedTypes _restrictedType = RoiRestrictedTypes.None;
+        private RoiRestrictedTypes _restrictedType;
 
         public event EventHandler<Roi> OnRoiChanged;
 
-        public int X
+        public double X
         {
             get => _x;
             set
             {
-                if (value == _x) return;
+                if (Math.Abs(value - _x) < 0.00001) return;
                 _x = value;
                 OnRoiChanged?.Invoke(this, this);
                 RaisePropertyChanged(nameof(X));
             }
         }
-        public int Y
+        public double Y
         {
             get => _y;
             set
             {
-                if (value == _y) return;
+                if (Math.Abs(value - _y) < 0.00001) return;
                 _y = value;
                 OnRoiChanged?.Invoke(this, this);
                 RaisePropertyChanged(nameof(Y));
             }
         }
-        public int Width
+        public double Width
         {
             get => _width;
             set
             {
-                if (value == _width) return;
+                if (Math.Abs(value - _width) < 0.00001) return;
                 _width = value;
                 OnRoiChanged?.Invoke(this, this);
                 RaisePropertyChanged(nameof(Width));
             }
         }
-        public int Height
+        public double Height
         {
             get => _height;
             set
             {
-                if (value == _height) return;
+                if (Math.Abs(value - _height) < 0.00001) return;
                 _height = value;
                 OnRoiChanged?.Invoke(this, this);
                 RaisePropertyChanged(nameof(Height));
@@ -137,7 +137,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         public IList<RoiRestrictedTypes> RestrictedTypes { get; set; }
         
 
-        public Roi(int x, int y, int width, int height, 
+        public Roi(double x, double y, double width, double height, 
             string color, bool show = true, string title = null, bool showRoiValue = true,
             List<string> colors = null, bool canOverLaid = true, 
             RoiRestrictedTypes restrictedType = RoiRestrictedTypes.None)
@@ -191,7 +191,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         {
             return Contains(point) && Show;
         }
-        public void Update(int x, int y, int width, int height)
+        public void Update(double x, double y, double width, double height)
         {
             switch (RestrictedType)
             {

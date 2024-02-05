@@ -17,6 +17,7 @@ namespace Jg.wpf.app.ViewModels
         private int _maxRoi = 10;
         private bool _useGlobalRoiThickness;
         private RoiThickness _globalThickness;
+        private float _pixelsPerDpi;
 
         public bool AllowOverLaid
         {
@@ -111,7 +112,7 @@ namespace Jg.wpf.app.ViewModels
             _zoom = 1;
             _rois = new MyObservableCollection<Roi>();
 
-            _globalThickness = new RoiThickness(4);
+            _globalThickness = new RoiThickness(2);
             _globalThickness.OnSingleThicknessChanged += OnSingleThicknessChanged;
 
             _useGlobalRoiThickness = true;
@@ -175,9 +176,16 @@ namespace Jg.wpf.app.ViewModels
         {
             Rois.ClearEx();
 
-            var roi1 = new Roi(25, 48, 227, 185, "Yellow", title: "1,");
-            var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "2,", restrictedType: RoiRestrictedTypes.X);
-            var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "3,", restrictedType: RoiRestrictedTypes.Y);
+            var scale = 1 / _pixelsPerDpi;
+
+            var roi1 = new Roi(25 * scale, 48 * scale, 227 * scale, 185 * scale, "Yellow", title: "1,");
+            var roi2 = new Roi(270 * scale, 46 * scale, 240 * scale, 182 * scale, "LightGreen", title: "2,", restrictedType: RoiRestrictedTypes.X);
+            var roi3 = new Roi(30 * scale, 415 * scale, 486 * scale, 140 * scale, "DeepPink", title: "3,", restrictedType: RoiRestrictedTypes.Y);
+
+
+            //var roi1 = new Roi(30 * scale, 60 * scale, 300 * scale, 230 * scale, "Yellow", title: "1,");
+            //var roi2 = new Roi(340 * scale, 60 * scale, 300 * scale, 230 * scale, "LightGreen", title: "2,", restrictedType: RoiRestrictedTypes.X);
+            //var roi3 = new Roi(40 * scale, 520 * scale, 610 * scale, 175 * scale, "DeepPink", title: "3,", restrictedType: RoiRestrictedTypes.Y);
 
             Rois.Add(roi1);
             Rois.Add(roi2);
@@ -192,6 +200,11 @@ namespace Jg.wpf.app.ViewModels
         private void OnSingleThicknessChanged(object sender, RoiThickness e)
         {
             RaisePropertyChanged(nameof(GlobalThickness));
+        }
+
+        public void SetDpiScale(float pixelsPerDpi)
+        {
+            _pixelsPerDpi = pixelsPerDpi;
         }
     }
 }

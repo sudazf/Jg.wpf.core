@@ -53,7 +53,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                     if (creatorWidth > 0 && creatorHeight > 0)
                     {
-                        _creatorDrawingVisual.DrawCreator((int)_startPoint.X, (int)_startPoint.Y, (int)creatorWidth, (int)creatorHeight, "Red", 1);
+                        _creatorDrawingVisual.DrawCreator(_startPoint.X, _startPoint.Y, creatorWidth, creatorHeight, "Red", 1);
                     }
                 }
             }
@@ -197,7 +197,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     y = topLeft.Y;
 
                     width = bottomRight.X - topLeft.X;
-                    height =bottomRight.Y - topLeft.Y;
+                    height = bottomRight.Y - topLeft.Y;
 
                     overlaid = OverLaidCheck(x, y, width, height, _hitRoi.CanOverLaid);
                     if (!overlaid)
@@ -352,11 +352,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 double offset;
                 if (e.Delta > 0)
                 {
-                    offset = -1 / _pixelsPerDpi;
+                    offset = -1;
                 }
                 else
                 {
-                    offset = 1 / _pixelsPerDpi;
+                    offset = 1;
                 }
 
                 var topLeft = new Point(_hitRoi.X + offset, _hitRoi.Y + offset);
@@ -459,14 +459,14 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 {
                     _creatorDrawingVisual.Clear();
 
-                    int x, y , width, height;
+                    double x, y , width, height;
                     x = _creatorDrawingVisual.X;
                     y = _creatorDrawingVisual.Y;
                     width = _creatorDrawingVisual.Width;
                     height = _creatorDrawingVisual.Height;
 
                     var newRoi = new Roi(x, y, width, height, DefaultRoiColor);
-                    var newRect = new Rectangle(x, y, width, height);
+                    var newRect = new Rectangle((int)x, (int)y, (int)width, (int)height);
                     bool overlaid = false;
 
                     //overlaid check
@@ -520,7 +520,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     if (_hitRoi.Y > 0)
                     {
-                        var newY = _hitRoi.Y - 1 / _pixelsPerDpi;
+                        var newY = _hitRoi.Y - 1;
                         overlaid = OverLaidCheck(_hitRoi.X, newY, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
                         if (!overlaid)
                         {
@@ -537,7 +537,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     if (_hitRoi.Y + _hitRoi.Height < ActualHeight)
                     {
-                        var newY = _hitRoi.Y + 1 / _pixelsPerDpi;
+                        var newY = _hitRoi.Y + 1;
                         overlaid = OverLaidCheck(_hitRoi.X, newY, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
                         if (!overlaid)
                         {
@@ -554,7 +554,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     if (_hitRoi.X > 0)
                     {
-                        var newX = _hitRoi.X - 1 / _pixelsPerDpi;
+                        var newX = _hitRoi.X - 1;
                         overlaid = OverLaidCheck(newX, _hitRoi.Y, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
                         if (!overlaid)
                         {
@@ -571,7 +571,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     }
                     if (_hitRoi.X + _hitRoi.Width < ActualWidth)
                     {
-                        var newX = _hitRoi.X + 1 / _pixelsPerDpi;
+                        var newX = _hitRoi.X + 1;
                         overlaid = OverLaidCheck(newX, _hitRoi.Y, _hitRoi.Width, _hitRoi.Height, _hitRoi.CanOverLaid);
                         if (!overlaid)
                         {

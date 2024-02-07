@@ -135,7 +135,6 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         public List<string> Colors { get; private set; }
         public bool CanOverLaid { get; set; }
         public IList<RoiRestrictedTypes> RestrictedTypes { get; set; }
-        
 
         public Roi(double x, double y, double width, double height, 
             string color, bool show = true, string title = null, bool showRoiValue = true,
@@ -210,13 +209,19 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
                     _width = width;
                     break;
             }
+    
+
+            OnRoiChanged?.Invoke(this, this);
+
+            _x = Math.Round(_x);
+            _y = Math.Round(_y);
+            _width = Math.Round(_width);
+            _height = Math.Round(_height);
 
             RaisePropertyChanged(nameof(X));
             RaisePropertyChanged(nameof(Y));
             RaisePropertyChanged(nameof(Width));
             RaisePropertyChanged(nameof(Height));
-
-            OnRoiChanged?.Invoke(this, this);
         }
         public void Dispose()
         {

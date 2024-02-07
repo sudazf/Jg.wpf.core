@@ -2,15 +2,24 @@
 using System.Windows.Media;
 using System.Windows;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
+using System.Reflection;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
     public class RoiDrawingVisual : DrawingVisual
     {
         private readonly BrushConverter _brushConverter = new BrushConverter();
-
+        private readonly float _physicPixel;
         public RoiDrawingVisual()
         {
+            var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+            var dpiYProperty = typeof(SystemParameters).GetProperty("Dpi", BindingFlags.NonPublic | BindingFlags.Static);
+
+            var dpiX = (int)dpiXProperty.GetValue(null, null);
+            var dpiY = (int)dpiYProperty.GetValue(null, null);
+
+            var pixelsPerDpi = (float)dpiX / 96;
+            _physicPixel = 1 / pixelsPerDpi;
         }
 
         public void DrawRoi(Roi roi, double scale, Thickness thickness)
@@ -23,6 +32,30 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var topThickness = thickness.Top;
                     var rightThickness = thickness.Right;
                     var bottomThickness = thickness.Bottom;
+                    if (leftThickness % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(leftThickness / _physicPixel);
+                        leftThickness = intScale * _physicPixel;
+                        //Console.WriteLine($"leftThickness adjust from {thickness.Left} to {leftThickness}");
+                    }
+                    if (topThickness % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(topThickness / _physicPixel);
+                        topThickness = intScale * _physicPixel;
+                        //Console.WriteLine($"topThickness adjust from {thickness.Top} to {topThickness}");
+                    }
+                    if (rightThickness % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(rightThickness / _physicPixel);
+                        rightThickness = intScale * _physicPixel;
+                        //Console.WriteLine($"rightThickness adjust from {thickness.Right} to {rightThickness}");
+                    }
+                    if (bottomThickness % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(bottomThickness / _physicPixel);
+                        bottomThickness = intScale * _physicPixel;
+                        //Console.WriteLine($"bottomThickness adjust from {thickness.Bottom} to {bottomThickness}");
+                    }
 
                     var emSize = 14 / scale;
                     emSize = Math.Round(emSize, 1);
@@ -39,11 +72,41 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     var rightD = rightPen.Thickness / 2;
                     var bottomD = bottomPen.Thickness / 2;
 
-                    var bottomLeft = new Point(roi.X, roi.Y + roi.Height);
-                    var topLeft = new Point(roi.X, roi.Y);
-                    var topRight = new Point(roi.X + roi.Width, roi.Y);
-                    var bottomRight = new Point(roi.X + roi.Width, roi.Y + roi.Height);
+                    var x = roi.X;
+                    var y = roi.Y;
+                    var w = roi.Width;
+                    var h = roi.Height;
 
+                    if (x % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(x / _physicPixel);
+                        x = intScale * _physicPixel;
+                        //Console.WriteLine($"X adjust from {roi.X} to {x}");
+                    }
+                    if (y % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(y / _physicPixel);
+                        y = intScale * _physicPixel;
+                        //Console.WriteLine($"Y adjust from {roi.Y} to {y}");
+                    }
+                    if (w % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(w / _physicPixel);
+                        w = intScale * _physicPixel;
+                        //Console.WriteLine($"Width adjust from {roi.Width} to {w}");
+                    }
+                    if (h % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(h / _physicPixel);
+                        h = intScale * _physicPixel;
+                        //Console.WriteLine($"Height adjust from {roi.Height} to {h}");
+                    }
+
+                    var bottomLeft = new Point(x, y + h);
+                    var topLeft = new Point(x, y);
+                    var topRight = new Point(x + w, y);
+                    var bottomRight = new Point(x + w, y + h);
+        
                     var leftLineStartPoint = new Point(bottomLeft.X, bottomLeft.Y + bottomD);
                     var leftLineEndPoint = new Point(topLeft.X, topLeft.Y - topD);
 
@@ -108,9 +171,17 @@ namespace Jg.wpf.controls.Customer.CustomImage
     {
         private readonly Pen _editorPen = new Pen(Brushes.Gray, 1);
         private readonly Pen _clearPen = new Pen(Brushes.Transparent, 1);
+        private readonly float _physicPixel;
         public RoiEditorDrawingVisual()
         {
+            var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+            var dpiYProperty = typeof(SystemParameters).GetProperty("Dpi", BindingFlags.NonPublic | BindingFlags.Static);
 
+            var dpiX = (int)dpiXProperty.GetValue(null, null);
+            var dpiY = (int)dpiYProperty.GetValue(null, null);
+
+            var pixelsPerDpi = (float)dpiX / 96;
+            _physicPixel = 1 / pixelsPerDpi;
         }
 
         public void DrawEditor(Roi hitRoi, double scale)
@@ -128,6 +199,13 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 {
                     thickness = 10;
                 }
+
+                if (thickness % _physicPixel != 0)
+                {
+                    var intScale = Math.Round(thickness / _physicPixel);
+                    thickness = intScale * _physicPixel;
+                }
+
                 _editorPen.Thickness = thickness;
 
                 var topLeft = new Point(hitRoi.X, hitRoi.Y);
@@ -193,19 +271,26 @@ namespace Jg.wpf.controls.Customer.CustomImage
     {
         private readonly BrushConverter _brushConverter = new BrushConverter();
         private readonly Pen _clearPen = new Pen(Brushes.Transparent, 1);
+        private readonly float _physicPixel;
 
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-
+        public double X { get; private set; }
+        public double Y { get; private set; }
+        public double Width { get; private set; }
+        public double Height { get; private set; }
 
         public RoiCreatorDrawingVisual()
         {
+            var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+            var dpiYProperty = typeof(SystemParameters).GetProperty("Dpi", BindingFlags.NonPublic | BindingFlags.Static);
 
+            var dpiX = (int)dpiXProperty.GetValue(null, null);
+            var dpiY = (int)dpiYProperty.GetValue(null, null);
+
+            var pixelsPerDpi = (float)dpiX / 96;
+            _physicPixel = 1 / pixelsPerDpi;
         }
 
-        public void DrawCreator(int x, int y, int width, int height, string stringColor, float thickness)
+        public void DrawCreator(double x, double y, double width, double height, string stringColor, float thickness)
         {
             X = x;
             Y = y;
@@ -225,17 +310,51 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         thickness = 10;
                     }
 
+                    double penThickness = thickness;
+                    if (penThickness % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(penThickness / _physicPixel);
+                        penThickness = intScale * _physicPixel;
+                    }
+
+                    if (X % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(X / _physicPixel);
+                        X = intScale * _physicPixel;
+                    }
+                    if (Y % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(Y / _physicPixel);
+                        Y = intScale * _physicPixel;
+                    }
+                    if (Width % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(Width / _physicPixel);
+                        Width = intScale * _physicPixel;
+                    }
+                    if (Height % _physicPixel != 0)
+                    {
+                        var intScale = Math.Round(Height / _physicPixel);
+                        Height = intScale * _physicPixel;
+                    }
+
                     var color = (SolidColorBrush)_brushConverter.ConvertFromString(stringColor);
-                    var pen = new Pen(color, thickness);
-                    var topLeft = new Point(x, y);
-                    var bottomRight = new Point(x + width, y + height);
+                    var pen = new Pen(color, penThickness);
+                    var topLeft = new Point(X, Y);
+                    var bottomRight = new Point(X + Width, Y + Height);
 
                     var d = pen.Thickness / 2;
-                    var guidelines = new GuidelineSet(new[] { d }, new[] { d });
+                    var guidelines = new GuidelineSet(new[]
+                    {
+                        X - d, X + d, X + Width - d, X + Width + d
+                    }, new[]
+                    {
+                        Y - d, Y + d, Y + Height - d, Y + Height + d
+                    });
                     dc.PushGuidelineSet(guidelines);
-
                     dc.DrawRectangle(Brushes.Transparent, pen,
                         new Rect(topLeft, bottomRight));
+                    dc.Pop();
                 }
                 catch (Exception e)
                 {

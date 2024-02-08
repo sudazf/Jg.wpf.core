@@ -120,13 +120,14 @@ namespace Jg.wpf.app.ViewModels
         public JCommand DecreaseZoomCommand { get; }
         public JCommand IncreaseAngleCommand { get; }
         public JCommand DecreaseAngleCommand { get; }
+        public JCommand DeleteRoiCommand { get; }
         
         public RoiEditorViewModel()
         {
             _zoom = 1;
             _rois = new MyObservableCollection<Roi>();
 
-            _globalThickness = new RoiThickness(2);
+            _globalThickness = new RoiThickness(1);
             _globalThickness.OnSingleThicknessChanged += OnSingleThicknessChanged;
 
             _useGlobalRoiThickness = true;
@@ -137,14 +138,17 @@ namespace Jg.wpf.app.ViewModels
             IncreaseAngleCommand = new JCommand("IncreaseAngleCommand", OnIncreaseAngle);
             DecreaseAngleCommand = new JCommand("DecreaseAngleCommand", OnDecreaseAngle);
             ClearRoisCommand = new JCommand("ClearRoisCommand", OnClearAllRoi);
+            DeleteRoiCommand = new JCommand("DeleteRoiCommand", OnDeleteRoi);
         }
 
-
+        public void SetDpiScale(float pixelsPerDpi)
+        {
+            _pixelsPerDpi = pixelsPerDpi;
+        }
         public void AddRoi(Roi newRoi)
         {
             Rois.Add(newRoi);
         }
-
         public void RemoveRoi(Roi oldRoi)
         {
             var exist = Rois.FirstOrDefault(r => r.X == oldRoi.X && r.Y == oldRoi.Y &&
@@ -160,12 +164,10 @@ namespace Jg.wpf.app.ViewModels
         {
             Angle += 5;
         }
-
         private void OnDecreaseAngle(object obj)
         {
             Angle -= 5;
         }
-
         private void OnIncreaseZoom(object obj)
         {
             var unformatZoom = _zoom + 0.1;
@@ -175,7 +177,6 @@ namespace Jg.wpf.app.ViewModels
             }
             Zoom = Math.Round(unformatZoom, 1);
         }
-
         private void OnDecreaseZoom(object obj)
         {
             var unformatZoom = _zoom - 0.1;
@@ -190,28 +191,26 @@ namespace Jg.wpf.app.ViewModels
         {
             Rois.ClearEx();
 
-            var roi1 = new Roi(25, 48, 227, 185, "Yellow", title: "1,");
-            var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "2,", restrictedType: RoiRestrictedTypes.X);
-            var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "3,", restrictedType: RoiRestrictedTypes.Y);
+            var roi1 = new Roi(25, 48, 227, 185, "Yellow", title: "Title1,");
+            var roi2 = new Roi(270, 46, 240, 182, "LightGreen", title: "Title2,", restrictedType: RoiRestrictedTypes.X);
+            var roi3 = new Roi(30, 415, 486, 140, "DeepPink", title: "Title3,", restrictedType: RoiRestrictedTypes.Y);
 
             Rois.Add(roi1);
             Rois.Add(roi2);
             Rois.Add(roi3);
         }
-
         private void OnClearAllRoi(object obj)
         {
             Rois.ClearEx();
+        }
+        private void OnDeleteRoi(object obj)
+        {
+            SelectedRoi.Show = false;
         }
 
         private void OnSingleThicknessChanged(object sender, RoiThickness e)
         {
             RaisePropertyChanged(nameof(GlobalThickness));
-        }
-
-        public void SetDpiScale(float pixelsPerDpi)
-        {
-            _pixelsPerDpi = pixelsPerDpi;
         }
     }
 }

@@ -305,6 +305,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
         public double Width { get; private set; }
         public double Height { get; private set; }
 
+        public double OriginX { get; private set; }
+        public double OriginY { get; private set; }
+        public double OriginWidth { get; private set; }
+        public double OriginHeight { get; private set; }
+
         public RoiCreatorDrawingVisual()
         {
             var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
@@ -319,6 +324,11 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         public void DrawCreator(double x, double y, double width, double height, string stringColor, float thickness)
         {
+            OriginX = x; 
+            OriginY = y;
+            OriginWidth = width;
+            OriginHeight = height;
+
             X = x;
             Y = y;
             Width = width;

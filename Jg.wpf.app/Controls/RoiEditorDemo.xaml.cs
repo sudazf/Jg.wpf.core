@@ -96,7 +96,14 @@ namespace Jg.wpf.app.Controls
 
                 var pixelsPerDpi = (float)dpiX / 96;
                 vm.SetDpiScale(pixelsPerDpi);
+
+                Editor.OnOverMaxRoi += OnOverMaxRoi;
             }
+        }
+
+        private void OnOverMaxRoi(object sender, EventArgs e)
+        {
+            MessageBox.Show("不得超过最大ROI设置数。", "系统提示", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

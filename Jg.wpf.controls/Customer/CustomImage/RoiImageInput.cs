@@ -63,7 +63,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
                     if (creatorWidth > 0 && creatorHeight > 0)
                     {
-                        _creatorDrawingVisual.DrawCreator(_startPoint.X, _startPoint.Y, creatorWidth, creatorHeight, "Red", 1);
+                        _creatorDrawingVisual.DrawCreator((int)_startPoint.X, (int)_startPoint.Y, (int)creatorWidth, (int)creatorHeight, "Red", 1);
                     }
                 }
             }
@@ -471,10 +471,12 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     _creatorDrawingVisual.Clear();
 
                     double x, y , width, height;
-                    x = _creatorDrawingVisual.X;
-                    y = _creatorDrawingVisual.Y;
-                    width = _creatorDrawingVisual.Width;
-                    height = _creatorDrawingVisual.Height;
+
+                    //保持Creator和最终绘制位置一致
+                    x = _creatorDrawingVisual.OriginX;
+                    y = _creatorDrawingVisual.OriginY;
+                    width = _creatorDrawingVisual.OriginWidth;
+                    height = _creatorDrawingVisual.OriginHeight;
 
                     var newRoi = new Roi(x, y, width, height, DefaultRoiColor);
                     var newRect = new Rectangle((int)x, (int)y, (int)width, (int)height);

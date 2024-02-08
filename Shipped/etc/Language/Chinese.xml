@@ -3,7 +3,7 @@
 	<LocaleItem key="ShowDemoInWindow">在窗体中显示</LocaleItem>
 	
 	<LocaleItem key="NoRestrict">无限制</LocaleItem>
-	<LocaleItem key="RestrictX">限制X</LocaleItem>
-	<LocaleItem key="RestrictY">限制Y</LocaleItem>
+	<LocaleItem key="RestrictX">限制X方向移动</LocaleItem>
+	<LocaleItem key="RestrictY">限制Y方向移动</LocaleItem>
 	
 </ArrayOfLocaleItem>

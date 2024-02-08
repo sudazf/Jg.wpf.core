@@ -22,6 +22,19 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 new FrameworkPropertyMetadata(null,
                     OnRoiSetPropertyChanged));
 
+        public Roi SelectedRoi
+        {
+            get => (Roi)GetValue(SelectedRoiProperty);
+            set => SetValue(SelectedRoiProperty, value);
+        }
+
+        public static readonly DependencyProperty SelectedRoiProperty =
+            DependencyProperty.Register(nameof(SelectedRoi),
+                typeof(Roi), typeof(RoiImage),
+                new FrameworkPropertyMetadata(
+                    null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
         public double Scale
         {
             get => (double)GetValue(ScaleProperty);
@@ -154,7 +167,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         if (image._hitRoi != null)
                         {
                             image._editorDrawingVisual.ClearEditor();
-                            image._hitRoi = null;
+                            image.HitRoi = null;
                         }
                     }
                 }
@@ -230,7 +243,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 if (image._hitRoi != null)
                 {
                     image._editorDrawingVisual.ClearEditor();
-                    image._hitRoi = null;
+                    image.HitRoi = null;
                 }
             }
 
@@ -326,7 +339,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                             if (roi == _hitRoi)
                             {
                                 _editorDrawingVisual.ClearEditor();
-                                _hitRoi = null;
+                                HitRoi = null;
                             }
                         }
                     }
@@ -343,7 +356,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     if (_hitRoi != null)
                     {
                         _editorDrawingVisual.ClearEditor();
-                        _hitRoi = null;
+                        HitRoi = null;
                     }
                     break;
             }
@@ -409,7 +422,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
                         if (roi == _hitRoi)
                         {
                             _editorDrawingVisual.ClearEditor();
-                            _hitRoi = null;
+                            HitRoi = null;
                         }
                     }
                 }

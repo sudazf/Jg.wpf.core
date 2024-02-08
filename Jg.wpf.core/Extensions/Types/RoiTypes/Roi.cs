@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Jg.wpf.core.Utility;
 
 namespace Jg.wpf.core.Extensions.Types.RoiTypes
 {
@@ -242,12 +243,7 @@ namespace Jg.wpf.core.Extensions.Types.RoiTypes
         }
         private void ProvideDefaultColors()
         {
-            Colors = new List<string>
-            {
-                "Red", "Green", "Blue", "White", 
-                "Black", "Yellow", "Crimson", "DeepPink", 
-                "DarkOrange", "LightGreen"
-            };
+            Colors = (List<string>)JColorHelper.GetSysColors();
         }
         private void OnSingleThicknessChanged(object sender, RoiThickness e)
         {

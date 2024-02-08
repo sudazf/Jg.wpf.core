@@ -3,6 +3,7 @@ using System.Windows.Media;
 using System.Windows;
 using Jg.wpf.core.Extensions.Types.RoiTypes;
 using System.Reflection;
+using System.Globalization;
 
 namespace Jg.wpf.controls.Customer.CustomImage
 {
@@ -36,25 +37,21 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     {
                         var intScale = Math.Round(leftThickness / _physicPixel);
                         leftThickness = intScale * _physicPixel;
-                        //Console.WriteLine($"leftThickness adjust from {thickness.Left} to {leftThickness}");
                     }
                     if (topThickness % _physicPixel != 0)
                     {
                         var intScale = Math.Round(topThickness / _physicPixel);
                         topThickness = intScale * _physicPixel;
-                        //Console.WriteLine($"topThickness adjust from {thickness.Top} to {topThickness}");
                     }
                     if (rightThickness % _physicPixel != 0)
                     {
                         var intScale = Math.Round(rightThickness / _physicPixel);
                         rightThickness = intScale * _physicPixel;
-                        //Console.WriteLine($"rightThickness adjust from {thickness.Right} to {rightThickness}");
                     }
                     if (bottomThickness % _physicPixel != 0)
                     {
                         var intScale = Math.Round(bottomThickness / _physicPixel);
                         bottomThickness = intScale * _physicPixel;
-                        //Console.WriteLine($"bottomThickness adjust from {thickness.Bottom} to {bottomThickness}");
                     }
 
                     var emSize = 14 / scale;
@@ -81,25 +78,21 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     {
                         var intScale = Math.Round(x / _physicPixel);
                         x = intScale * _physicPixel;
-                        //Console.WriteLine($"X adjust from {roi.X} to {x}");
                     }
                     if (y % _physicPixel != 0)
                     {
                         var intScale = Math.Round(y / _physicPixel);
                         y = intScale * _physicPixel;
-                        //Console.WriteLine($"Y adjust from {roi.Y} to {y}");
                     }
                     if (w % _physicPixel != 0)
                     {
                         var intScale = Math.Round(w / _physicPixel);
                         w = intScale * _physicPixel;
-                        //Console.WriteLine($"Width adjust from {roi.Width} to {w}");
                     }
                     if (h % _physicPixel != 0)
                     {
                         var intScale = Math.Round(h / _physicPixel);
                         h = intScale * _physicPixel;
-                        //Console.WriteLine($"Height adjust from {roi.Height} to {h}");
                     }
 
                     var bottomLeft = new Point(x, y + h);
@@ -158,6 +151,40 @@ namespace Jg.wpf.controls.Customer.CustomImage
                     dc.PushGuidelineSet(bottomGuidelines);
                     dc.DrawLine(bottomPen, bottomLineStartPoint, bottomLineEndPoint);
                     dc.Pop();
+
+                    if (!string.IsNullOrEmpty(roi.Title))
+                    {
+                        var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                            new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                        var titlePoint = new Point(x, y + h + 10);
+                        dc.DrawText(titleText, titlePoint);
+                    }
+
+                    if (roi.ShowRoiValue)
+                    {
+                        var roundX = Math.Round(roi.X);
+                        var roundY = Math.Round(roi.Y);
+                        var roundWidth = Math.Round(roi.Width);
+                        var roundHeight = Math.Round(roi.Height);
+
+                        var xyValues = $"X:{roundX} Y:{roundY}, W:{roundWidth} H:{roundHeight}";
+
+                        var xyText = new FormattedText(xyValues, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                            new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                        var xyStartPoint = new Point(x, y + h + 10);
+
+                        if (!string.IsNullOrEmpty(roi.Title))
+                        {
+                            var titleText = new FormattedText(roi.Title, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                                new Typeface("宋体"), emSize, color, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+                            xyStartPoint.X = xyStartPoint.X + titleText.Width + 4;
+                        }
+
+                        dc.DrawText(xyText, xyStartPoint);
+                    }
                 }
                 catch (Exception e)
                 {

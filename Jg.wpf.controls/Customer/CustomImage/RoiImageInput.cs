@@ -19,6 +19,16 @@ namespace Jg.wpf.controls.Customer.CustomImage
 
         public event EventHandler OnOverMaxRoi;
 
+        public Roi HitRoi
+        {
+            get => _hitRoi;
+            set
+            {
+                _hitRoi = value; 
+                SelectedRoi = _hitRoi;
+            }
+        }
+
         protected override void OnMouseLeave(MouseEventArgs e)
         {
             base.OnMouseLeave(e);
@@ -423,7 +433,7 @@ namespace Jg.wpf.controls.Customer.CustomImage
             var hitRoi = HitRoiTest(jPoint);
             if (hitRoi != null)
             {
-                _hitRoi = hitRoi;
+                HitRoi = hitRoi;
 
                 if (_hitRoi.Show)
                 {
@@ -438,7 +448,8 @@ namespace Jg.wpf.controls.Customer.CustomImage
                 {
                     _editorDrawingVisual.ClearEditor();
                 }
-                _hitRoi = null;
+
+                HitRoi = null;
                 _isInCreating = true;
             }
         }

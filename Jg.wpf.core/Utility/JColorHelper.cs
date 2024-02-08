@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Collections.Generic;
+using System.Windows.Media;
 using Jg.wpf.core.Extensions.Types;
 
 namespace Jg.wpf.core.Utility
@@ -16,6 +17,19 @@ namespace Jg.wpf.core.Utility
             };
 
             return windowColor;
+        }
+
+        public static IList<string> GetSysColors()
+        {
+            var colors = typeof(Colors).GetProperties();
+
+            var colorList = new List<string>();
+            foreach (var color in colors)
+            {
+                colorList.Add(color.Name);
+            }
+
+            return colorList;
         }
     }
 }

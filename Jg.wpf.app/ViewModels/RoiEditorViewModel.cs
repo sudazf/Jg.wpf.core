@@ -18,6 +18,7 @@ namespace Jg.wpf.app.ViewModels
         private bool _useGlobalRoiThickness;
         private RoiThickness _globalThickness;
         private float _pixelsPerDpi;
+        private Roi _selectedRoi;
 
         public bool AllowOverLaid
         {
@@ -69,6 +70,19 @@ namespace Jg.wpf.app.ViewModels
                 RaisePropertyChanged(nameof(Rois));
             }
         }
+
+        public Roi SelectedRoi
+        {
+            get => _selectedRoi;
+            set
+            {
+                if (Equals(value, _selectedRoi)) return;
+                _selectedRoi = value;
+                RaisePropertyChanged(nameof(SelectedRoi));
+            }
+        }
+
+
         public int MaxRoi
         {
             get => _maxRoi;

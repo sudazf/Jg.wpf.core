@@ -120,7 +120,6 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -138,22 +137,8 @@
                         Command="{Binding ClearRoisCommand}"
                         Content="清空 Roi" />
                 </StackPanel>
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <Button
-                        Width="120"
-                        Height="32"
-                        Margin="4"
-                        Click="BtnShowImage"
-                        Content="切换小图" />
-                    <Button
-                        Width="120"
-                        Height="32"
-                        Margin="4"
-                        Click="BtnShowBigImage"
-                        Content="换成大图" />
-
-                </StackPanel>
-                <WrapPanel Grid.Row="2" Orientation="Horizontal">
+               
+                <WrapPanel Grid.Row="1" Orientation="Horizontal">
                     <CheckBox
                         Margin="4"
                         VerticalAlignment="Center"
@@ -162,10 +147,10 @@
                     <CheckBox
                         Margin="4"
                         VerticalAlignment="Center"
-                        Content="允许创建Roi（鼠标左键）"
+                        Content="允许手动创建ROI（鼠标左键）"
                         IsChecked="{Binding CanUseRoiCreator}" />
                 </WrapPanel>
-                <WrapPanel Grid.Row="3" Orientation="Horizontal">
+                <WrapPanel Grid.Row="2" Orientation="Horizontal">
                     <CheckBox
                         Margin="4"
                         VerticalAlignment="Center"
@@ -174,14 +159,14 @@
                     <TextBlock
                         Margin="4"
                         VerticalAlignment="Center"
-                        Text="最大 Roi 数:" />
+                        Text="最大ROI设置数:" />
                     <TextBox
                         Width="30"
                         Margin="4"
                         VerticalAlignment="Center"
                         Text="{Binding MaxRoi}" />
                 </WrapPanel>
-                <WrapPanel Grid.Row="4" Orientation="Horizontal">
+                <WrapPanel Grid.Row="3" Orientation="Horizontal">
                     <TextBlock
                         Margin="4"
                         VerticalAlignment="Center"
@@ -229,12 +214,12 @@
                 </WrapPanel>
 
                 <Border
-                    Grid.Row="5"
+                    Grid.Row="4"
                     BorderBrush="Gray"
                     BorderThickness="0,0,0,1"
                     Opacity="0.4" />
                 <Grid
-                    Grid.Row="6"
+                    Grid.Row="5"
                     Margin="4"
                     SnapsToDevicePixels="True">
                     <Grid.RowDefinitions>
@@ -346,12 +331,12 @@
                             <CheckBox
                                 Margin="4"
                                 VerticalAlignment="Center"
-                                Content="ROI下方显示坐标数值"
+                                Content="在ROI下方显示坐标数值"
                                 IsChecked="{Binding SelectedRoi.ShowRoiValue}" />
                             <CheckBox
                                 Margin="4"
                                 VerticalAlignment="Center"
-                                Content="允许与其它ROI重叠"
+                                Content="移动时允许与其它ROI重叠"
                                 IsChecked="{Binding SelectedRoi.CanOverLaid}" />
                         </WrapPanel>
                         <WrapPanel Grid.Row="4" Orientation="Horizontal">

@@ -22,29 +22,6 @@ namespace Jg.wpf.app.Controls
             ProvideImage();
         }
 
-        private void BtnShowImage(object sender, System.Windows.RoutedEventArgs e)
-        {
-            ProvideImage();
-        }
-
-        private void BtnShowBigImage(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var imageFile = "BigPic.png";
-
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Images\\{imageFile}");
-            var image = (Bitmap)System.Drawing.Image.FromFile(filePath);
-            var bitmapData = image.LockBits(
-                new Rectangle(0, 0, image.Width, image.Height),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly, image.PixelFormat);
-            var bitmapSource = BitmapSource.Create(
-                bitmapData.Width, bitmapData.Height, 96, 96, PixelFormats.Pbgra32, null,
-                bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
-            image.UnlockBits(bitmapData);
-
-            Editor.Source = bitmapSource;
-        }
-
-
         private void ProvideImage()
         {
             _imageIndicator++;
@@ -103,7 +80,7 @@ namespace Jg.wpf.app.Controls
 
         private void OnOverMaxRoi(object sender, EventArgs e)
         {
-            MessageBox.Show("不得超过最大ROI设置数。", "系统提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("超过最大ROI设置数。", "系统提示", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

@@ -26,22 +26,26 @@ namespace Jg.wpf.app.ViewModels
             TestItems = new List<MySelectableItem>()
             {
                 new MySelectableItem(false, "Tom"),
-                new MySelectableItem(true, "Jerry"),
+                new MySelectableItem(false, "Jerry"),
             };
 
             Containers = new List<MyContainer>()
             {
                 new MyContainer("Category1", new List<MySelectableItem>()
                 {
-                    new MySelectableItem(false, "Jack"),
+                    new MySelectableItem(true, "Jack"),
                     new MySelectableItem(true, "Hellen"),
+                    new MySelectableItem(false, "sunny"),
                 }),
                 new MyContainer("Category2", new List<MySelectableItem>()
                 {
-                    new MySelectableItem(false, "pony"),
-                    new MySelectableItem(true, "jimi"),
+                    new MySelectableItem(true, "pony"),
+                    new MySelectableItem(false, "jimi"),
+                    new MySelectableItem(false, "lisa"),
                 }),
             };
+
+            _selectedContainer = Containers[0];
         }
     }
 

@@ -5,6 +5,7 @@
     xmlns:customer="clr-namespace:Jg.wpf.controls.Customer;assembly=Jg.wpf.controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:localConverters="clr-namespace:Jg.wpf.app.LocalConverters"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
     d:DataContext="{d:DesignInstance viewModels:MultiSelectComboBoxViewModel}"
@@ -36,33 +37,45 @@
                 ItemsSource="{Binding TestItems}"
                 Style="{StaticResource Jg.MultiSelectComboBox}" />
         </Border>
-        <Border
-            Grid.Column="1"
-            BorderBrush="LightGray"
-            BorderThickness="1,0,0,0">
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                <ComboBox
-                    Width="100"
-                    Height="30"
-                    Margin="16,16"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    DisplayMemberPath="Category"
-                    ItemsSource="{Binding Containers}"
-                    SelectedItem="{Binding SelectContainer}" />
-                <customer:MultiSelectComboBox
-                    Width="300"
-                    Height="30"
-                    Margin="16,16"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Delimiter=","
-                    ItemDisplayPath="Name"
-                    ItemTemplate="{StaticResource Test.DataTemplate}"
-                    ItemsSource="{Binding SelectContainer, Converter={localConverters:SelectContainerToItemsConverter}}"
-                    Style="{StaticResource Jg.MultiSelectComboBox}"
-                    Text="{Binding SelectContainer, Converter={localConverters:SelectContainerToTextConverter}}" />
-            </StackPanel>
-        </Border>
+        <Grid Grid.Column="1">
+            <materialDesign:Snackbar x:Name="MySnackbar" MessageQueue="{materialDesign:MessageQueue}" />
+            <Border BorderBrush="LightGray" BorderThickness="1,0,0,0">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox
+                            Width="100"
+                            Height="30"
+                            Margin="16,16"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            DisplayMemberPath="Category"
+                            ItemsSource="{Binding Containers}"
+                            SelectedItem="{Binding SelectContainer}" />
+                        <Button
+                            Width="180"
+                            HorizontalAlignment="Left"
+                            Click="ButtonBase_OnClick"
+                            Content="Get Selects" />
+                    </StackPanel>
+                    <customer:MultiSelectComboBox
+                        Grid.Row="1"
+                        Width="300"
+                        Height="30"
+                        Margin="16,16"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Delimiter=","
+                        ItemDisplayPath="Name"
+                        ItemTemplate="{StaticResource Test.DataTemplate}"
+                        ItemsSource="{Binding SelectContainer, Converter={localConverters:SelectContainerToItemsConverter}}"
+                        Style="{StaticResource Jg.MultiSelectComboBox}"
+                        Text="{Binding SelectContainer, Converter={localConverters:SelectContainerToTextConverter}}" />
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

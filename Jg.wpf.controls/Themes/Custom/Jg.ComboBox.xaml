@@ -28,37 +28,49 @@
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Gray" />
         <Setter Property="Foreground" Value="{DynamicResource MultiSelectComboBoxItem.Foreground}" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="Margin" Value="1,0" />
         <Setter Property="IsSelected" Value="{Binding IsSelected}" />
-        <Setter Property="Padding" Value="{Binding Padding, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:MultiSelectComboBoxItem}">
                     <Border
                         x:Name="PART_Border"
-                        Padding="{TemplateBinding Padding}"
+                        Padding="0"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="0"
                         SnapsToDevicePixels="true">
-                        <CheckBox
-                            MinHeight="{TemplateBinding MinHeight}"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Foreground="{TemplateBinding Foreground}"
-                            IsChecked="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
-                            <ContentPresenter
-                                x:Name="PART_ContentPresenter"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                TextElement.Foreground="{TemplateBinding Foreground}" />
-                        </CheckBox>
+                        <Grid ClipToBounds="False">
+                            <CheckBox
+                                Height="36"
+                                MinHeight="{TemplateBinding MinHeight}"
+                                Margin="4,0,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Foreground="{TemplateBinding Foreground}"
+                                IsChecked="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                                <ContentPresenter
+                                    x:Name="PART_ContentPresenter"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    TextElement.Foreground="{TemplateBinding Foreground}" />
+                            </CheckBox>
+                        </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="PART_Border" Property="Background" Value="LightGray" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Border" Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -72,12 +84,12 @@
         <Setter Property="Focusable" Value="True" />
         <Setter Property="Foreground" Value="{DynamicResource MultiSelectComboBox.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource Jg.MultiSelectComboBoxItem}" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="BorderBrush" Value="{DynamicResource MultiSelectComboBox.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource MultiSelectComboBox.Background}" />
-        <Setter Property="Padding" Value="2" />
+        <Setter Property="Padding" Value="6" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:MultiSelectComboBox}">
@@ -114,31 +126,31 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="0"
-                            Focusable="True"
+                            Focusable="False"
                             SnapsToDevicePixels="True" />
-
                         <TextBox
                             Name="PART_EditableTextBox"
                             Grid.Column="0"
-                            Margin="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Margin="4"
+                            Padding="1,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
                             Panel.ZIndex="1"
                             Background="Transparent"
                             Focusable="True"
                             Foreground="{TemplateBinding Foreground}"
                             IsReadOnly="True"
-                            SelectionBrush="{DynamicResource WD.WindowBorderBrushSolidColorBrush}"
+                            SelectionBrush="Red"
                             Style="{x:Null}"
                             Template="{StaticResource Jg.ComboBoxTextBox}"
                             Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
                         <TextBlock
                             x:Name="PART_Watermark"
                             Grid.Column="1"
-                            Margin="{TemplateBinding Padding}"
+                            Margin="4"
                             Padding="1,0"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
                             Background="Transparent"
                             FontSize="13"
                             Foreground="{DynamicResource br_uiFramework_foreground_active}"
@@ -182,7 +194,7 @@
                                     CornerRadius="0"
                                     SnapsToDevicePixels="True"
                                     UseLayoutRounding="True" />
-                                <Grid Margin="0,8" ClipToBounds="False">
+                                <Grid Margin="0,4" ClipToBounds="False">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition />
@@ -227,12 +239,14 @@
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="PART_Border" Property="BorderBrush" Value="{DynamicResource MultiSelectComboBox.MouseOver.BorderBrush}" />
                         </Trigger>
-
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="PART_Border" Property="BorderBrush" Value="{DynamicResource MultiSelectComboBox.MouseOver.BorderBrush}" />
                         </Trigger>
                         <Trigger SourceName="PART_Popup" Property="AllowsTransparency" Value="True">
                             <Setter TargetName="PART_DropDownBorder" Property="Margin" Value="0,2,0,0" />
+                        </Trigger>
+                        <Trigger SourceName="PART_EditableTextBox" Property="Text" Value="">
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="Text" Value="">
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible" />

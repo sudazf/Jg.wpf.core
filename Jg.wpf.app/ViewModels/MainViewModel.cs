@@ -69,6 +69,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("13. Roi Editor","RoiEditorDemo", new RoiEditorViewModel()),
                 new DemoItem("14. Localization","LocalizationDemo", new LocalizationViewModel()),
                 new DemoItem("15. Multi-UI-Thread control","SeparatedControlDemo", null),
+                new DemoItem("16. MultiSelectComboBox","MultiSelectComboBoxDemo", new MultiSelectComboBoxViewModel()),
 
             };
             DemoItems = _defaultItems;

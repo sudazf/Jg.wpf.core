@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using Jg.wpf.core.Service;
 using Jg.wpf.core.Service.ThemeService;
+using MaterialDesignThemes.Wpf;
 
 namespace Jg.wpf.app
 {
@@ -15,8 +16,10 @@ namespace Jg.wpf.app
         {
             ServiceManager.Init(Current.Dispatcher);
 
+            //todo.
+            var isLight = true;
             var themes = ServiceManager.GetService<IThemeService>();
-            themes.Apply(true);
+            themes.Apply(isLight);
         }
     }
 }

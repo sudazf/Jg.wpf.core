@@ -27,7 +27,7 @@
         <Border Grid.Column="0">
             <customer:MultiSelectComboBox
                 Width="300"
-                Height="30"
+                Height="40"
                 Margin="16,16"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

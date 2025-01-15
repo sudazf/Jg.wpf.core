@@ -3,10 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Jg.wpf.controls.Customer"
     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:converter="clr-namespace:Jg.wpf.controls.Converter"
     po:Freeze="True">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.ToggleButton.xaml" />
+        <ResourceDictionary>
+            <converter:MathConverter x:Key="MathConverter" />
+
+        </ResourceDictionary>
 
     </ResourceDictionary.MergedDictionaries>
 
@@ -152,6 +157,8 @@
                             VerticalAlignment="Center"
                             Panel.ZIndex="1"
                             Background="Transparent"
+                            MaxWidth="{TemplateBinding Width, Converter={StaticResource MathConverter}, ConverterParameter=x-40}"
+                            TextWrapping="Wrap"
                             Focusable="True"
                             Foreground="{TemplateBinding Foreground}"
                             IsReadOnly="True"
@@ -168,7 +175,7 @@
                             VerticalAlignment="Center"
                             Background="Transparent"
                             FontSize="13"
-                            Foreground="{DynamicResource br_uiFramework_foreground_active}"
+                            Foreground="{TemplateBinding Foreground}"
                             IsHitTestVisible="False"
                             Text="None"
                             TextTrimming="CharacterEllipsis"
@@ -181,6 +188,7 @@
                             Background="Transparent"
                             ClickMode="Release"
                             Focusable="False"
+                            VerticalAlignment="Center"
                             IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             IsTabStop="False"
                             Style="{StaticResource Jg.ToggleButton}" />

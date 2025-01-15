@@ -32,6 +32,9 @@ namespace Jg.wpf.app.ViewModels
                 new MySelectableItem(false, "Jerry"),
                 new MySelectableItem(false, "Jerry"),
                 new MySelectableItem(false, "Jerry"),
+                new MySelectableItem(false, "Jerry"),
+                new MySelectableItem(false, "Jerry"),
+                new MySelectableItem(false, "Jerry"),
             };
 
             Containers = new List<MyContainer>()

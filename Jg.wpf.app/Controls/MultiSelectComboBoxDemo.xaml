@@ -33,48 +33,40 @@
                 VerticalAlignment="Center"
                 Delimiter=","
                 ItemDisplayPath="Name"
-                MaxDropDownHeight="200"
                 ItemTemplate="{StaticResource Test.DataTemplate}"
                 ItemsSource="{Binding TestItems}"
+                MaxDropDownHeight="200"
                 Style="{StaticResource Jg.MultiSelectComboBox}" />
         </Border>
         <Grid Grid.Column="1">
             <materialDesign:Snackbar x:Name="MySnackbar" MessageQueue="{materialDesign:MessageQueue}" />
             <Border BorderBrush="LightGray" BorderThickness="1,0,0,0">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal">
                         <ComboBox
-                            Width="100"
                             Height="30"
-                            Margin="16,16"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             DisplayMemberPath="Category"
                             ItemsSource="{Binding Containers}"
                             SelectedItem="{Binding SelectContainer}" />
+                        <customer:MultiSelectComboBox
+                            Width="200"
+                            Height="30"
+                            Margin="16,16,16,16"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Delimiter=","
+                            ItemDisplayPath="Name"
+                            ItemTemplate="{StaticResource Test.DataTemplate}"
+                            ItemsSource="{Binding SelectContainer, Converter={localConverters:SelectContainerToItemsConverter}}"
+                            Style="{StaticResource Jg.MultiSelectComboBox}"
+                            Text="{Binding SelectContainer, Converter={localConverters:SelectContainerToTextConverter}}" />
                         <Button
-                            Width="180"
                             HorizontalAlignment="Left"
                             Click="ButtonBase_OnClick"
                             Content="Get Selects" />
                     </StackPanel>
-                    <customer:MultiSelectComboBox
-                        Grid.Row="1"
-                        Width="300"
-                        Height="30"
-                        Margin="16,16"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Delimiter=","
-                        ItemDisplayPath="Name"
-                        ItemTemplate="{StaticResource Test.DataTemplate}"
-                        ItemsSource="{Binding SelectContainer, Converter={localConverters:SelectContainerToItemsConverter}}"
-                        Style="{StaticResource Jg.MultiSelectComboBox}"
-                        Text="{Binding SelectContainer, Converter={localConverters:SelectContainerToTextConverter}}" />
                 </Grid>
             </Border>
         </Grid>

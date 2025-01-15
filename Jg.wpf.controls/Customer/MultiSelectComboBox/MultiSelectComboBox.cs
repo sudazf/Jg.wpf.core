@@ -1,12 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using System.Windows.Controls;
-using System.Windows.Threading;
 using System.Windows;
-using System;
-using System.Collections;
 using System.Linq;
-using System.Windows.Input;
 using System.Collections.Generic;
 using Jg.wpf.core.Extensions.Types;
 
@@ -16,7 +12,7 @@ namespace Jg.wpf.controls.Customer
     {
         private const string PART_Popup = "PART_Popup";
         private const string PART_CheckBoxAll = "PART_CheckBoxAll";
-
+        
         public static readonly DependencyProperty IsDropDownOpenProperty =
             DependencyProperty.Register("IsDropDownOpen", typeof(bool), typeof(MultiSelectComboBox),
                 new PropertyMetadata(false));
@@ -41,13 +37,11 @@ namespace Jg.wpf.controls.Customer
             DependencyProperty.Register("Text", typeof(string), typeof(MultiSelectComboBox),
                 new PropertyMetadata(string.Empty, OnTextChanged));
 
-        public string ItemDisplayPath { get; set; }
-
-
         private bool _ignoreTextValueChanged;
         private MultiSelectComboBoxItem _multiSelectComboBoxItem;
         private Popup _popup;
 
+        public string ItemDisplayPath { get; set; }
         public bool IsDropDownOpen
         {
             get => (bool)GetValue(IsDropDownOpenProperty);
@@ -62,25 +56,21 @@ namespace Jg.wpf.controls.Customer
             get => (double)GetValue(MaxDropDownHeightProperty);
             set => SetValue(MaxDropDownHeightProperty, value);
         }
-
         public object SelectAllContent
         {
             get => GetValue(SelectAllContentProperty);
             set => SetValue(SelectAllContentProperty, value);
         }
-
         public bool IsSelectAllActive
         {
             get => (bool)GetValue(IsSelectAllActiveProperty);
             set => SetValue(IsSelectAllActiveProperty, value);
         }
-
         public string Delimiter
         {
             get => (string)GetValue(DelimiterProperty);
             set => SetValue(DelimiterProperty, value);
         }
-
         public string Text
         {
             get => (string)GetValue(TextProperty);
@@ -101,30 +91,14 @@ namespace Jg.wpf.controls.Customer
 
             base.OnPropertyChanged(e);
         }
-
-        private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var MultiSelectComboBox = (MultiSelectComboBox)d;
-
-            if (!(bool)e.NewValue)
-                MultiSelectComboBox.Dispatcher.BeginInvoke(new Action(() => { Mouse.Capture(null); }),
-                    DispatcherPriority.Send);
-        }
-
-        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-        }
-
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is MultiSelectComboBoxItem;
         }
-
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new MultiSelectComboBoxItem();
         }
-
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
             UpdateText();
@@ -134,48 +108,31 @@ namespace Jg.wpf.controls.Customer
         {
             base.OnApplyTemplate();
             _popup = GetTemplateChild(PART_Popup) as Popup;
+            if (_popup != null)
+                _popup.MouseDown += (s, e) => e.Handled = true; //防止点击内部自动关闭 Popup
+
             _multiSelectComboBoxItem = GetTemplateChild(PART_CheckBoxAll) as MultiSelectComboBoxItem;
-            _multiSelectComboBoxItem.Selected += OnMultiSelectComboBoxItem_Selected;
-            _multiSelectComboBoxItem.Unselected += OnMultiSelectComboBoxItem_Unselected;
-        }
-
-        private void Instance_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            SelectAllContent = "SelectAll";
-        }
-
-        private void OnMultiSelectComboBoxItem_Unselected(object sender, RoutedEventArgs e)
-        {
-            if (_ignoreTextValueChanged) return;
-            _ignoreTextValueChanged = true;
-            UnselectAll();
-            _ignoreTextValueChanged = false;
-            UpdateText();
-        }
-
-        private void OnMultiSelectComboBoxItem_Selected(object sender, RoutedEventArgs e)
-        {
-            if (_ignoreTextValueChanged) return;
-            _ignoreTextValueChanged = true;
-            SelectAll();
-            _ignoreTextValueChanged = false;
-            UpdateText();
+            if (_multiSelectComboBoxItem != null)
+            {
+                _multiSelectComboBoxItem.Selected += OnMultiSelectComboBoxItem_Selected;
+                _multiSelectComboBoxItem.Unselected += OnMultiSelectComboBoxItem_Unselected;
+            }
         }
 
         protected virtual void UpdateText()
         {
-            if (_ignoreTextValueChanged) return;
-            var newValue = string.Join(Delimiter, SelectedItems.Cast<object>().Select(x => GetItemDisplayValue(x)));
+            if (_ignoreTextValueChanged) 
+                return;
+
+            var newValue = string.Join(Delimiter, SelectedItems.Cast<object>().Select(GetItemDisplayValue));
             if (string.IsNullOrWhiteSpace(Text) || !Text.Equals(newValue))
             {
                 _ignoreTextValueChanged = true;
-                if (_multiSelectComboBoxItem != null)
-                    _multiSelectComboBoxItem.SetCurrentValue(IsSelectedProperty, SelectedItems.Count == Items.Count);
+                _multiSelectComboBoxItem?.SetCurrentValue(IsSelectedProperty, SelectedItems.Count == Items.Count);
                 SetCurrentValue(TextProperty, newValue);
                 _ignoreTextValueChanged = false;
             }
         }
-
         protected object GetItemDisplayValue(object item)
         {
             if (string.IsNullOrWhiteSpace(ItemDisplayPath))
@@ -197,9 +154,48 @@ namespace Jg.wpf.controls.Customer
 
             return item;
         }
+
+        private void OnMultiSelectComboBoxItem_Unselected(object sender, RoutedEventArgs e)
+        {
+            if (_ignoreTextValueChanged) return;
+            _ignoreTextValueChanged = true;
+            UnselectAll();
+            _ignoreTextValueChanged = false;
+            UpdateText();
+        }
+        private void OnMultiSelectComboBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+            if (_ignoreTextValueChanged) return;
+            _ignoreTextValueChanged = true;
+            SelectAll();
+            _ignoreTextValueChanged = false;
+            UpdateText();
+        }
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+        }
     }
 
     public class MultiSelectComboBoxItem : ListBoxItem
     {
+        private const string PART_Indicator = "PART_Indicator";
+        private const string PART_Border = "PART_Border";
+        
+        private Border _indicator;
+        private Border _border;
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            _border = GetTemplateChild(PART_Border) as Border;
+            if (_border != null)
+                _border.MouseDown += (s, e) => e.Handled = true; //防止点击内部自动关闭 Popup
+
+            _indicator = GetTemplateChild(PART_Indicator) as Border;
+            if (_indicator != null)
+                _indicator.MouseDown += (s, e) => e.Handled = true; //防止点击内部自动关闭 Popup
+        }
     }
 }

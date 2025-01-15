@@ -24,34 +24,48 @@
     </ControlTemplate>
 
     <Style x:Key="Jg.MultiSelectComboBoxItem" TargetType="{x:Type controls:MultiSelectComboBoxItem}">
+        <Setter Property="IsSelected" Value="{Binding IsSelected}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Gray" />
         <Setter Property="Foreground" Value="{DynamicResource MultiSelectComboBoxItem.Foreground}" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="Margin" Value="1,0" />
-        <Setter Property="IsSelected" Value="{Binding IsSelected}" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="Height" Value="36" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:MultiSelectComboBoxItem}">
                     <Border
                         x:Name="PART_Border"
-                        Padding="0"
+                        Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="0"
-                        SnapsToDevicePixels="true">
-                        <Grid ClipToBounds="False">
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border
+                                x:Name="PART_Indicator"
+                                Grid.Column="0"
+                                Width="4"
+                                Background="{DynamicResource MultiSelectComboBoxItem.Indicator.Color}" />
+
+                            <!--  注意这里的高度绑定  -->
                             <CheckBox
-                                Height="36"
+                                Grid.Column="1"
+                                Height="{TemplateBinding Height}"
                                 MinHeight="{TemplateBinding MinHeight}"
-                                Margin="4,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Foreground="{TemplateBinding Foreground}"
                                 IsChecked="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
                                 <ContentPresenter
@@ -65,10 +79,11 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="PART_Border" Property="Background" Value="LightGray" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{DynamicResource MultiSelectComboBoxItem.Border.Selected.Color}" />
+                            <Setter TargetName="PART_Indicator" Property="Background" Value="{DynamicResource MultiSelectComboBoxItem.Indicator.Selected.Color}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_Border" Property="Background" Value="LightGray" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{DynamicResource MultiSelectComboBoxItem.Border.Selected.Color}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -85,7 +100,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MultiSelectComboBox.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource Jg.MultiSelectComboBoxItem}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="BorderBrush" Value="{DynamicResource MultiSelectComboBox.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource MultiSelectComboBox.Background}" />
@@ -140,7 +155,7 @@
                             Focusable="True"
                             Foreground="{TemplateBinding Foreground}"
                             IsReadOnly="True"
-                            SelectionBrush="Red"
+                            SelectionBrush="{DynamicResource MultiSelectComboBox.Selection.Color}"
                             Style="{x:Null}"
                             Template="{StaticResource Jg.ComboBoxTextBox}"
                             Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
@@ -160,6 +175,7 @@
                             Visibility="Collapsed" />
                         <ToggleButton
                             x:Name="PART_ToggleButton"
+                            Grid.Column="0"
                             Grid.ColumnSpan="3"
                             Margin="4"
                             Background="Transparent"
@@ -170,7 +186,9 @@
                             Style="{StaticResource Jg.ToggleButton}" />
                         <Popup
                             x:Name="PART_Popup"
+                            Grid.Column="0"
                             Grid.ColumnSpan="3"
+                            MaxHeight="{TemplateBinding MaxDropDownHeight}"
                             AllowsTransparency="True"
                             IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                             Placement="Bottom"
@@ -180,7 +198,7 @@
                                 x:Name="PART_DropDown"
                                 MinWidth="{TemplateBinding FrameworkElement.ActualWidth}"
                                 MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                Margin="4"
+                                Margin="0"
                                 RenderTransformOrigin=".5,0"
                                 SnapsToDevicePixels="True">
                                 <Grid.RenderTransform>
@@ -194,7 +212,7 @@
                                     CornerRadius="0"
                                     SnapsToDevicePixels="True"
                                     UseLayoutRounding="True" />
-                                <Grid Margin="0,4" ClipToBounds="False">
+                                <Grid Margin="0,2,0,1" ClipToBounds="False">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition />

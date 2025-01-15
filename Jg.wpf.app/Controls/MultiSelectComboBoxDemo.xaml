@@ -33,6 +33,7 @@
                 VerticalAlignment="Center"
                 Delimiter=","
                 ItemDisplayPath="Name"
+                MaxDropDownHeight="200"
                 ItemTemplate="{StaticResource Test.DataTemplate}"
                 ItemsSource="{Binding TestItems}"
                 Style="{StaticResource Jg.MultiSelectComboBox}" />

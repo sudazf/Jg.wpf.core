@@ -34,8 +34,8 @@
     
     <SolidColorBrush x:Key="MultiSelectComboBoxItem.Background" Color="WhiteSmoke" po:Freeze="True" />
     <SolidColorBrush x:Key="MultiSelectComboBoxItem.Foreground" Color="#1E1E1E" po:Freeze="True" />
-    <SolidColorBrush x:Key="MultiSelectComboBoxItem.Indicator.Color" Color="{StaticResource Primary600}" po:Freeze="True" />
-    <SolidColorBrush x:Key="MultiSelectComboBoxItem.Indicator.Selected.Color" Color="{StaticResource Primary800}" po:Freeze="True" />
+    <SolidColorBrush x:Key="MultiSelectComboBoxItem.Indicator.Color" Color="Transparent" po:Freeze="True" />
+    <SolidColorBrush x:Key="MultiSelectComboBoxItem.Indicator.Selected.Color" Color="{StaticResource Primary500}" po:Freeze="True" />
     <SolidColorBrush x:Key="MultiSelectComboBoxItem.Border.Selected.Color" Color="Transparent" po:Freeze="True" />
 
 </ResourceDictionary>

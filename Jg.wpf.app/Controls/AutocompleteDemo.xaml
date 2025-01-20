@@ -16,7 +16,7 @@
         <StackPanel
             Margin="0 16 0 0"
             HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             Orientation="Horizontal">
             <TextBlock
                 Margin="4"

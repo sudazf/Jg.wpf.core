@@ -164,7 +164,7 @@
                     Margin="4"
                     VerticalAlignment="Center"
                     Foreground="Gray"
-                    Text="范围: 0 ~ 1000, 最多小数位: 3, 无法输入超过上下限, 若超过自动修正到上下限临界值" />
+                    Text="(Range: 0 ~ 1000, digit: 3)" />
 
             </StackPanel>
         </GroupBox>

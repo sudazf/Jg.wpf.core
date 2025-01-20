@@ -21,7 +21,7 @@ namespace Jg.wpf.app.ViewModels
 
     public class DraggableViewModel : ViewModelBase
     {
-        private bool _isInDraggingModel;
+        private bool _isInDraggingModel = true;
         public bool IsInDraggingMode
         {
             get => _isInDraggingModel;

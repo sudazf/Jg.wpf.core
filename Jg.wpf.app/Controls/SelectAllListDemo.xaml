@@ -14,167 +14,174 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Row="0" Header="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <selectAll:SelectAllListBox
+                    Margin="4"
+                    ItemsSource="{Binding Foods1}"
+                    Style="{StaticResource Jg.SelectAll.Vertical.ListBox}">
+                    <selectAll:SelectAllListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox
+                                    Margin="16,4"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding IsSelected}" />
+                                <TextBlock
+                                    Margin="16,4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Name}" />
+                                <TextBlock
+                                    Margin="16,4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Description}" />
+                                <TextBlock
+                                    Margin="16,4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Price, StringFormat={}{0:F1}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </selectAll:SelectAllListBox.ItemTemplate>
+                    <selectAll:SelectAllListBox.ColumnHeader>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="16,4"
+                                VerticalAlignment="Center"
+                                Text="名称" />
+                            <TextBlock
+                                Margin="16,4"
+                                VerticalAlignment="Center"
+                                Text="备注" />
+                            <TextBlock
+                                Margin="16,4"
+                                VerticalAlignment="Center"
+                                Text="价格（元/斤）" />
+                        </StackPanel>
+                    </selectAll:SelectAllListBox.ColumnHeader>
+                </selectAll:SelectAllListBox>
+                <selectAll:SelectAllListBox
+                    Grid.Column="1"
+                    Margin="4"
+                    IsEditable="False"
+                    ItemsSource="{Binding Foods1}"
+                    Style="{StaticResource Jg.SelectAll.Vertical.ListBox}">
+                    <selectAll:SelectAllListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox
+                                    Margin="16,4"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding IsSelected}"
+                                    IsEnabled="False" />
+                                <TextBlock
+                                    Margin="16,4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Name}" />
+                                <TextBlock
+                                    Margin="16,4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Description}" />
+                                <TextBlock
+                                    Margin="16,4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Price, StringFormat={}{0:F1}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </selectAll:SelectAllListBox.ItemTemplate>
+                    <selectAll:SelectAllListBox.ColumnHeader>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="16,4"
+                                VerticalAlignment="Center"
+                                Text="名称" />
+                            <TextBlock
+                                Margin="16,4"
+                                VerticalAlignment="Center"
+                                Text="备注" />
+                            <TextBlock
+                                Margin="16,4"
+                                VerticalAlignment="Center"
+                                Text="价格（元/斤）" />
+                        </StackPanel>
+                    </selectAll:SelectAllListBox.ColumnHeader>
+                </selectAll:SelectAllListBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <selectAll:SelectAllListBox
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding Foods2}"
+                    OnSelectAllChanged="SelectAllListBox_OnSelectAllChanged"
+                    Style="{StaticResource Jg.SelectAll.Horizontal.ListBox}">
+                    <selectAll:SelectAllListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding IsSelected}" />
+                                <TextBlock
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Name}" />
+                                <TextBlock
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Description, StringFormat=({0})}" />
+                                <TextBlock
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Price, StringFormat={}{0:F1}元/斤}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </selectAll:SelectAllListBox.ItemTemplate>
+                </selectAll:SelectAllListBox>
 
-        <selectAll:SelectAllListBox
-            Grid.Row="0"
-            Margin="4"
-            ItemsSource="{Binding Foods1}"
-            Style="{StaticResource Jg.SelectAll.Vertical.ListBox}">
-            <selectAll:SelectAllListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox
-                            Margin="16,4"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding IsSelected}" />
-                        <TextBlock
-                            Margin="16,4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Name}" />
-                        <TextBlock
-                            Margin="16,4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Description}" />
-                        <TextBlock
-                            Margin="16,4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Price,StringFormat={}{0:F1}}" />
-                    </StackPanel>
-                </DataTemplate>
-            </selectAll:SelectAllListBox.ItemTemplate>
-            <selectAll:SelectAllListBox.ColumnHeader>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="16,4"
-                        VerticalAlignment="Center"
-                        Text="名称" />
-                    <TextBlock
-                        Margin="16,4"
-                        VerticalAlignment="Center"
-                        Text="备注" />
-                    <TextBlock
-                        Margin="16,4"
-                        VerticalAlignment="Center"
-                        Text="价格（元/斤）" />
-                </StackPanel>
-            </selectAll:SelectAllListBox.ColumnHeader>
-        </selectAll:SelectAllListBox>
-
-        <selectAll:SelectAllListBox
-            Grid.Row="0"
-            Grid.Column="1"
-            Margin="4"
-            IsEditable="False"
-            ItemsSource="{Binding Foods1}"
-            Style="{StaticResource Jg.SelectAll.Vertical.ListBox}">
-            <selectAll:SelectAllListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox
-                            Margin="16,4"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding IsSelected}"
-                            IsEnabled="False" />
-                        <TextBlock
-                            Margin="16,4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Name}" />
-                        <TextBlock
-                            Margin="16,4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Description}" />
-                        <TextBlock
-                            Margin="16,4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Price,StringFormat={}{0:F1}}" />
-                    </StackPanel>
-                </DataTemplate>
-            </selectAll:SelectAllListBox.ItemTemplate>
-            <selectAll:SelectAllListBox.ColumnHeader>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="16,4"
-                        VerticalAlignment="Center"
-                        Text="名称" />
-                    <TextBlock
-                        Margin="16,4"
-                        VerticalAlignment="Center"
-                        Text="备注" />
-                    <TextBlock
-                        Margin="16,4"
-                        VerticalAlignment="Center"
-                        Text="价格（元/斤）" />
-                </StackPanel>
-            </selectAll:SelectAllListBox.ColumnHeader>
-        </selectAll:SelectAllListBox>
-
-        <selectAll:SelectAllListBox
-            Grid.Row="1"
-            Margin="4"
-            ItemsSource="{Binding Foods2}"
-            OnSelectAllChanged="SelectAllListBox_OnSelectAllChanged"
-            Style="{StaticResource Jg.SelectAll.Horizontal.ListBox}">
-            <selectAll:SelectAllListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding IsSelected}" />
-                        <TextBlock
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Name}" />
-                        <TextBlock
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Description, StringFormat=({0})}" />
-                        <TextBlock
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Price,StringFormat={}{0:F1}元/斤}" />
-                    </StackPanel>
-                </DataTemplate>
-            </selectAll:SelectAllListBox.ItemTemplate>
-        </selectAll:SelectAllListBox>
-
-        <selectAll:SelectAllListBox
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="4"
-            IsEditable="False"
-            ItemsSource="{Binding Foods2}"
-            Style="{StaticResource Jg.SelectAll.Horizontal.ListBox}">
-            <selectAll:SelectAllListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding IsSelected}"
-                            IsEnabled="False" />
-                        <TextBlock
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Name}" />
-                        <TextBlock
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Description, StringFormat=({0})}" />
-                        <TextBlock
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            Text="{Binding Price,StringFormat={}{0:F1}元/斤}" />
-                    </StackPanel>
-                </DataTemplate>
-            </selectAll:SelectAllListBox.ItemTemplate>
-        </selectAll:SelectAllListBox>
+                <selectAll:SelectAllListBox
+                    Grid.Column="1"
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    IsEditable="False"
+                    ItemsSource="{Binding Foods2}"
+                    Style="{StaticResource Jg.SelectAll.Horizontal.ListBox}">
+                    <selectAll:SelectAllListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding IsSelected}"
+                                    IsEnabled="False" />
+                                <TextBlock
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Name}" />
+                                <TextBlock
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Description, StringFormat=({0})}" />
+                                <TextBlock
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Price, StringFormat={}{0:F1}元/斤}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </selectAll:SelectAllListBox.ItemTemplate>
+                </selectAll:SelectAllListBox>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>

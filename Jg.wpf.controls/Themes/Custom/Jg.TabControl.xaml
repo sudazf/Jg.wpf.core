@@ -349,17 +349,7 @@
                                             VerticalAlignment="Center"
                                             Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:NavigationRailAssist.FloatingContent)}"
                                             Focusable="False" />
-                                        <UniformGrid
-                                            x:Name="HeaderPanel"
-                                            Grid.Row="1"
-                                            Grid.Column="0"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            Columns="1"
-                                            Focusable="False"
-                                            IsItemsHost="True"
-                                            Rows="0" />
-
+                                   
                                         <controls:JScrollViewer
                                             x:Name="Indicator"
                                             Grid.Row="0"
@@ -435,10 +425,7 @@
                             <Setter TargetName="DividerRect" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="DividerRect" Property="VerticalAlignment" Value="Bottom" />
                             <Setter TargetName="DividerRect" Property="Width" Value="Auto" />
-                            <Setter TargetName="HeaderPanel" Property="Columns" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Rows" Value="1" />
+                
                             <Setter TargetName="TabGrid" Property="DockPanel.Dock" Value="Top" />
 
                             <Setter TargetName="Indicator" Property="behaviors:ScrollableBehavior.Orientation" Value="Horizontal" />
@@ -458,10 +445,7 @@
                             <Setter TargetName="DividerRect" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="DividerRect" Property="VerticalAlignment" Value="Top" />
                             <Setter TargetName="DividerRect" Property="Width" Value="Auto" />
-                            <Setter TargetName="HeaderPanel" Property="Columns" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Rows" Value="1" />
+                 
                             <Setter TargetName="TabGrid" Property="DockPanel.Dock" Value="Bottom" />
 
                             <Setter TargetName="Indicator" Property="behaviors:ScrollableBehavior.Orientation" Value="Horizontal" />

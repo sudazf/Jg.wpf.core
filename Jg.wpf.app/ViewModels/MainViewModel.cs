@@ -59,7 +59,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("3. TextBlock", "TextBlockDemo", null),
                 new DemoItem("4. Autocomplete","AutocompleteDemo",new AutocompleteViewModel()),
                 new DemoItem("5. ListBox with Select All","SelectAllListDemo", new SelectAllListViewModel()),
-                new DemoItem("6. TabControl Animation","TabControlDemo", null),
+                new DemoItem("6. TabControl Animation","TabControlDemo", new TabControlViewModel()),
                 new DemoItem("7. Dragging animation", "DraggableDemo", new DraggableDemoViewModel()),
                 new DemoItem("8. ScrollViewer Animation","ScrollViewerAnimationDemo",new ScrollViewerAnimationViewModel()),
                 new DemoItem("9. Performance","RefreshPerFrameDemo1",new RefreshPerFrameViewModel1()),

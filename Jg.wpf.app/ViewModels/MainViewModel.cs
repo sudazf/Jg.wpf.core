@@ -70,6 +70,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("14. Localization","LocalizationDemo", new LocalizationViewModel()),
                 new DemoItem("15. Multi-UI-Thread control","SeparatedControlDemo", null),
                 new DemoItem("16. MultiSelectComboBox","MultiSelectComboBoxDemo", new MultiSelectComboBoxViewModel()),
+                new DemoItem("17. Button path","ButtonsDemo", null),
 
             };
             DemoItems = _defaultItems;

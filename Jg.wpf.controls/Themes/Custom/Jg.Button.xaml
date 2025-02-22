@@ -1,0 +1,289 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <materialDesign:RangeLengthConverter x:Key="RangeLengthConverter" />
+    <materialDesign:MathConverter x:Key="MathAddConverter" Operation="Add" />
+    <system:Int32 x:Key="ProgressRingStrokeWidth">8</system:Int32>
+
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="2"
+                        SnapsToDevicePixels="true"
+                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                        StrokeDashArray="1 2"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Jg.Star.Button" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary.Foreground}" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Path
+                            Effect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(materialDesign:ElevationAssist.Elevation), Converter={x:Static materialDesign:ShadowConverter.Instance}}"
+                            Fill="{TemplateBinding Background}"
+                            Stretch="Fill"
+                            Stroke="{TemplateBinding BorderBrush}"
+                            StrokeThickness="{TemplateBinding BorderThickness}">
+                            <Path.Data>
+                                <PathGeometry Figures="M50,5 L61,37 L95,37 L68,57 L79,91 L50,72 L21,91 L32,57 L5,37 L39,37 Z" />
+                            </Path.Data>
+                        </Path>
+                        <materialDesign:Ripple
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Clip="{Binding ElementName=GeometryEllipse, Path=RenderedGeometry}"
+                            ClipToBounds="True"
+                            Content="{TemplateBinding Content}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                        <Path
+                            x:Name="GeometryEllipse"
+                            Margin="0"
+                            Fill="Transparent"
+                            Focusable="False"
+                            IsHitTestVisible="False"
+                            Stretch="Fill"
+                            Stroke="Transparent">
+                            <Path.Data>
+                                <PathGeometry Figures="M50,5 L61,37 L95,37 L68,57 L79,91 L50,72 L21,91 L32,57 L5,37 L39,37 Z" />
+                            </Path.Data>
+                        </Path>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.38" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource MaterialDesign.Brush.TextBox.HoverBackground}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource MaterialDesign.Brush.Secondary}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="1" />
+        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp6" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+    </Style>
+
+    <Style x:Key="Jg.Custom1.Button" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary.Foreground}" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Path
+                            Effect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(materialDesign:ElevationAssist.Elevation), Converter={x:Static materialDesign:ShadowConverter.Instance}}"
+                            Fill="{TemplateBinding Background}"
+                            Stretch="Fill"
+                            Stroke="{TemplateBinding BorderBrush}"
+                            StrokeThickness="{TemplateBinding BorderThickness}">
+                            <Path.Data>
+                                <PathGeometry Figures="M0,0 L30,0 L20,10 L0,10 L0,0 Z" />
+                            </Path.Data>
+                        </Path>
+                        <materialDesign:Ripple
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Clip="{Binding ElementName=GeometryEllipse, Path=RenderedGeometry}"
+                            ClipToBounds="True"
+                            Content="{TemplateBinding Content}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                        <Path
+                            x:Name="GeometryEllipse"
+                            Margin="0"
+                            Fill="Transparent"
+                            Focusable="False"
+                            IsHitTestVisible="False"
+                            Stretch="Fill"
+                            Stroke="Transparent">
+                            <Path.Data>
+                                <PathGeometry Figures="M0,0 L30,0 L20,10 L0,10 L0,0 Z" />
+                            </Path.Data>
+                        </Path>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.38" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource MaterialDesign.Brush.TextBox.HoverBackground}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource MaterialDesign.Brush.Secondary}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="1" />
+        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp6" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+    </Style>
+
+    <Style x:Key="Jg.Custom2.Button" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary.Foreground}" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Path
+                            Effect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(materialDesign:ElevationAssist.Elevation), Converter={x:Static materialDesign:ShadowConverter.Instance}}"
+                            Fill="{TemplateBinding Background}"
+                            Stretch="Fill"
+                            Stroke="{TemplateBinding BorderBrush}"
+                            StrokeThickness="{TemplateBinding BorderThickness}">
+                            <Path.Data>
+                                <PathGeometry Figures="M10,0 L30,0 L30,10 L0,10 Z" />
+                            </Path.Data>
+                        </Path>
+                        <materialDesign:Ripple
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Clip="{Binding ElementName=GeometryEllipse, Path=RenderedGeometry}"
+                            ClipToBounds="True"
+                            Content="{TemplateBinding Content}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                        <Path
+                            x:Name="GeometryEllipse"
+                            Margin="0"
+                            Fill="Transparent"
+                            Focusable="False"
+                            IsHitTestVisible="False"
+                            Stretch="Fill"
+                            Stroke="Transparent">
+                            <Path.Data>
+                                <PathGeometry Figures="M10,0 L30,0 L30,10 L0,10 Z" />
+                            </Path.Data>
+                        </Path>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.38" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource MaterialDesign.Brush.TextBox.HoverBackground}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource MaterialDesign.Brush.Secondary}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="1" />
+        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp6" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+    </Style>
+
+    <Style x:Key="Jg.Apple.Button" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary.Foreground}" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Path
+                            Effect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(materialDesign:ElevationAssist.Elevation), Converter={x:Static materialDesign:ShadowConverter.Instance}}"
+                            Fill="{TemplateBinding Background}"
+                            Stretch="Fill"
+                            Stroke="{TemplateBinding BorderBrush}"
+                            StrokeThickness="{TemplateBinding BorderThickness}">
+                            <Path.Data>
+                                <PathGeometry Figures="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z" />
+                            </Path.Data>
+                        </Path>
+                        <materialDesign:Ripple
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Clip="{Binding ElementName=GeometryEllipse, Path=RenderedGeometry}"
+                            ClipToBounds="True"
+                            Content="{TemplateBinding Content}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                        <Path
+                            x:Name="GeometryEllipse"
+                            Margin="0"
+                            Fill="Transparent"
+                            Focusable="False"
+                            IsHitTestVisible="False"
+                            Stretch="Fill"
+                            Stroke="Transparent">
+                            <Path.Data>
+                                <PathGeometry Figures="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z" />
+                            </Path.Data>
+                        </Path>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.38" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource MaterialDesign.Brush.TextBox.HoverBackground}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource MaterialDesign.Brush.Secondary}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="1" />
+        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp6" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+    </Style>
+</ResourceDictionary>

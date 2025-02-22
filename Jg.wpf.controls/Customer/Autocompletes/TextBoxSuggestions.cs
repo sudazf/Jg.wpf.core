@@ -48,6 +48,17 @@ namespace Jg.wpf.controls.Customer.Autocompletes
             set => SetValue(TextBoxSuggestionsSourceProperty, value);
         }
 
+
+        public string SelectedItem
+        {
+            get => (string)GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
+        }
+
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register("SelectedItem", typeof(string), typeof(TextBoxSuggestions), new PropertyMetadata(""));
+
+
         static TextBoxSuggestions()
         {
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBoxSuggestions), new FrameworkPropertyMetadata(typeof(TextBoxSuggestions)));
@@ -117,6 +128,8 @@ namespace Jg.wpf.controls.Customer.Autocompletes
             if (TextBox != null)
             {
                 TextBox.Text = args.Parameter as string ?? string.Empty;
+
+                SetValue(SelectedItemProperty, TextBox.Text);
 
                 if (KeepFocusOnSelection)
                 {

@@ -9,6 +9,7 @@ namespace Jg.wpf.app.ViewModels
     {
         private ITextBoxSuggestionsSource textBoxSuggestionsSource;
         private string _text;
+        private string _selected;
 
         public ITextBoxSuggestionsSource TextBoxSuggestionsSource => textBoxSuggestionsSource;
 
@@ -19,6 +20,17 @@ namespace Jg.wpf.app.ViewModels
             {
                 _text = value;
                 RaisePropertyChanged(()=>Text);
+            }
+        }
+
+        public string Selected
+        {
+            get => _selected;
+            set
+            {
+                if (value == _selected) return;
+                _selected = value;
+                RaisePropertyChanged(nameof(Selected));
             }
         }
 

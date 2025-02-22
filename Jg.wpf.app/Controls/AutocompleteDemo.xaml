@@ -26,6 +26,7 @@
                 Width="300"
                 Margin="4"
                 Style="{StaticResource Jg.TextBoxSuggestions}"
+                SelectedItem="{Binding Selected, Mode=OneWayToSource}"
                 TextBoxSuggestionsSource="{Binding TextBoxSuggestionsSource}">
                 <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </autocompletes:TextBoxSuggestions>

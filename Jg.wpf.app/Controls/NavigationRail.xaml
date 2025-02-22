@@ -10,7 +10,10 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <TabControl Style="{StaticResource MaterialDesignNavigatilRailTabControl}" TabStripPlacement="Left">
+        <TabControl
+            materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+            Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+            TabStripPlacement="Left">
             <TabItem Style="{StaticResource Jg.NavigationRail.UnderLine.TabItem}">
                 <TabItem.Header>
                     <materialDesign:PackIcon

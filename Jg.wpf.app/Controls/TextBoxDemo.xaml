@@ -117,7 +117,7 @@
                         <Condition Binding="{Binding ElementName=Placeholder, Path=AdornedElement.(materialDesign:ValidationAssist.UsePopup)}" Value="False" />
                     </MultiDataTrigger.Conditions>
                     <MultiDataTrigger.Setters>
-                        <Setter TargetName="DefaultErrorViewer" Property="Visibility" Value="{Binding ElementName=Placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Setter TargetName="DefaultErrorViewer" Property="Visibility" Value="{Binding ElementName=Placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay, Converter={converter:BoolToVisibilityConverter}}" />
                     </MultiDataTrigger.Setters>
                 </MultiDataTrigger>
 

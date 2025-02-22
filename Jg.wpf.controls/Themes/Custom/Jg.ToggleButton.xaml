@@ -24,7 +24,6 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
-        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>

@@ -6,16 +6,19 @@
     xmlns:local="clr-namespace:Jg.wpf.app.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pageControl="clr-namespace:Jg.wpf.controls.Customer.PageControl;assembly=Jg.wpf.controls"
+    xmlns:viewModels="clr-namespace:Jg.wpf.app.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    d:DataContext="{d:DesignInstance viewModels:PageControlViewModel}"
     mc:Ignorable="d">
     <Grid>
         <pageControl:PageControl
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            PageSize="5"
-            ContinuousCount="3"
-            RecordCount="100"
+            PageSize="{Binding PageSize}"
+            ContinuousCount="{Binding ContinuousCount}"
+            RecordCount="{Binding RecordCount}"
+            CurrentPage="{Binding CurrentPage, Mode = TwoWay}"
             Style="{StaticResource Jg.PageControl}"/>
     </Grid>
 </UserControl>

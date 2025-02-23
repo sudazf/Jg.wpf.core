@@ -1,31 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Jg.wpf.core.Extensions.Types.Pages;
+﻿using Jg.wpf.core.Extensions.Types.Pages;
 using Jg.wpf.core.Notify;
 
 namespace Jg.wpf.app.ViewModels
 {
     public class PageControlViewModel : ViewModelBase
     {
-        private int _pageCount;
-        private int _recordCount;
-        private int _pageSize;
-        private int _continuousCount;
+        private int _recordCount = 100;
+        private int _pageSize = 10;
+        private int _continuousCount = 3;
         private int _currentPage;
 
-        public int PageCount
-        {
-            get => _pageCount;
-            set
-            {
-                if (value == _pageCount) return;
-                _pageCount = value;
-                RaisePropertyChanged(nameof(PageCount));
-            }
-        }
 
         public int RecordCount
         {
@@ -74,12 +58,6 @@ namespace Jg.wpf.app.ViewModels
         public PageControlViewModel()
         {
 
-        }
-     
-
-        private void OnPageChanged(object sender, PageChangedEventArgs e)
-        {
-            //todo
         }
     }
 }

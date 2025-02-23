@@ -55,6 +55,12 @@ namespace Jg.wpf.controls.Behaviors
                     default:
                         lengthFrom = _indicator.RenderSize.Width;
                         lengthTo = selectedElement.RenderSize.Width;
+                        //修复：动画线可能会消失的问题
+                        if (selectedElement.Content != null && lengthTo == 0)
+                        {
+                            lengthTo = lengthFrom;
+                        }
+
                         translateFrom = _indicatorTranslate.X;
                         translateTo = scrollViewer.HorizontalOffset + point.X;
                         lengthProperty = FrameworkElement.WidthProperty;
@@ -63,6 +69,11 @@ namespace Jg.wpf.controls.Behaviors
                     case JgOrientation.Vertical:
                         lengthFrom = _indicator.RenderSize.Height;
                         lengthTo = selectedElement.RenderSize.Height;
+                        //修复：动画线可能会消失的问题
+                        if (selectedElement.Content != null && lengthTo == 0)
+                        {
+                            lengthTo = lengthFrom;
+                        }
                         translateFrom = _indicatorTranslate.Y;
                         translateTo = scrollViewer.VerticalOffset + point.Y;
                         lengthProperty = FrameworkElement.HeightProperty;

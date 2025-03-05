@@ -33,5 +33,6 @@ namespace Jg.wpf.app.Controls
                 vm.Init();
             }
         }
+
     }
 }

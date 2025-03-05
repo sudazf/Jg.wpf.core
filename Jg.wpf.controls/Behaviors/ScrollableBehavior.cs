@@ -135,6 +135,12 @@ namespace Jg.wpf.controls.Behaviors
 
         private void SelectorOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //如果不是控件本身触发，而是子元素触发 SelectionChanged，就忽略
+            if (e != null && !Equals(e.OriginalSource, Selector))
+            {
+                return;
+            }
+
             if (Selector != null && AssociatedObject is JScrollViewer scrollViewer)
             {
                 ContentControl selectedElement = GetSelectedItem(Selector);

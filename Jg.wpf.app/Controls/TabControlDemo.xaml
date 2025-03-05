@@ -22,7 +22,8 @@
         </Grid.ColumnDefinitions>
         <TabControl Style="{StaticResource Jg.Animation.TabControl}" TabStripPlacement="Top">
             <TabItem Header="Title1">
-                <ListBox ItemsSource="{Binding TestItems}" SelectedItem="{Binding SelectedItem}">
+                <ListBox ItemsSource="{Binding TestItems}" 
+                         SelectedItem="{Binding SelectedItem}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Margin="4" Text="{Binding Name}" />

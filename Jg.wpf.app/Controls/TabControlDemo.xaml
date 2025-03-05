@@ -2,6 +2,7 @@
     x:Class="Jg.wpf.app.Controls.TabControlDemo"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:assist="clr-namespace:Jg.wpf.controls.Assist;assembly=Jg.wpf.controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Jg.wpf.app.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -19,27 +20,40 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TabControl
-            ItemsSource="{Binding TestItems}"
-            Style="{StaticResource Jg.Animation.TabControl}"
-            TabStripPlacement="Top">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Margin="4" Text="{Binding .}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Margin="4" Text="{Binding .}" />
-                        <Button
-                            Width="100"
-                            DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType=TabControl}}"
-                            Command="{Binding AddCommand}"
-                            Content="Add" />
-                    </StackPanel>
-                </DataTemplate>
-            </TabControl.ContentTemplate>
+        <TabControl Style="{StaticResource Jg.Animation.TabControl}" TabStripPlacement="Top">
+            <TabItem Header="Title1">
+                <ListBox ItemsSource="{Binding TestItems}" SelectedItem="{Binding SelectedItem}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="4" Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="Title2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+                    <Button Width="200" Content="Focusable Control" />
+                    <TabControl
+                        Grid.Row="1"
+                        assist:TabContentPreservation.IsContentPreserved="True"
+                        ItemsSource="{Binding SelectedItem.SubItems}"
+                        Loaded="FrameworkElement_OnLoaded"
+                        SelectedItem="{Binding SelectedItem.SelectedItem}"
+                        Style="{StaticResource Jg.Animation.TabControl}"
+                        TabStripPlacement="Top">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="4" Text="{Binding SubName}" />
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                    </TabControl>
+                </Grid>
+
+            </TabItem>
         </TabControl>
 
         <TabControl

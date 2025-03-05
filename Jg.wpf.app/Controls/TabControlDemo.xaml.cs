@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Jg.wpf.app.ViewModels;
 
 namespace Jg.wpf.app.Controls
 {
@@ -23,6 +24,14 @@ namespace Jg.wpf.app.Controls
         public TabControlDemo()
         {
             InitializeComponent();
+        }
+
+        private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is TabControlViewModel vm)
+            {
+                vm.Init();
+            }
         }
     }
 }

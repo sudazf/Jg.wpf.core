@@ -93,6 +93,9 @@ namespace Jg.wpf.controls.Behaviors
             }
             if (AssociatedObject is ScrollViewer scrollViewer)
             {
+                //需要父控件 loaded 时候，获取焦点，否则下面获取 point 可能为0
+                scrollViewer.Focus();
+
                 scrollViewer.ScrollChanged += ScrollViewerOnScrollChanged;
                 ScrollViewerOnScrollChanged(scrollViewer, null);
 
@@ -137,6 +140,7 @@ namespace Jg.wpf.controls.Behaviors
                 ContentControl selectedElement = GetSelectedItem(Selector);
                 if (selectedElement != null)
                 {
+                    //需要父控件 loaded 时候，获取焦点，否则 point 可能为0
                     GeneralTransform focusedVisualTransform = selectedElement.TransformToVisual(scrollViewer);
                     Point point = focusedVisualTransform.Transform(new Point(selectedElement.Margin.Left, selectedElement.Margin.Top));
                     OnSelectionChanged(selectedElement, scrollViewer, point);

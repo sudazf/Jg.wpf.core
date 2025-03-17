@@ -34,5 +34,12 @@ namespace Jg.wpf.app.Controls
             }
         }
 
+        private void OnParentSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!e.OriginalSource.Equals(sender))
+            {
+                return;
+            }
+        }
     }
 }

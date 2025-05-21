@@ -11,6 +11,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using System.Windows;
 using Jg.wpf.core.Utility;
+using System.Xml.Linq;
 
 namespace Jg.wpf.controls.Customer.CoverFlowControl
 {
@@ -203,6 +204,7 @@ namespace Jg.wpf.controls.Customer.CoverFlowControl
         {
             if (!_itemShowDic.TryGetValue(pos, out var item)) return;
             _visualParent.Children.Remove(item);
+            item.Element.PreviewMouseDown -= _element_PreviewMouseDown;
             _itemShowDic.Remove(pos);
         }
 

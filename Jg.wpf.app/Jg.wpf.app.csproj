@@ -15,11 +15,35 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Images\BigPic.png" />
+    <None Remove="Images\CoverFlow\CoverFlow-1.png" />
+    <None Remove="Images\CoverFlow\CoverFlow-2.png" />
+    <None Remove="Images\CoverFlow\CoverFlow-3.png" />
+    <None Remove="Images\CoverFlow\CoverFlow-4.png" />
+    <None Remove="Images\CoverFlow\CoverFlow-5.png" />
+    <None Remove="Images\CoverFlow\CoverFlow-6.png" />
     <None Remove="Images\RoiDemo.bmp" />
     <None Remove="Images\RoiDemo2.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BigPic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CoverFlow\CoverFlow-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CoverFlow\CoverFlow-2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CoverFlow\CoverFlow-3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CoverFlow\CoverFlow-4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CoverFlow\CoverFlow-5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\CoverFlow\CoverFlow-6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\RoiDemo.bmp">

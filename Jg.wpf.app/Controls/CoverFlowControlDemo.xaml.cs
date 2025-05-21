@@ -14,12 +14,12 @@ namespace Jg.wpf.app.Controls
 
             CoverFlowMain.AddRange(new[]
             {
-                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/RoiDemo2.jpg")),
-                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/RoiDemo2.jpg")),
-                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/RoiDemo2.jpg")),
-                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/RoiDemo2.jpg")),
-                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/RoiDemo2.jpg")),
-                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/RoiDemo2.jpg")),
+                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/CoverFlow/CoverFlow-1.png")),
+                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/CoverFlow/CoverFlow-2.png")),
+                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/CoverFlow/CoverFlow-3.png")),
+                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/CoverFlow/CoverFlow-4.png")),
+                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/CoverFlow/CoverFlow-5.png")),
+                new CoverFlowContent(new Uri(@"pack://application:,,,/Images/CoverFlow/CoverFlow-6.png")),
             });
 
             CoverFlowMain.PageIndex = 2;

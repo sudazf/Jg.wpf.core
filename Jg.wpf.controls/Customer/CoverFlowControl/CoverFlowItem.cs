@@ -132,7 +132,7 @@ namespace Jg.wpf.controls.Customer.CoverFlowControl
             return CreateMeshGeometry(p0, p1, p2, p3);
         }
 
-        private double GetAngleByPos(int index) => Math.Sign(Index - index);
+        private double GetAngleByPos(int index) => Math.Sign(Index - index) * -45; //改变角度
 
         private double GetXByPos(int index) => Index * Interval + (Index - index) * 1.1;
 

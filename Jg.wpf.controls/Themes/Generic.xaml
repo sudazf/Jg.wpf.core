@@ -36,6 +36,7 @@
         <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.ComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.PageControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Jg.wpf.controls;component/Themes/Custom/Jg.CoverFlow.xaml" />
         
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

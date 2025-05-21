@@ -73,6 +73,7 @@ namespace Jg.wpf.app.ViewModels
                 new DemoItem("17. Button path","ButtonsDemo", null),
                 new DemoItem("18. Page control","PageControlDemo", new PageControlViewModel()),
                 new DemoItem("19. Office to PDF","OfficeToPDFControlDemo", new OfficeToPDFViewModel()),
+                new DemoItem("20. Cover Flow","CoverFlowControlDemo", null),
             };
             DemoItems = _defaultItems;
 

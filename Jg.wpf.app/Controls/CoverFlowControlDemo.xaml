@@ -11,8 +11,7 @@
     <Grid>
         <coverFlowControl:CoverFlow
             x:Name="CoverFlowMain"
-            Width="500"
-            Height="300"
-            Margin="32" />
+            Width="600"
+            Height="600" />
     </Grid>
 </UserControl>

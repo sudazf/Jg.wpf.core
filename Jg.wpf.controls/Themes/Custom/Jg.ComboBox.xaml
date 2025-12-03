@@ -96,6 +96,12 @@
         </Setter>
     </Style>
 
+    <Style x:Key="Jg.SelectAll.MultiSelectComboBoxItem" 
+           TargetType="{x:Type controls:MultiSelectComboBoxItem}"
+           BasedOn="{StaticResource Jg.MultiSelectComboBoxItem}">
+        <Setter Property="IsSelected" Value="{Binding SelectedAll}" />
+    </Style>
+
     <Style x:Key="Jg.MultiSelectComboBox" TargetType="{x:Type controls:MultiSelectComboBox}">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
@@ -228,7 +234,7 @@
                                     <controls:MultiSelectComboBoxItem
                                         x:Name="PART_CheckBoxAll"
                                         Content="{TemplateBinding SelectAllContent}"
-                                        Style="{TemplateBinding ItemContainerStyle}" />
+                                        Style="{StaticResource Jg.SelectAll.MultiSelectComboBoxItem}" />
                                     <ScrollViewer
                                         x:Name="DropDownScrollViewer"
                                         Grid.Row="1"

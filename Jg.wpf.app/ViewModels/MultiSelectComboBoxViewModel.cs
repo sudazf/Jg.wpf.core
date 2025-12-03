@@ -21,6 +21,8 @@ namespace Jg.wpf.app.ViewModels
             }
         }
 
+        public bool SelectedAll { get; set; }
+
         public MultiSelectComboBoxViewModel()
         {
             TestItems = new List<MySelectableItem>()

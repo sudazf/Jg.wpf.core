@@ -23,6 +23,7 @@
     <None Remove="Images\CoverFlow\CoverFlow-6.png" />
     <None Remove="Images\RoiDemo.bmp" />
     <None Remove="Images\RoiDemo2.jpg" />
+    <None Remove="Resources\Image\Tomato.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BigPic.png">
@@ -52,6 +53,9 @@
     <Content Include="Images\RoiDemo2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\Tomato.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jg.wpf.controls\Jg.wpf.controls.csproj" />

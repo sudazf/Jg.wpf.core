@@ -1,0 +1,120 @@
+﻿<customWindows:CustomWindow
+    x:Class="Jg.wpf.app.Controls.MyCustomWindow2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:customWindows="clr-namespace:Jg.wpf.controls.Customer.CustomWindows;assembly=Jg.wpf.controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Jg.wpf.app.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    Title="This is title."
+    Width="800"
+    Height="450"
+    Icon="../Resources/Image/Tomato.ico"
+    Style="{StaticResource Custom.Window}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <customWindows:CustomWindow.NonClientAreaContent>
+        <Grid>
+            <StackPanel Orientation="Horizontal">
+                <Menu Margin="4,0,0,0">
+                    <Menu.Resources>
+                        <GeometryGroup x:Key="ConnectDevice" o:Freeze="True">
+                            <Geometry>M869 119.3H156.8c-36.4 0-66 29.6-66 66v657.9c0 36.4 29.6 66 66 66H869c36.4 0 66-29.6 66-66V185.3c0-36.4-29.6-66-66-66z m-4 70v176.6H160.8V189.3H865z m0 246.6V602H160.8V435.9H865zM160.8 839.2V672H865v167.2H160.8z</Geometry>
+                            <Geometry>M723.5 317.8h43c19.3 0 35-15.7 35-35s-15.7-35-35-35h-43c-19.3 0-35 15.7-35 35s15.7 35 35 35zM723.5 553.9h43c19.3 0 35-15.7 35-35s-15.7-35-35-35h-43c-19.3 0-35 15.7-35 35 0 19.4 15.7 35 35 35zM766.5 720.1h-43c-19.3 0-35 15.7-35 35s15.7 35 35 35h43c19.3 0 35-15.7 35-35 0-19.4-15.7-35-35-35z</Geometry>
+                        </GeometryGroup>
+                        <GeometryGroup x:Key="Setting" o:Freeze="True">
+                            <Geometry>M855.8 445.3l104 34.8V543l-106.7 34.5-2.9-1.4c-8.8 47.1-28 90.4-53.8 128.5l11.3 3.4 48.4 100.8-47.2 47.2-102.3-50.6-2.6-8.8c-37.5 25.2-79.8 44.2-125.9 53.1l3.2 5.9-36.6 104h-65.8L442.8 853l1.9-3.4c-46.1-9.1-88.4-28-125.8-53.4l-3.4 11.4L214.6 856l-47.2-47.2L218 706.5l8.9-2.6c-25.3-37.6-44.2-79.9-53.2-126l-5.9 3.1-104-36.4v-65.9l106.6-36.1 3.6 1.9c9.2-47.2 28.7-90.6 55.1-128.7l-12-4-49.7-99.6 45.1-45.1L313.7 219l2.9 9.4c37.5-25.9 79.9-45.1 126-54.5l-3.4-6.2 38.2-104h68.9L584 170.3l-2.1 3.9c46.2 9.5 88.3 28.9 125.7 54.9l4-12.2 99.6-49.6 45 45.1-51.7 101.2-9.4 2.9c26.9 39.1 46.5 83.4 55.4 131.7l5.3-2.9z</Geometry>
+                            <Geometry>M511.8 236c-152.2 0-275.6 123.4-275.6 275.6s123.5 275.6 275.6 275.6c152.3 0 275.7-123.5 275.7-275.6C787.5 359.4 664 236 511.8 236z</Geometry>
+                            <Geometry>M511.8 683.9c-95.1 0-172.3-77.2-172.3-172.3s77.1-172.3 172.3-172.3c95.2 0 172.4 77.1 172.4 172.3S607 683.9 511.8 683.9z</Geometry>
+                            <Geometry>M511.8 408.2c-57.1 0-103.3 46.4-103.3 103.4 0 57.1 46.2 103.4 103.3 103.4 57.2 0 103.4-46.3 103.4-103.4 0-57.1-46.2-103.4-103.4-103.4z</Geometry>
+                        </GeometryGroup>
+                        <GeometryGroup x:Key="Version" o:Freeze="True">
+                            <Geometry>M512 81.92C275.456 81.92 81.92 275.456 81.92 512s193.536 430.08 430.08 430.08 430.08-193.536 430.08-430.08S748.544 81.92 512 81.92z m-6.4512 647.2704c-8.6016 15.0528-25.8048 23.6544-45.1584 19.3536-17.2032-2.1504-30.1056-17.2032-34.4064-34.4064L370.0736 425.984H296.96v-86.016h107.52c21.504 0 38.7072 15.0528 43.008 34.4064l43.008 217.1904 180.6336-288.1536 73.1136 45.1584-238.6944 380.6208z</Geometry>
+                        </GeometryGroup>
+                    </Menu.Resources>
+                    <MenuItem Margin="16,0,0,0" >
+                        <MenuItem.Header>
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="Test System Info" />
+                        </MenuItem.Header>
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="15"
+                                    Text="Device connect" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <Path
+                                    Data="{StaticResource ConnectDevice}"
+                                    Fill="DarkOrange"
+                                    Stretch="Uniform" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="15"
+                                    Text="Systems" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <Path
+                                    Data="{StaticResource Setting}"
+                                    Fill="DarkOrange"
+                                    Stretch="Uniform" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+
+                    <MenuItem Margin="0,0,0,0">
+
+                        <MenuItem.Header>
+                            <Border>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    FontStyle="Italic"
+                                    Text="V3.2.1.0" />
+                            </Border>
+                        </MenuItem.Header>
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="15"
+                                    Text="1.0.1.0" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <Path
+                                    Data="{StaticResource Version}"
+                                    Fill="DarkOrange"
+                                    Stretch="Uniform" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="15"
+                                    Text="2.0.0.0" />
+                            </MenuItem.Header>
+
+                            <MenuItem.Icon>
+                                <Path
+                                    Data="{StaticResource Version}"
+                                    Fill="DarkOrange"
+                                    Stretch="Uniform" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+        </Grid>
+    </customWindows:CustomWindow.NonClientAreaContent>
+    <Grid />
+</customWindows:CustomWindow>

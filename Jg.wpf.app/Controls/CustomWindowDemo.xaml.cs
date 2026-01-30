@@ -18,5 +18,11 @@ namespace Jg.wpf.app.Controls
             var window = new MyCustomWindow();
             window.Show();
         }
+
+        private void ShowWindowClick2(object sender, RoutedEventArgs e)
+        {
+            var window = new MyCustomWindow2();
+            window.Show();
+        }
     }
 }
